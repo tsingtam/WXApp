@@ -1,0 +1,107 @@
+<!--index.wxml-->
+  <view class="page-body">
+	<view class="weui-search-bar">
+	   <view class="weui-search-bar__form">
+		<view class="weui-search-bar__box">
+		  <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+		  <input type="text" class="weui-search-bar__input" placeholder="请输入查询内容" value="" bindtap="search_product" />
+		</view>
+	  </view>
+	</view>
+    <view class="top">
+		<image src="../../image/companyIcon.png" background-size="cover" class="companyImg"></image>
+		<view class="topR">
+			<text class="companyName">中铝新材料科技公司</text>
+			<text class="small">主营精细氧化铝</text>
+		</view>
+		<view class="manage">
+			<navigator url="/pages/user/admin">
+			<image class="icoImg" src="../../image/set.png" background-size="cover"></image>
+			<text>管理</text>
+			</navigator>
+		</view>
+    </view>
+	<view class='page_row'>  
+	  <view class="nav" wx:for='{{nav_title}}' wx:key="index">  
+		<view class="nav_item page_row {{shownavindex == index? 'on' : ''}} {{shownavindex == index? 'actived' : ''}}" bindtap="click_nav" data-index="{{index}}">  
+		  <view class="content">{{item}}  
+		  </view>  
+		<view class="ico_arrow"></view>  
+		</view>  
+	  </view>  
+	</view>  
+	<view class='nav_centent_arr' hidden="{{selectList}}">  
+	  <view class="nav_info" bindtap="selecthide">
+		<scroll-view scroll-y="true" style="height: 100%;">
+		<view class="allLi" bindtap="check_all" data-name="全部">全部</view>
+		<block wx:for="{{nav_centent}}" wx:key="index">  
+			<view class='nav_centent'>
+				<view class="typeName" data-name="{{item.name}}">{{item.name}}</view>
+				<view class="cont">
+					<block wx:for="{{item.child}}" wx:key="index">  
+						<text class="cont-item" data-name="{{item.name}}" bindtap="select_type">{{item.name}}</text>
+					</block>
+				</view>
+			</view>
+		</block> 
+		</scroll-view>
+	  </view>
+	</view>
+	<view class="list-group" wx:for='{{productList}}' wx:key="index" hidden="{{!selectList}}">
+		<view class="list-group-item">
+			<view class="cont-wrap">
+				<view class="contentL" bindtap="check_detail" data-index="{{item.id}}">
+					<text class="productName">{{item.brand}}</text>
+					<view class="mid">
+						<text class="midF">{{item.name}}</text>
+					</view>
+					<text class="grad">{{item.grade}}</text>
+				</view>
+				<view class="contentR">
+					<view><text class="active">{{item.price}}</text>元/吨</view>
+					<image src="../../image/buy.png" class="add" bindtap="addCartTap" data-index="{{item.id}}" data-detail="{{item}}"></image>
+				</view>
+			</view>
+		</view>
+	</view>
+    <view class="weui-loadmore weui-loadmore_line" hidden="{{!selectList||productList.length}}">
+        <view class="weui-loadmore__tips_in-line">暂无产品</view>
+    </view>
+	<view class="selectModel" hidden="{{isDisplay}}">
+		<view class="mode-content">
+			<view class="mode-topInfo">
+				<view class="infoL">
+					<view class="title">{{productDetail.brand || '精细氧化铝'}}</view>
+					<view class="price">￥{{productInfo.price}}</view>
+				</view>
+				<image src="../../image/close.png" class="closeIcon" background-size="cover" bindtap="closeModel"></image>
+			</view>
+			<view class="model-item">
+				<view class="title">交货方式</view>
+				<text class="con {{deliver == 1 ? 'active':''}}" bindtap="deliverItemTap" data-index="1" data-id="{{productDetail.id}}" data-name="自提">自提</text>
+			</view>
+			<view class="model-item" hidden="{{isShow}}">
+				<view class="title">提货地</view>
+				<block wx:for="{{warehouse}}" >
+				<text class="con {{company == item.w_id  ? 'active':''}}" bindtap="companyItemTap" data-index="{{item.w_id}}" data-name="{{item.warehouse.name}}">{{item.warehouse.name}}</text>
+				</block>
+			</view>
+			<view class="model-item">
+				<view class="title">包装</view>
+				<text class="con {{pack == 1 ? 'active':''}}" bindtap="lableItemTap" data-name="25公斤" data-index="1">25公斤</text>
+				<text class="con {{pack == 2 ? 'active':''}}" bindtap="lableItemTap" data-name="50公斤" data-index="2">50公斤</text>
+				<text class="con {{pack == 3 ? 'active':''}}" bindtap="lableItemTap" data-name="1吨" data-index="3">1吨</text>
+			</view>
+			<view class="add-minus">
+				<view class="minus {{buynumber == buynumbermin ? 'disabled':''}}" bindtap="minusTap">
+					<image src="../../image/minus2.png" class="minusIcon"></image>
+				</view>
+				<input type="number" class="buy-num" bindinput="getAmount" value="{{buynumber}}" />
+				<view class="plus {{buynumber == buynumbermax ? 'disabled':''}}" bindtap="plusTap">
+					<image src="../../image/plus2.png" class="plusIcon"></image>
+				</view>
+			</view>
+			<button class="btnSure" bindtap="addGoodsTap">确定</button>
+		</view>
+	</view>
+  </view>

@@ -1,0 +1,37 @@
+<!--index.wxml-->
+<template name="orderItem">
+	<view class="list-group">
+		<view class="list-group-item myBid">
+			<text class="title c_disabled" bindtap="checkNum">2018.04.25 14:33:25</text>
+			<text class="c_pass floatR title">待配货</text>
+			<view class="cont-wrap" bindtap="check_detail">
+				<view class="txt">
+					<text>铝棒 兰铝 100*5.8</text>
+				</view>
+				<view class="txt">
+					<text class="txt-item c_disabled">A-GG-2A  1000kg</text>
+					<text class="txt-item">￥16696.00</text>
+					<text class="txt-item floatR">×1000</text>
+				</view>
+				<view class="txt">
+					<text class="txt-item c_disabled">A-GG-2A  1000kg</text>
+					<text class="txt-item">￥16696.00</text>
+					<text class="txt-item floatR">×1000</text>
+				</view>
+				<view class="txt">
+					<text class="txt-item c_disabled">A-GG-2A  1000kg</text>
+					<text class="txt-item">￥16696.00</text>
+					<text class="txt-item floatR">×1000</text>
+				</view>
+			</view>
+			<view class="countInfo">
+				<text class="txt-small">共2件商品 合计：</text>
+				<text>￥189000.00</text>
+			</view>
+			<view class="btn-wrap">
+				<button class="btnAgain">再来一单</button>
+			</view>
+		</view>
+	</view>
+</template>
+<template is="orderItem" wx:for="{{[1,2,3,4,5]}}"></template>

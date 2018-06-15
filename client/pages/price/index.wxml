@@ -1,0 +1,76 @@
+<!--index.wxml-->
+<scroll-view scroll-y="true" style="height: 100%;">
+<template name="no-goods">
+	<view class="title-box">
+		<image src="../../image/icon-cart.png"  background-size= "cover" class="cart-null"></image>
+		<view>购物车空空如也</view>
+	</view>
+	<button class="to-index-btn" bindtap="toIndexPage">
+           去逛逛
+	</button>
+</template>
+<view class="cart-page">
+	<template name="cart-page">
+		<view class="list-group" wx:for="{{list}}" wx:key="{{index}}">
+			<view class="list-item">
+				<view class="type-wrap">
+					<label class="weui-cell weui-check__label">
+						<view class="weui-cell__hd">
+							<checkbox value="铝大牛科技" checked="{{true}}"/>
+						</view>
+						<view class="weui-cell__bd">{{item.p_category}}</view>
+					</label>
+				</view>
+				<view class="type-li" wx:for="{{item.value}}" wx:key="{{index}}" >
+					<view class="type-wrap-small">
+						<label class="weui-cell weui-check__label">
+							<view class="weui-cell__hd">
+								<checkbox value="铝大牛科技" checked="{{true}}"/>
+							</view>
+							<view class="weui-cell__bd">{{item.category}}</view>
+						</label>
+					</view>
+					<view class="list-info-item" wx:for="{{item.value}}" wx:key="{{index}}" data-id="{{item.id}}" bindtap="selectTap" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}">
+						<view class="cartInfo" style="{{item.left}}">
+							<label class="check__label_L">
+								<checkbox value="铝大牛科技" class="checkbox_info" checked="{{true}}"/>
+							</label>
+							<view class="cartInfoR">
+								<view class="productInfo">
+									<text class="info-item">牌号：{{item.product.name}}</text>
+									<text class="info-item">包装：{{item.packing}}</text>
+								</view>
+								<view class="numInfo">
+									<view class="priceL">现汇价：<text class="active">￥{{item.product.price}}</text></view>
+									<view class="numR">
+										<text class="btn minus" bindtap="minusTap" data-id="{{item.product_id}}" data-item="{{item}}">-</text>
+										<input type="number" class="buy-num" value="{{item.amount}}" bindchange="getAmount" data-item="{{item}}" />
+										<text class="btn plus" bindtap="addTap" data-id="{{item.product_id}}" data-item="{{item}}">+</text>
+										<text>吨</text>
+									</view>
+								</view>
+							</view>
+						</view>
+						<view class="delete-btn" data-index="{{index}}" data-id="{{item.id}}" data-pid="{{item.product_id}}" catchtap="delItem">删除</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</template>
+</view>	
+<view class="count">
+	<label>
+		<view class="weui-cell__hd">
+			<checkbox value="铝大牛科技" checked="{{item.checked}}"/>全选
+		</view>
+	</label>
+	<view class="total">
+		合计：<text class="active">￥1640000.00</text>
+	</view>
+	<view class="btnBuy" bindtap="btnBuy">立即下单</view>
+</view>
+<template is="{{cartInfo.list.length > 0 ? 'cart-page' : 'no-goods'}}" data="{{...cartInfo}}"></template>
+</scroll-view>
+
+		
+	

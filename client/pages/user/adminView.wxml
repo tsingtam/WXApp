@@ -1,0 +1,104 @@
+<!--index.wxml-->
+<view class="page-body">
+    <view class="page-top"></view>
+    <view class="weui-form-preview">
+        <view class="weui-form-preview__hd">
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">买方</view>
+                <view class="weui-form-preview__value">河北火神实业材料有限公司</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">客户状态</view>
+                <view class="weui-form-preview__value">新客户</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">联系电话</view>
+                <view class="weui-form-preview__value">18810371663</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">所属销售</view>
+                <view class="weui-form-preview__value"><image class="icoImg" src="../../image/user.png" background-size="cover"></image>王家骐</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">总金额</view>
+                <view class="weui-form-preview__value_in-hd">¥18882400.00</view>
+            </view>
+        </view>
+        <view class="weui-form-preview__bd">
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">品种</view>
+                <view class="weui-form-preview__value">低钠氧化铝</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">牌号</view>
+                <view class="weui-form-preview__value">A-CG-2A</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">采购数量</view>
+                <view class="weui-form-preview__value">100吨</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">包装</view>
+                <view class="weui-form-preview__value">1吨</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">金额</view>
+                <view class="weui-form-preview__value">￥189000.00</view>
+            </view>
+        </view>
+        <view class="weui-form-preview__bd">
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">品种</view>
+                <view class="weui-form-preview__value">低钠氧化铝</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">牌号</view>
+                <view class="weui-form-preview__value">A-CG-2A</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">采购数量</view>
+                <view class="weui-form-preview__value">100吨</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">包装</view>
+                <view class="weui-form-preview__value">1吨</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">金额</view>
+                <view class="weui-form-preview__value">￥189000.00</view>
+            </view>
+        </view>
+        <view class="weui-form-preview__bd">
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">品种</view>
+                <view class="weui-form-preview__value">低钠氧化铝</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">牌号</view>
+                <view class="weui-form-preview__value">A-CG-2A</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">采购数量</view>
+                <view class="weui-form-preview__value">100吨</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">包装</view>
+                <view class="weui-form-preview__value">1吨</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">金额</view>
+                <view class="weui-form-preview__value">￥189000.00</view>
+            </view>
+        </view>
+    </view>
+    <view class="weui-btn-area">
+        <button class="weui-btn" type="primary">接单</button>
+        <button class="weui-btn" type="primary">完成ERP</button>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        	<button class="weui-btn" type="default">转单</button>
+        </picker>
+    </view>
+	<view class="btn-area">
+		<button form-type="submit" type="primary">生成购销单</button>
+	</view>
+</view>

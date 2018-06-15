@@ -1,0 +1,84 @@
+<!--index.wxml-->
+<view class="page-body">
+    <view class="page-top"></view>
+    <view class="weui-form-preview">
+		 <view class="weui-form-preview__hd">
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">卖方</view>
+                <view class="weui-form-preview__value">河北火神实业材料有限公司</view>
+            </view>
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">产品系列</view>
+                <view class="weui-form-preview__value">氧化铝</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">总金额</view>
+                <view class="weui-form-preview__value_in-hd">¥18882400.00</view>
+            </view>     
+        </view>
+        <view class="weui-form-preview__bd">
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">卖方</view>
+                <view class="weui-form-preview__value">河北火神实业材料有限公司</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">品种</view>
+                <view class="weui-form-preview__value">氧化铝</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">牌号</view>
+                <view class="weui-form-preview__value">A-GG-A-CG-2A</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">采购数量</view>
+                <view class="weui-form-preview__value">100吨</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">单价</view>
+                <view class="weui-form-preview__value">￥189000.00</view>
+            </view>
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">包装</view>
+                <view class="weui-form-preview__value">10吨</view>
+            </view>
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">总价</view>
+                <view class="weui-form-preview__value">￥189000.00</view>
+            </view>
+        </view>
+		<view class="weui-form-preview__bd">
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">卖方</view>
+                <view class="weui-form-preview__value">河北火神实业材料有限公司</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">品种</view>
+                <view class="weui-form-preview__value">氧化铝</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">牌号</view>
+                <view class="weui-form-preview__value">A-GG-A-CG-2A</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">采购数量</view>
+                <view class="weui-form-preview__value">100吨</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">单价</view>
+                <view class="weui-form-preview__value">￥189000.00</view>
+            </view>
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">包装</view>
+                <view class="weui-form-preview__value">10吨</view>
+            </view>
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">总价</view>
+                <view class="weui-form-preview__value">￥189000.00</view>
+            </view>
+        </view>
+    </view>
+	<view class="imgShow">
+		<text class="title">订单确认书</text>
+		<image src="../../image/product.png" background-size="cover"></image>
+	</view>
+</view>

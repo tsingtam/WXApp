@@ -1,0 +1,14 @@
+<!--index.wxml-->
+<view class="large-title">
+	<view class="icon_user resetName"><image class="pic" src="{{user.avatarUrl}}"></image></view>
+	<view class="resetName">
+		<view class="name">{{user.nickName}}</view>
+		<view class="mobile">北京铝大牛计算机系统有限公司</view>
+	</view>
+	<view class="btnR icon_setting icon remind"><view></view><view class="circle"></view></view>
+	<view class="title-bottom" style="height: 11px;"></view>
+</view>
+
+<button type="primary" bindtap="share" open-type="share">分享到群</button>
+<view>{{openGId}}</view>
+<open-data type="groupName" open-gid="{{openGId}}"></open-data>

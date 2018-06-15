@@ -1,0 +1,86 @@
+<!--index.wxml-->
+  <view class="page-body">
+    <view class="topInfo">
+		<view class="productName">{{productDetail.brand}}{{productDetail.category}}</view>
+		<view class="price-num">
+			<view class="price-wrap">
+				<text class="active">￥{{productDetail.price}}</text>
+				<text>/出厂价</text>
+			</view>
+			<view class="num-wrap">
+				<text class="num">50kg</text>
+				<text>起批</text>
+			</view>
+		</view>
+    </view>
+	<view class="midInfo">
+		<view class="title">产品属性</view>
+		<view class="list-item">
+			<text class="nameL">品种</text>
+			<text class="contentR">{{productDetail.category}}</text>
+		</view>
+		<view class="list-item">
+			<text class="nameL">牌号</text>
+			<text class="contentR">{{productDetail.name}}</text>
+		</view>
+		<view class="list-item">
+			<text class="nameL">指标</text>
+			<view class="contentR">
+				<text class="txt">{{productDetail.quota}}</text>
+			</view>
+		</view>
+		<view class="list-item">
+			<text class="nameL">使用工业</text>
+			<text class="contentR">{{productDetail.uses}}</text>
+		</view>
+		<view class="list-item">
+			<text class="nameL">工艺</text>
+			<text class="contentR">{{productDetail.technology}}</text>
+		</view>
+	</view>
+	<view class="footer">
+		<view class="link" bindtap="phonecall">联系卖方</view>
+		<view class="addCart" bindtap="selectType">
+		<image class="addbuy" src="../../image/buy2.png" background-size="cover"></image>
+		<view class="mark" wx:if="{{cartNum > 0}}">{{cartNum}}</view>
+		加入购物车</view>
+		<view class="btnBuy" bindtap="buyTap">立即下单</view>
+	</view>
+	<view class="selectModel" hidden="{{isDisplay}}">
+		<view class="mode-content">
+			<view class="mode-topInfo">
+				<view class="infoL">
+					<view class="title">{{productDetail.brand || '精细氧化铝'}}</view>
+					<view class="price">￥{{productInfo.price || productDetail.price}}</view>
+				</view>
+				<image src="../../image/close.png" class="closeIcon" background-size="cover" bindtap="closeModel"></image>
+			</view>
+			<view class="model-item">
+				<view class="title">交货方式</view>
+				<text class="con {{deliver == 1 ? 'active':''}}" bindtap="deliverItemTap" data-index="1" data-id="{{productDetail.id}}" data-name="自提">自提</text>
+			</view>
+			<view class="model-item" hidden="{{isShow}}">
+				<view class="title">提货地</view>
+				<block wx:for="{{warehouse}}" >
+				<text class="con {{company == item.w_id  ? 'active':''}}" bindtap="companyItemTap" data-index="{{item.w_id}}" data-name="{{item.warehouse.name}}">{{item.warehouse.name}}</text>
+				</block>
+			</view>
+			<view class="model-item">
+				<view class="title">包装</view>
+				<text class="con {{pack == 1 ? 'active':''}}" bindtap="lableItemTap" data-name="25公斤" data-index="1">25公斤</text>
+				<text class="con {{pack == 2 ? 'active':''}}" bindtap="lableItemTap" data-name="50公斤" data-index="2">50公斤</text>
+				<text class="con {{pack == 3 ? 'active':''}}" bindtap="lableItemTap" data-name="1吨" data-index="3">1吨</text>
+			</view>
+			<view class="add-minus">
+				<view class="minus {{buynumber == buynumbermin ? 'disabled':''}}" bindtap="minusTap">
+					<image src="../../image/minus2.png" class="minusIcon"></image>
+				</view>
+				<input type="number" class="buy-num" bindinput="getAmount" value="{{buynumber}}" />
+				<view class="plus {{buynumber == buynumbermax ? 'disabled':''}}" bindtap="plusTap">
+					<image src="../../image/plus2.png" class="plusIcon"></image>
+				</view>
+			</view>
+			<button class="btnSure" bindtap="addGoodsTap">确定</button>
+		</view>
+	</view>
+  </view>

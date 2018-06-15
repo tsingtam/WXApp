@@ -1,0 +1,36 @@
+<!--index.wxml-->
+<view class="page-body">
+    <view class="page-top"></view>
+    <view class="weui-form-preview">
+		<view class="weui-form-preview__bd">
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">普通原粉（粗粉）</view>            
+            </view>   
+        </view>
+        <view class="weui-form-preview__hd">                   
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">牌号</view>
+                <view class="weui-form-preview__value">A-GG-A-CG-2A</view>
+            </view>
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">价格</view>
+                <view class="weui-form-preview__value">￥189000.00</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">采购数量</view>
+                <view class="weui-form-preview__value">1吨</view>
+            </view>
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">包装</view>
+                <view class="weui-form-preview__value">1吨</view>
+            </view>
+        </view>
+    </view>
+	<view class="page-bottom"></view>
+	<view class="count">
+		<view class="total">
+			合计：<text class="active">￥1640000.00</text>
+		</view>
+		<view class="btnBuy" bindtap="btnBuy">立即下单</view>
+	</view>
+</view>

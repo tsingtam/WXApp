@@ -1,0 +1,131 @@
+{
+  "pages":[
+    "pages/bid/hall",
+    "pages/bid/detail",
+    "pages/price/index",
+    "pages/price/submitOrder",
+    "pages/order/index",
+    "pages/order/detail",
+    "pages/user/index",
+    "pages/user/admin",
+    "pages/user/adminView",
+    "pages/user/auth",
+    "pages/login/index",
+    "pages/search/search",
+    
+    "pages/index/index",
+    "pages/addCgi/addCgi",
+
+    "pages/component/index",
+
+    "pages/component/pages/view/view",
+    "pages/component/pages/scroll-view/scroll-view",
+    "pages/component/pages/swiper/swiper",
+
+    "pages/component/pages/text/text",
+    "pages/component/pages/icon/icon",
+    "pages/component/pages/progress/progress",
+
+    "pages/component/pages/button/button",
+    "pages/component/pages/checkbox/checkbox",
+    "pages/component/pages/form/form",
+    "pages/component/pages/input/input",
+    "pages/component/pages/label/label",
+    "pages/component/pages/picker/picker",
+    "pages/component/pages/radio/radio",
+    "pages/component/pages/slider/slider",
+    "pages/component/pages/switch/switch",
+    "pages/component/pages/textarea/textarea",
+
+    "pages/component/pages/navigator/navigator",
+    "pages/component/pages/navigator/navigate",
+    "pages/component/pages/navigator/redirect",
+
+    "pages/component/pages/image/image",
+    "pages/component/pages/audio/audio",
+    "pages/component/pages/video/video",
+
+    "pages/component/pages/map/map",
+
+    "pages/component/pages/canvas/canvas",
+
+    "pages/API/index",
+
+    "pages/API/pages/login/login",
+    "pages/API/pages/get-user-info/get-user-info",
+    "pages/API/pages/request-payment/request-payment",
+    "pages/API/pages/share/share",
+    "pages/API/pages/custom-message/custom-message",
+    "pages/API/pages/template-message/template-message",
+
+    "pages/API/pages/set-navigation-bar-title/set-navigation-bar-title",
+    "pages/API/pages/navigation-bar-loading/navigation-bar-loading",
+    "pages/API/pages/navigator/navigator",
+    "pages/API/pages/pull-down-refresh/pull-down-refresh",
+    "pages/API/pages/animation/animation",
+
+    "pages/API/pages/action-sheet/action-sheet",
+    "pages/API/pages/modal/modal",
+    "pages/API/pages/toast/toast",
+
+    "pages/API/pages/get-network-type/get-network-type",
+    "pages/API/pages/get-system-info/get-system-info",
+    "pages/API/pages/on-compass-change/on-compass-change",
+    "pages/API/pages/make-phone-call/make-phone-call",
+    "pages/API/pages/scan-code/scan-code",
+
+
+    "pages/API/pages/request/request",
+    "pages/API/pages/web-socket/web-socket",
+    "pages/API/pages/upload-file/upload-file",
+    "pages/API/pages/download-file/download-file",
+
+
+    "pages/API/pages/image/image",
+    "pages/API/pages/file/file",
+    "pages/API/pages/on-accelerometer-change/on-accelerometer-change",
+    "pages/API/pages/canvas/canvas",
+    "pages/API/pages/video/video",
+
+    "pages/API/pages/open-location/open-location",
+
+    "pages/API/pages/storage/storage"
+  ],
+  "window":{
+    "backgroundColor":"#F6F6F6",
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#326ccb",
+    "navigationBarTitleText": "铝大牛",
+    "navigationBarTextStyle":"white"
+  },
+  "tabBar": {
+    "color": "#333",
+    "selectedColor": "#366ec8",
+    "borderStyle": "black",
+    "fontSize": "15rpx",
+    "backgroundColor": "#ffffff",
+    "list": [{
+      "pagePath": "pages/bid/hall",
+      "iconPath": "image/icon_home.png",
+      "selectedIconPath": "image/icon_home_on.png",
+      "text": "首页"
+    }, {
+      "pagePath": "pages/price/index",
+      "iconPath": "image/icon_buy.png",
+      "selectedIconPath": "image/icon_buy_on.png",
+      "text": "购物车"
+    }, {
+      "pagePath": "pages/order/index",
+      "iconPath": "image/icon_user.png",
+      "selectedIconPath": "image/icon_user_on.png",
+      "text": "我的订单"
+    }]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

@@ -1,0 +1,72 @@
+﻿<!--index.wxml-->
+<view class="page-body">
+    <view class="weui-tab">
+        <view class="weui-navbar">
+            <block wx:for="{{tabs}}" wx:key="*this">
+                <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                	<view class="weui-navbar__title">
+                		{{item}}
+                		<view class="weui-badge" style="position: absolute;top: 0.8em;right: 3.0em;">8</view>
+                	</view>
+                </view>
+            </block>
+            <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+        </view>
+        <view class="weui-tab__panel">
+            <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+				<view class="weui-time"><view class="cont">2018年5月8日</view></view>
+				<view class="weui-panel">
+				    <view class="weui-panel__hd">2017-07-08 14:33:45<image class="icoImg floatR" src="../../image/new.png" background-size="cover"></image><view class="floatR"><image class="icoImg" src="../../image/user.png" background-size="cover"></image>王家骐</view></view>
+				    <view class="weui-panel__bd">
+				        <view class="weui-media-box weui-media-box_text">
+				        	<view class="weui-media-box__cont">
+					            <view class="weui-media-box__title weui-media-box__title_in-text">河北火神实业材料有限公司 <view class="floatR"><image class="icoImg" src="../../image/phone2.png" background-size="cover"></image>18810371663</view></view>
+					            <view class="weui-media-box__desc">低钠氧化铝A-CG-2A 1吨 <view class="floatR">￥4100.00 x196</view></view>
+					            <view class="weui-media-box__desc">低钠氧化铝A-CG-2A 1吨 <view class="floatR">￥4100.00 x196</view></view>
+					            <view class="weui-media-box__desc">低钠氧化铝A-CG-2A 1吨 <view class="floatR">￥4100.00 x196</view></view>
+				        	</view>
+			            	<view class="weui-media-box__title">共3件商品 合计： <view class="floatR">￥1890000.00 / 216.5吨</view></view>
+				        </view>
+				    </view>
+				</view>
+
+				<view class="weui-panel">
+				    <view class="weui-panel__hd">2017-07-08 14:33:45</view>
+				    <view class="weui-panel__bd">
+				        <view class="weui-media-box weui-media-box_text">
+				        	<view class="weui-media-box__cont">
+					            <view class="weui-media-box__title weui-media-box__title_in-text">河北火神实业材料有限公司 <view class="floatR"><image class="icoImg" src="../../image/phone2.png" background-size="cover"></image>18810371663</view></view>
+					            <view class="weui-media-box__desc">低钠氧化铝A-CG-2A 1吨 <view class="floatR">￥4100.00 x196</view></view>
+					            <view class="weui-media-box__desc">低钠氧化铝A-CG-2A 1吨 <view class="floatR">￥4100.00 x196</view></view>
+					            <view class="weui-media-box__desc">低钠氧化铝A-CG-2A 1吨 <view class="floatR">￥4100.00 x196</view></view>
+				        	</view>
+				            <view class="weui-media-box__title">共3件商品 合计： <view class="floatR">￥1890000.00 / 216.5吨</view></view>
+				        </view>
+				    </view>
+				</view>
+
+				<view class="weui-time"><view class="cont">2018年5月8日</view></view>
+
+				<view class="weui-panel">
+				    <view class="weui-panel__hd">2017-07-08 14:33:45</view>
+				    <view class="weui-panel__bd">
+				        <view class="weui-media-box weui-media-box_text">
+				        	<view class="weui-media-box__cont">
+					            <view class="weui-media-box__title weui-media-box__title_in-text">河北火神实业材料有限公司 <view class="floatR"><image class="icoImg" src="../../image/phone2.png" background-size="cover"></image>18810371663</view></view>
+					            <view class="weui-media-box__desc">低钠氧化铝A-CG-2A 1吨 <view class="floatR">￥4100.00 x196</view></view>
+					            <view class="weui-media-box__desc">低钠氧化铝A-CG-2A 1吨 <view class="floatR">￥4100.00 x196</view></view>
+					            <view class="weui-media-box__desc">低钠氧化铝A-CG-2A 1吨 <view class="floatR">￥4100.00 x196</view></view>
+				        	</view>
+				            <view class="weui-media-box__title">共3件商品 合计： <view class="floatR">￥1890000.00 / 216.5吨</view></view>
+				        </view>
+				    </view>
+				</view>
+            </view>
+            <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+			    <view class="weui-loadmore weui-loadmore_line">
+			        <view class="weui-loadmore__tips_in-line">暂无订单</view>
+			    </view>
+            </view>
+        </view>
+    </view>
+</view>

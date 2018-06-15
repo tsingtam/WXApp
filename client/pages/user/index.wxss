@@ -1,0 +1,6 @@
+/**index.wxss**/
+.icon_user .pic{
+	width: 116rpx;
+	height: 116rpx;
+	border-radius: 116rpx;
+}
