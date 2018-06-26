@@ -1,3 +1,4 @@
 {
-    "navigationBarTitleText": "业务员管理"
+    "navigationBarTitleText": "业务员管理",
+    "enablePullDownRefresh": true
 }

@@ -7,23 +7,24 @@
 	background-color:#326ccb;
 }
 .top{
-  height: 200rpx;
+  height: 150rpx;
   padding: 20rpx;
 }
 .topR{
   display: inline-block;
-  padding-top: 30rpx;
+  padding: 25rpx 0 0 5rpx;
 }
 .companyImg{
-  height: 200rpx;
-  width: 200rpx;
+  height: 150rpx;
+  width: 150rpx;
   float: left;
   display: block;
   margin-right: 20rpx;
+  border-radius: 50px;
 }
 .manage{
   float: right;
-  padding-top: 40rpx;
+  padding-top: 50rpx;
 }
 .manageImg{
 	height:50rpx;
@@ -32,13 +33,16 @@
   margin-right: 15rpx;
   margin-left: 5rpx;
 }
-.topR .small{
-  font-size: 24rpx;
-}
 .companyName,.small{
   display: block;
   line-height: 60rpx;
   height: 60rpx;
+}
+.topR .small{
+  font-size: 24rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  color: #999;
 }
 .nav {  
   height: 80rpx;  
@@ -129,8 +133,10 @@ to {height:500rpx;}
   background-color: #fff;
 }
 .contentL{
-	width:70%;
+	width:64%;
 	float:left;
+	height:140rpx;
+	overflow:hidden;
 }
 .mid{
 	font-size:26rpx;
@@ -144,21 +150,25 @@ to {height:500rpx;}
 }
 .grad{
 	font-size:26rpx;
+	color: #999;
+	margin:0 0 10px;
 }
 .contentR{
-	width:30%;
+	width:36%;
 	display:inline-block;
-	padding-top:22rpx;
+	padding-top:2rpx;
+	text-align:right;
+	padding-right:0;
 }
 .contentR .active{
 	font-size:32rpx;
 	color:#ff6c00;
 }
 .add{
-	height:24px;
-	width:24px;
+	height:30px;
+	width:30px;
 	display:block;
   float: right;
   margin-top: 20rpx;
-  margin-right: 30rpx;
+  margin-right: 0rpx;
 }

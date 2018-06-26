@@ -92,11 +92,11 @@ Page({
 		if(app.data.user.userKey){
 			Data.userKey = app.data.user.userKey;
 		}
-		if(app.data.user.type){
-			Data.authType = '2';
-		}else{
-			Data.authType = '';
-		}
+		// if(app.data.user.type){
+		// 	Data.authType = '2';
+		// }else{
+		// 	Data.authType = '';
+		// }
 		if(Data.comName == ''){
 			wx.showToast({
 				title: '公司名不能为空',
@@ -133,15 +133,18 @@ Page({
 						  icon: 'success',
 						  duration: 2000
 						});
-						wx.navigateTo({
-						  url: '/pages/bid/hall'
-						});
+						setTimeout(function(){
+							wx.navigateBack();
+						}, 2000);
 					}else{
 						wx.showToast({
 						  title: res.data.msg,
-						  icon: 'success',
+						  icon: 'none',
 						  duration: 2000
 						});
+						setTimeout(function(){
+							wx.navigateBack();
+						}, 2000);
 					}
 				},
 				fail: function(res) {

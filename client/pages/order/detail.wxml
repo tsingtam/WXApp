@@ -5,80 +5,50 @@
 		 <view class="weui-form-preview__hd">
 			<view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">卖方</view>
-                <view class="weui-form-preview__value">河北火神实业材料有限公司</view>
+                <view class="weui-form-preview__value">中铝新材料有限公司</view>
             </view>
 			<view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">产品系列</view>
-                <view class="weui-form-preview__value">氧化铝</view>
+                <view class="weui-form-preview__value">{{orderDetail.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</view>
+            </view>
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">交货方式</view>
+                <view class="weui-form-preview__value">自提</view>
+            </view>
+			<view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">提货地</view>
+                <view class="weui-form-preview__value">{{orderDetail.subOrders[0].product.warehouse_name}}</view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">总金额</view>
-                <view class="weui-form-preview__value_in-hd">¥18882400.00</view>
+                <view class="weui-form-preview__value_in-hd">¥{{orderDetail.total_price}}</view>
             </view>     
         </view>
-        <view class="weui-form-preview__bd">
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">卖方</view>
-                <view class="weui-form-preview__value">河北火神实业材料有限公司</view>
-            </view>
+        <view class="weui-form-preview__bd" wx:for="{{orderDetail.subOrders}}">            
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">品种</view>
-                <view class="weui-form-preview__value">氧化铝</view>
+                <view class="weui-form-preview__value">{{item.product.lCategory.name}}</view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">牌号</view>
-                <view class="weui-form-preview__value">A-GG-A-CG-2A</view>
+                <view class="weui-form-preview__value">{{item.product.name}}</view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">采购数量</view>
-                <view class="weui-form-preview__value">100吨</view>
+                <view class="weui-form-preview__value">{{item.amount}}吨</view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">单价</view>
-                <view class="weui-form-preview__value">￥189000.00</view>
+                <view class="weui-form-preview__value">￥{{item.price}}</view>
             </view>
 			<view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">包装</view>
-                <view class="weui-form-preview__value">10吨</view>
+                <view class="weui-form-preview__value">{{item.packing}}</view>
             </view>
 			<view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">总价</view>
-                <view class="weui-form-preview__value">￥189000.00</view>
+                <view class="weui-form-preview__value">￥{{parseFloat(item.amount)*parseFloat(item.price)*10000/10000}}</view>
             </view>
-        </view>
-		<view class="weui-form-preview__bd">
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">卖方</view>
-                <view class="weui-form-preview__value">河北火神实业材料有限公司</view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">品种</view>
-                <view class="weui-form-preview__value">氧化铝</view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">牌号</view>
-                <view class="weui-form-preview__value">A-GG-A-CG-2A</view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">采购数量</view>
-                <view class="weui-form-preview__value">100吨</view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">单价</view>
-                <view class="weui-form-preview__value">￥189000.00</view>
-            </view>
-			<view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">包装</view>
-                <view class="weui-form-preview__value">10吨</view>
-            </view>
-			<view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">总价</view>
-                <view class="weui-form-preview__value">￥189000.00</view>
-            </view>
-        </view>
+        </view>		
     </view>
-	<view class="imgShow">
-		<text class="title">订单确认书</text>
-		<image src="../../image/product.png" background-size="cover"></image>
-	</view>
 </view>

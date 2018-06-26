@@ -65,15 +65,10 @@ Page({
 			}
 		});
 	},
-	phoneCall:function(e){ // 拨打电话
+	phoneCall:function(e){
 		var that = this;
 		wx.makePhoneCall({
 			phoneNumber: that.data.phoneNum
-		});
-	},
-	contact:function(){ // 联系卖方
-		wx.navigateTo({
-			url: '/pages/bid/contact'
 		});
 	},
 	deliverItemTap:function(e){

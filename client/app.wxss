@@ -334,10 +334,20 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
   color:#ff6c00;
   font-size:36rpx;
 }
+.closeArea{
+	height:100rpx;
+	width:100rpx;
+	float:right;
+	margin-top:-25rpx;
+	margin-right:-40rpx;
+	vertical-align:middle;
+}
 .closeIcon{
   height:32rpx;
   width:32rpx;
-  float:right;
+  margin-top:30rpx;
+  margin-left:30rpx;
+
 }
 .model-item{
   margin-bottom:20rpx;
@@ -397,6 +407,7 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
 .plusIcon{
   width:64rpx;
   height:60rpx;
+  margin-left:1rpx; 
 }
 .btnSure{
   background-color:#3478f6;

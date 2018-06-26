@@ -39,13 +39,13 @@ page {
 .floatR {
     float: right;
 }
-
+.floatL{
+	display:block;
+	width:40%;
+}
 .c_disabled {
     font-size: 24rpx;
     color: #666;
-}
-.txt .txt-item{
-	margin-right:60rpx;
 }
 .txt-small{
 	font-size:26rpx;

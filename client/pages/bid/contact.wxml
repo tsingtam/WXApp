@@ -39,7 +39,7 @@
 		</view>
 	</view>
 	<view class="footer">
-		<view class="link" bindtap="phonecall" bindtap="contact">联系卖方</view>
+		<view class="link" bindtap="phonecall">联系卖方</view>
 		<view class="addCart" bindtap="selectType">
 		<image class="addbuy" src="../../image/buy2.png" background-size="cover"></image>
 		<view class="mark" wx:if="{{cartNum > 0}}">{{cartNum}}</view>

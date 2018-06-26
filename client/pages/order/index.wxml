@@ -1,37 +1,34 @@
 <!--index.wxml-->
-<template name="orderItem">
-	<view class="list-group">
-		<view class="list-group-item myBid">
-			<text class="title c_disabled" bindtap="checkNum">2018.04.25 14:33:25</text>
-			<text class="c_pass floatR title">待配货</text>
-			<view class="cont-wrap" bindtap="check_detail">
+	<view class="weui-loadmore weui-loadmore_line" wx:if="{{order.orderList.length == 0}}">
+		<view class="weui-loadmore__tips_in-line">暂无订单</view>
+	</view>
+
+	<view class="list-group" wx:for="{{order.orderList}}" wx:if="{{order.orderList.length > 0}}">
+		<view class="list-group-item myBid" bindtap="check_detail" data-index="{{item.id}}">
+			<text class="title c_disabled">{{item.show_time}}</text>
+			<text class="c_pass floatR title" wx:if="{{item.status == '0'}}">待配货</text>
+			<text class="c_pass floatR title" wx:if="{{item.status == '1'}}">已接单</text>
+			<text class="c_pass floatR title" wx:if="{{item.status == '2'}}">已处理</text>
+			<view class="cont-wrap">
 				<view class="txt">
-					<text>铝棒 兰铝 100*5.8</text>
+					<text>{{item.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</text>
 				</view>
-				<view class="txt">
-					<text class="txt-item c_disabled">A-GG-2A  1000kg</text>
-					<text class="txt-item">￥16696.00</text>
-					<text class="txt-item floatR">×1000</text>
-				</view>
-				<view class="txt">
-					<text class="txt-item c_disabled">A-GG-2A  1000kg</text>
-					<text class="txt-item">￥16696.00</text>
-					<text class="txt-item floatR">×1000</text>
-				</view>
-				<view class="txt">
-					<text class="txt-item c_disabled">A-GG-2A  1000kg</text>
-					<text class="txt-item">￥16696.00</text>
-					<text class="txt-item floatR">×1000</text>
+				<view class="txt" wx:for="{{item.subOrders}}">
+					<text class="txt-item floatL c_disabled">{{item.product.name}}  {{item.packing}}</text>
+					<text class="txt-item">￥{{item.price}}</text>
+					<text class="txt-item floatR">×{{item.amount}}</text>
 				</view>
 			</view>
 			<view class="countInfo">
-				<text class="txt-small">共2件商品 合计：</text>
-				<text>￥189000.00</text>
+				<text class="txt-small">共{{item.subOrders.length}}件商品 合计：</text>
+				<text>￥{{item.total_price}}</text>
 			</view>
 			<view class="btn-wrap">
-				<button class="btnAgain">再来一单</button>
+				<button class="btnAgain" catchtap="againBuy">再来一单</button>
 			</view>
 		</view>
 	</view>
-</template>
-<template is="orderItem" wx:for="{{[1,2,3,4,5]}}"></template>
+	<view class="weui-loadmore weui-loadmore_line" wx:if="{{isNoMore}}">
+		<view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多了</view>
+	</view>
+

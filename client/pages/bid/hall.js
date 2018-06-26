@@ -6,9 +6,12 @@ var util = require('../../utils/util.js')
 var app = getApp();  
 var index;  
 var nav_centent_list =[];
-var productList = [];  
+var productList = [];
+var totalPage = 1;  
 Page({
-	data: {  
+	data: {
+		user: null,
+
 		nav_title:['品种','用途'],  
 		shownavindex: null,  
 		nav_centent: null,
@@ -22,6 +25,7 @@ Page({
 		
 		productInfo:[],
 		isShow:true,
+		isNoMore:false,
 		deliver:0,
 		deliverType:'',
 		pack:0,
@@ -30,8 +34,63 @@ Page({
 		companyName:'',
 		company:0
 	}, 
+    onPullDownRefresh: function(){
+    	var that = this;
+		wx.request({
+			url: config.service.productListUrl,
+			data: {},
+			success: function(res) {
+				if(res.data.resultCode == 0 && res.data.data.products){
+					totalPage = 1;
+					productList = res.data.data.products
+					that.setData({
+						productList:productList,
+						isNoMore:false
+					})
+				}
+			},
+			fail: function(res) {
+				console.log('失败', res)
+			}
+		}) 
+    },
+    onReachBottom: function(){
+		var that= this;
+		totalPage++;
+		if(!that.data.isNoMore){
+			wx.request({
+				url: config.service.productListUrl,
+				data: {
+					page:totalPage
+				},
+				success: function(res) {				
+					if(res.data.resultCode == 0 && res.data.data && res.data.data.products){					
+						productList = res.data.data.products
+						that.setData({
+							productList:that.data.productList.concat(productList)
+						})
+					}else if(res.data.resultCode == 0 && res.data.data.length == 0){					
+						that.setData({
+							isNoMore: true
+						});
+					}
+				},
+				fail: function(res) {
+					console.log('失败', res)
+				}
+			});
+		}
+    },
 	onLoad: function(){		
 		var that = this;
+		// wx.navigateTo({
+		//   url: '/pages/login/index'
+		// });
+
+		that.setData({
+			user: app.data.user
+		});
+
 		wx.request({
 			url: config.service.productTypeUrl,
 			data: {},
@@ -47,10 +106,12 @@ Page({
 			url: config.service.productListUrl,
 			data: {},
 			success: function(res) {
-				productList = res.data.data.products
-				that.setData({
-					productList:productList
-				})
+				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
+					productList = res.data.data.products
+					that.setData({
+						productList:productList
+					});
+				}
 			},
 			fail: function(res) {
 				console.log('失败', res)
@@ -58,7 +119,7 @@ Page({
 		}) 
 	}, 
 	click_nav: function (e) {
-		if (index == e.currentTarget.dataset.index && this.data.nav_centent != null){  
+		if (index == e.currentTarget.dataset.index && this.data.nav_centent != null && !this.data.selectList){ 
 			index = e.currentTarget.dataset.index; 
 			this.setData({  
 				nav_centent: null,  
@@ -67,7 +128,16 @@ Page({
 			this.setData({
 				selectList:true
 			});
-		} else if (this.data.nav_centent == null) {  
+		}else if (index == e.currentTarget.dataset.index && this.data.nav_centent != null && this.data.selectList){
+			index = e.currentTarget.dataset.index; 
+			this.setData({  
+				nav_centent: nav_centent_list[Number(index)],  
+				shownavindex: index,  
+			})
+			this.setData({
+				selectList:false
+			});
+		} else if (this.data.nav_centent == null) { 
 			index = e.currentTarget.dataset.index;
 			this.setData({  
 				shownavindex: index,  
@@ -76,7 +146,7 @@ Page({
 			this.setData({
 				selectList:false
 			});
-		} else {	
+		} else {
 			index = e.currentTarget.dataset.index;
 			this.setData({  
 				shownavindex: index,  
@@ -107,10 +177,14 @@ Page({
 			url: config.service.productListUrl,
 			data: {},
 			success: function(res) {
-				productList = res.data.data.products
-				that.setData({
-					productList:productList
-				})
+				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
+					productList = res.data.data.products;
+					totalPage = 1;
+					that.setData({
+						productList:productList,
+						isNoMore:false,
+					});
+				}
 			},
 			fail: function(res) {
 				console.log('失败', res)
@@ -140,10 +214,14 @@ Page({
 				uses:uses
 			},
 			success: function(res) {
-				productList = res.data.data.products
-				that.setData({
-					productList:productList
-				})
+				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
+					productList = res.data.data.products;
+					totalPage = 1;
+					that.setData({
+						productList:productList,
+						isNoMore:false,
+					});
+				}
 			},
 			fail: function(res) {
 				console.log('失败', res)
@@ -246,14 +324,15 @@ Page({
 			  url: '/pages/login/index'
 			});
 		}
+		return false;
 	},
 	addGoodsTap:function(){
 		var that = this;
-		if(that.data.deliver == 0 || that.data.pack == 0 || that.data.company == 0){
-			wx.showModal({
-			  title: '提示',
-			  content: '请选择商品规格！',
-			  showCancel: false
+		if(that.data.deliver == 0 || that.data.pack == 0 || that.data.company == 0){	
+			wx.showToast({
+				title: '请选择商品规格！',
+				icon: 'none',
+				duration: 2000
 			});
 		}else{
 			wx.request({
@@ -332,5 +411,10 @@ Page({
 				buynumber:currentNum
 			});
 		}
+	},
+	goManage: function(){
+		wx.navigateTo({
+		  url: '/pages/user/admin'
+		});
 	}
 })  

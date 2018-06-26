@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 小程序配置文件
  */
 
@@ -58,6 +58,9 @@ var config = {
 		//提交订单
 		submitOrderUrl:`${host}/order/save-order`,
 		
+		//立即下单
+		immediateBuyUrl:`${host}/order/save-order-right`,
+		
 		//订单列表
 		orderListUrl:`${host}/order/list`,
 		
@@ -68,7 +71,7 @@ var config = {
         adminOrderListUrl:`${host}/mng/get-orders`,
         
         // 管理-订单详情
-        adminOrderDetailUrl:`${host}/mng/get-order-info`,
+        adminOrderDetailUrl:`${host}/mng/get-order-detail`,
         
         // 管理-录入ERP
         adminOrderDealUrl:`${host}/mng/deal-order`,
@@ -78,9 +81,12 @@ var config = {
         
         // 管理-转单
         adminOrderTransferUrl:`${host}/mng/transfer`,
+        
+        // 管理-接单
+        adminOrderReceiveUrl:`${host}/mng/receive`,
 		
-		// 管理-接单
-		adminOrderReceiveUrl:`${host}/mng/receive`,
+		// 管理-生成购销单
+		adminOrderCreateUrl:`${host}/mng/create`,
 		
         // 测试的请求地址，用于测试会话
         requestUrl: `${host}/weapp/user`,

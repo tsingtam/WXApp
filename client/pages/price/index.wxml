@@ -11,61 +11,72 @@
 </template>
 <view class="cart-page">
 	<template name="cart-page">
-		<view class="list-group" wx:for="{{list}}" wx:key="{{index}}">
+		<view class="list-group" wx:for="{{list}}" wx:for-item="items" wx:key="{{index}}">
 			<view class="list-item">
 				<view class="type-wrap">
 					<label class="weui-cell weui-check__label">
 						<view class="weui-cell__hd">
-							<checkbox value="铝大牛科技" checked="{{true}}"/>
+							<checkbox-group bindchange="checkboxChangeT" data-index="{{index}}">
+								<checkbox value="{{items.p_category}}" checked="{{items.checked}}" data-index="{{index}}"/>
+							</checkbox-group>
 						</view>
-						<view class="weui-cell__bd">{{item.p_category}}</view>
+						<view class="weui-cell__bd">{{items.p_category}}</view>
 					</label>
 				</view>
-				<view class="type-li" wx:for="{{item.value}}" wx:key="{{index}}" >
+				<view class="type-li" wx:for="{{items.value}}" wx:for-item="childItem" wx:key="{{index}}">
 					<view class="type-wrap-small">
 						<label class="weui-cell weui-check__label">
 							<view class="weui-cell__hd">
-								<checkbox value="铝大牛科技" checked="{{true}}"/>
+								<checkbox-group bindchange="checkboxChangeM" data-index="{{index}}" data-id="{{childItem.category}}" data-type="{{items.p_category}}">
+									<checkbox value="{{childItem.category}}" checked="{{childItem.checked}}"/>
+								</checkbox-group>
 							</view>
-							<view class="weui-cell__bd">{{item.category}}</view>
+							<view class="weui-cell__bd">{{childItem.category}}</view>
 						</label>
 					</view>
-					<view class="list-info-item" wx:for="{{item.value}}" wx:key="{{index}}" data-id="{{item.id}}" bindtap="selectTap" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}">
-						<view class="cartInfo" style="{{item.left}}">
+					<view class="list-info-item" wx:for="{{childItem.value}}" wx:for-item="lastChild" wx:key="{{index}}" data-id="{{lastChild.id}}" bindtap="selectTap" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}">
+						<view class="cartInfo" style="{{lastChild.left}}">
 							<label class="check__label_L">
-								<checkbox value="铝大牛科技" class="checkbox_info" checked="{{true}}"/>
+								<checkbox-group bindchange="checkboxChangeB" data-index="{{index}}" data-id="{{lastChild.product_id}}" data-category="{{lastChild.product.category_id}}" data-cateType="{{items.p_category}}">
+									<checkbox value="{{lastChild.product_id}}" class="checkbox_info" checked="{{lastChild.checked}}"/>
+								</checkbox-group>
 							</label>
 							<view class="cartInfoR">
 								<view class="productInfo">
-									<text class="info-item">牌号：{{item.product.name}}</text>
-									<text class="info-item">包装：{{item.packing}}</text>
+									<text class="info-item">牌号：{{lastChild.product.name}}</text>
+									<text class="info-item">包装：{{lastChild.packing}}</text>
 								</view>
 								<view class="numInfo">
-									<view class="priceL">现汇价：<text class="active">￥{{item.product.price}}</text></view>
+									<view class="priceL">现汇价：<text class="active">￥{{lastChild.price}}</text></view>
 									<view class="numR">
-										<text class="btn minus" bindtap="minusTap" data-id="{{item.product_id}}" data-item="{{item}}">-</text>
-										<input type="number" class="buy-num" value="{{item.amount}}" bindchange="getAmount" data-item="{{item}}" />
-										<text class="btn plus" bindtap="addTap" data-id="{{item.product_id}}" data-item="{{item}}">+</text>
+										<text class="btn minus {{disabledColor? 'disabled':''}}" bindtap="minusTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">-</text>
+										<input type="number" class="buy-num" value="{{lastChild.amount}}" bindchange="getAmount" data-item="{{lastChild}}" />
+										<text class="btn plus" bindtap="addTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">+</text>
 										<text>吨</text>
 									</view>
 								</view>
 							</view>
 						</view>
-						<view class="delete-btn" data-index="{{index}}" data-id="{{item.id}}" data-pid="{{item.product_id}}" catchtap="delItem">删除</view>
+						<view class="delete-btn" data-index="{{index}}" data-id="{{lastChild.id}}" data-pid="{{lastChild.product_id}}" catchtap="delItem">删除</view>
 					</view>
 				</view>
 			</view>
 		</view>
+		<view class="weui-loadmore weui-loadmore_line" wx:if="{{isNoMore}}">
+			<view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多了</view>
+		</view>
 	</template>
-</view>	
-<view class="count">
+</view>
+<view class="count" wx:if="{{cartInfo.list.length > 0}}">
 	<label>
 		<view class="weui-cell__hd">
-			<checkbox value="铝大牛科技" checked="{{item.checked}}"/>全选
+			<checkbox-group bindchange="checkboxChangeAll">
+				<checkbox value="{{}}" class="allSelect" checked="{{allSelect}}"/>全选
+			</checkbox-group>
 		</view>
 	</label>
 	<view class="total">
-		合计：<text class="active">￥1640000.00</text>
+		合计：<text class="active">￥{{totalPrice}}</text>
 	</view>
 	<view class="btnBuy" bindtap="btnBuy">立即下单</view>
 </view>

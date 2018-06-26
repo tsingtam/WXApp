@@ -14,12 +14,11 @@
 			<text class="companyName">中铝新材料科技公司</text>
 			<text class="small">主营精细氧化铝</text>
 		</view>
-		<view class="manage">
-			<navigator url="/pages/user/admin">
+		<view class="manage" wx:if="{{user&&user.auth&&(user.type==2||user.type==3)}}" bindtap="goManage">
 			<image class="icoImg" src="../../image/set.png" background-size="cover"></image>
 			<text>管理</text>
-			</navigator>
 		</view>
+		<navigator url="/pages/user/auth"><view class="floatR" style="margin:-60px 0 0 0;"><image class="icoImg" src="../../image/set.png" background-size="cover"></image>管理身份认证</view></navigator>
     </view>
 	<view class='page_row'>  
 	  <view class="nav" wx:for='{{nav_title}}' wx:key="index">  
@@ -49,17 +48,17 @@
 	</view>
 	<view class="list-group" wx:for='{{productList}}' wx:key="index" hidden="{{!selectList}}">
 		<view class="list-group-item">
-			<view class="cont-wrap">
-				<view class="contentL" bindtap="check_detail" data-index="{{item.id}}">
-					<text class="productName">{{item.brand}}</text>
+			<view class="cont-wrap" bindtap="check_detail" data-index="{{item.id}}">
+				<view class="contentL">
+					<text class="productName">{{item.category.name}}</text>
 					<view class="mid">
 						<text class="midF">{{item.name}}</text>
 					</view>
-					<text class="grad">{{item.grade}}</text>
+					<text class="grad">{{item.uses}}</text>
 				</view>
 				<view class="contentR">
-					<view><text class="active">{{item.price}}</text>元/吨</view>
-					<image src="../../image/buy.png" class="add" bindtap="addCartTap" data-index="{{item.id}}" data-detail="{{item}}"></image>
+					<view><text class="active">{{item.price||'--'}}</text>元/吨</view>
+					<image src="../../image/buy.png" class="add" catchtap="addCartTap" data-index="{{item.id}}" data-detail="{{item}}"></image>
 				</view>
 			</view>
 		</view>
@@ -67,14 +66,19 @@
     <view class="weui-loadmore weui-loadmore_line" hidden="{{!selectList||productList.length}}">
         <view class="weui-loadmore__tips_in-line">暂无产品</view>
     </view>
+	<view class="weui-loadmore weui-loadmore_line" wx:if="{{isNoMore}}">
+		<view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多了</view>
+	</view>
 	<view class="selectModel" hidden="{{isDisplay}}">
 		<view class="mode-content">
 			<view class="mode-topInfo">
 				<view class="infoL">
 					<view class="title">{{productDetail.brand || '精细氧化铝'}}</view>
-					<view class="price">￥{{productInfo.price}}</view>
+					<view class="price">￥{{productInfo.price||'--'}}</view>
 				</view>
-				<image src="../../image/close.png" class="closeIcon" background-size="cover" bindtap="closeModel"></image>
+				<view class="closeArea" bindtap="closeModel">
+					<image src="../../image/close.png" class="closeIcon" background-size="cover"></image>
+				</view>
 			</view>
 			<view class="model-item">
 				<view class="title">交货方式</view>
@@ -96,7 +100,7 @@
 				<view class="minus {{buynumber == buynumbermin ? 'disabled':''}}" bindtap="minusTap">
 					<image src="../../image/minus2.png" class="minusIcon"></image>
 				</view>
-				<input type="number" class="buy-num" bindinput="getAmount" value="{{buynumber}}" />
+				<input class="buy-num" bindinput="getAmount" value="{{buynumber}}" />
 				<view class="plus {{buynumber == buynumbermax ? 'disabled':''}}" bindtap="plusTap">
 					<image src="../../image/plus2.png" class="plusIcon"></image>
 				</view>

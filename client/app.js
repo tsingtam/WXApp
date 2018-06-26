@@ -20,6 +20,9 @@ App({
 	            	if (res.data.resultCode == 0){
 		            	that.data.user = res.data.data;
 						var userkey = res.data.data.userKey;
+						that.getCurrentPage().setData({
+							user: res.data.data
+						});
 						wx.request({ //获取购物车数量
 							url: config.service.getCartNumUrl,
 							data: {
@@ -68,6 +71,7 @@ App({
 		var that = this;
 		console.log('App Show')
         console.log(e);
+        /*
 		wx.getShareInfo({
 			shareTicket: e.shareTicket,
 			success: function(res){
@@ -123,6 +127,7 @@ App({
 				  })
 			}
 		});
+		*/
 	},
 	onHide: function (e) {
 		console.log('App Hide')
