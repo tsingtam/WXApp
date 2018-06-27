@@ -14,6 +14,9 @@ Page({
 		isNoMore:false
     },
 	onLoad: function(){
+		this.onShow();
+	},
+	onShow: function(){
 		this.getOrderList();
 	},
 	getOrderList: function(){
@@ -33,6 +36,7 @@ Page({
 						isNoMore:false
 					});
 				}
+                wx.stopPullDownRefresh();
 			},
 			fail: function(res) {
 				console.log('失败', res)

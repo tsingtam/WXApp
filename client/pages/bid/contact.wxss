@@ -43,19 +43,24 @@
 .midInfo .title{
 	font-size:30rpx;
 	color:black;
+	font-weight: bold;
+	margin:20px 0 0 0;
+}
+.midInfo .title:nth-child(1){
+	margin:0;
 }
 .list-item{
 	min-height:60rpx;
 	padding-top:20rpx;
 }
 .list-item .nameL{
-	width:35%;
+	width:25%;
 	text-align:left;
 	display:block;
 	float:left;
 }
 .list-item .contentR{
-	width:65%;
+	width:75%;
 	display:inline-block;
 	text-align:left;
 	word-break:break-word;
@@ -64,63 +69,4 @@
 	display:block;
 	line-height:60rpx;
 	height:60rpx;
-	width:240rpx;
-}
-.productImg{
-	width:100%;
-	margin-bottom: 40rpx;
-}
-.footer{
-	position:fixed;
-	bottom:0;
-	width:100%;
-	height:80rpx;
-	display:flex;
-	justify-content: space-around;
-	align-items: center;
-	background-color: #f0f0f0;
-	border-top:1px solid #eee;
-}
-.link{
-	position: relative;
-	width:33.3%;
-	text-align: center;
-	line-height:80rpx;
-	height:80rpx;
-	background-color:#fff;
-}
-.addCart{
-	width:33.3%;
-	line-height:80rpx;
-	height:80rpx;
-	text-align: center;
-	float:left;
-	color:#fff;
-	background-color:#999;
-}
-.btnBuy{
-	width:33.3%;
-	line-height:80rpx;
-	height:80rpx;
-	text-align: center;
-	float:left;
-	background-color:#366ec8;
-	color:#fff;
-}
-.mark{
-	position:absolute;
-	font-size:24rpx;
-	display:inline-block;
-	height:30rpx;
-	width:30rpx;
-	border-radius:20rpx;
-	background-color:red;
-	margin-left:-16rpx;
-	line-height:30rpx;
-	top:10rpx;
-}
-.addbuy{
-	height:42rpx;
-	width:42rpx;
-	vertical-align:middle;
 }

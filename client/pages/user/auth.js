@@ -132,8 +132,7 @@ Page({
 						  duration: 2000
 						});
 						setTimeout(function(){
-							app.data.user.type = 2;
-							app.data.user.auth = true;
+							app.login();
 							wx.navigateBack();
 						}, 2000);
 					}else{

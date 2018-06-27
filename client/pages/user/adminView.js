@@ -14,7 +14,8 @@ Page({
     },
     onReady: function(){
         this.setData({
-            activeIndex: app.data.orderActiveIndex
+            activeIndex: app.data.orderActiveIndex,
+            userType: app.data.user.type
         });
     },
     onLoad: function () {

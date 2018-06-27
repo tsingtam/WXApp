@@ -23,7 +23,7 @@ Page({
 		company:0,
 		
 		cartNum:0,
-		buynumber:1,
+		buynumber:0.05,
 		buynumbermin:0.05,
 		buynumbermax:10000,
 		phoneNum:'18500880000'
@@ -126,7 +126,10 @@ Page({
 		}else{
 			that.setData({
 				company:0,
-				companyName:''
+				companyName:'',
+				productInfo:{
+					price:that.data.productDetail.price
+				}
 			});
 		}
 	},
@@ -149,7 +152,8 @@ Page({
 			this.setData({
 				addCart:1,
 				productInfo:this.data.productDetail,
-				isDisplay:false
+				isDisplay:false,
+				buynumber:0.05
 			});
 		}else{
 			wx.navigateTo({
@@ -161,7 +165,8 @@ Page({
 		if(app.data.user.auth){
 			this.setData({
 				submitOrder:1,
-				isDisplay:false
+				isDisplay:false,
+				buynumber:0.05
 			});
 		}else{
 			wx.navigateTo({
@@ -188,9 +193,21 @@ Page({
 	},
 	addGoodsTap:function(){
 		var that = this;
-		if(that.data.deliver == 0 || that.data.pack == 0 || that.data.company == 0){			
+		if(that.data.deliver == 0){	
 			wx.showToast({
-				title: '请选择商品规格！',
+				title: '请选择商品交货方式！',
+				icon: 'none',
+				duration: 2000
+			});
+		}else if(that.data.company == 0){
+			wx.showToast({
+				title: '请选择商品提货地！',
+				icon: 'none',
+				duration: 2000
+			});
+		}else if(that.data.pack == 0){
+			wx.showToast({
+				title: '请选择商品包装规格！',
 				icon: 'none',
 				duration: 2000
 			});
@@ -254,10 +271,29 @@ Page({
 			}
 		}
 	},
+	getAmount:function(e){
+		var that = this;
+		var val = e.detail.value;
+		if(!isNaN(val)){
+			if(val > that.data.buynumbermin){
+				val = val;
+			}else{
+				val = that.data.buynumbermin;
+			}
+		}else{
+			val = that.data.buynumber;
+		}
+		this.setData({
+			buynumber:val
+		});
+	},
 	minusTap:function(){
 		if(this.data.buynumber > this.data.buynumbermin){
 			var currentNum = this.data.buynumber;
-			currentNum--;
+			currentNum = (currentNum*10000 - 500)/10000;
+			if(currentNum < that.data.buynumbermin){
+				currentNum = that.data.buynumbermin;
+			}
 			this.setData({
 				buynumber:currentNum
 			});
@@ -266,7 +302,7 @@ Page({
 	plusTap:function(){
 		if(this.data.buynumber < this.data.buynumbermax){
 			var currentNum = this.data.buynumber;
-			currentNum++;
+			currentNum = (currentNum*10000 + 500)/10000;
 			this.setData({
 				buynumber:currentNum
 			});

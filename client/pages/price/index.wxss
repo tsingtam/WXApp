@@ -128,6 +128,10 @@ page {
 	padding-bottom:6rpx;
 	border-bottom:2rpx solid #ccc;
 }
+.pageBottom{
+	height:90rpx;
+	width:100%;
+}
 .count{
 	position:fixed;
 	bottom:0;

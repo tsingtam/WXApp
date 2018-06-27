@@ -5,6 +5,7 @@ var util = require('../../utils/util.js')
 var app = getApp();
 var detailArr = [];
 var total = 0;
+var totalPage = 1;
 
 Page({
     data: {
@@ -12,7 +13,7 @@ Page({
 			list:[]
 		},
 		cartId:[],
-		isNoMore:true,
+		isNoMore:false,
 		testArr:[],
 		totalPrice:0,
 		disabledColor:false,
@@ -30,11 +31,24 @@ Page({
 				userkey:app.data.user.userKey
 			},
 			success: function(res) {
-				that.setData({
-					cartInfo:{
-						list:res.data.data.goods
+				if(res.data.resultCode == 0){
+					totalPage = 1;
+					if(res.data.data.length == 0){
+						that.setData({
+							cartInfo:{
+								list:res.data.data
+							},
+							isNoMore:false
+						});
+					}else{
+						that.setData({
+							cartInfo:{
+								list:res.data.data.goods
+							},
+							isNoMore:false
+						});
 					}
-				})
+				}
 			},
 			fail: function(res) {
 				console.log('失败', res)
@@ -45,6 +59,35 @@ Page({
         this.onShow();
 		app.getCartNum(app.data.user.userKey);
     },
+	onReachBottom: function(){
+		var that = this;
+		totalPage++;
+		if(!that.data.isNoMore){
+			wx.request({
+				url: config.service.getCartInfoUrl,
+				data: {
+					userkey:app.data.user.userKey,
+					page:totalPage
+				},
+				success: function(res) {
+					if(res.data.resultCode == 0 && res.data.data && res.data.data.goods){
+						that.setData({
+							cartInfo:{
+								list:that.data.cartInfo.list.concat(res.data.data.goods)
+							}
+						})
+					}else{
+						that.setData({
+							isNoMore:true
+						});
+					}
+				},
+				fail: function(res) {
+					console.log('失败', res)
+				}
+			});
+		}
+	},
 	toIndexPage: function(){
 		wx.switchTab({
 			url: '/pages/bid/hall'
@@ -55,35 +98,39 @@ Page({
 		var inputValue = e.detail.value;
 		var product = e.currentTarget.dataset.item;		
 		var amount = product.amount;
-		if(parseInt(inputValue) < 0){
-			console.log(inputValue,'inputValue');
-
-		}
-		if(inputValue < 0.05){
-			that.setData({
-				disabledColor:true,
+		if(inputValue > 0 && inputValue < 0.05){
+			wx.showToast({
+				title: '该商品的最小购买量为0.05吨！',
+				icon: 'none',
+				duration: 2000
 			});
-		}
-		if(parseFloat(e.detail.value*10000) > parseInt(amount*10000)){
-			var addNum = parseFloat(e.detail.value*10000) - parseInt(amount*10000);
-			var obj = {
-					product_id:product.product_id,
-					userkey:app.data.user.userKey,
-					packing:product.packing,
-					//deliver:e.currentTarget.dataset.item.delivery_type,
-					deliver:'自提',
-					warehouse:product.warehouse_id,
-					amount:addNum/10000
-				};
-			that.addCart(obj);	
-		}else if(parseFloat(e.detail.value*10000) < parseInt(amount*10000)){
-			var minusNum =parseInt(amount*10000) - parseFloat(e.detail.value*10000);
-			if(minusNum > 0){
-				that.deleteCart(product.product_id,minusNum/10000);
-			}else{
-				that.deleteCart(product.product_id);
+			that.setData({
+				cartInfo:{
+					list:that.data.cartInfo.list
+				}
+			});
+		}else{
+			if(parseFloat(inputValue*10000) > parseInt(amount*10000)){
+				var addNum = parseFloat(inputValue*10000);
+				var obj = {
+						product_id:product.product_id,
+						userkey:app.data.user.userKey,
+						packing:product.packing,
+						//deliver:e.currentTarget.dataset.item.delivery_type,
+						deliver:'自提',
+						warehouse:product.warehouse_id,
+						amount:addNum/10000
+					};
+				that.addCart(obj);	
+			}else if(parseFloat(inputValue*10000) < parseFloat(amount*10000)){
+				var minusNum =parseFloat(amount*10000) - parseFloat(inputValue*10000);
+				if(minusNum > 0){
+					that.deleteCart(product.product_id,minusNum/10000);
+				}else{
+					that.deleteCart(product.product_id);
+				}
 			}
-		}		
+		}
 	},
 	checkboxChangeT: function(e){ // 选择大类
 		var that = this;
@@ -233,83 +280,6 @@ Page({
 					})
 				}
 		})
-		/*for(var i = 0,len = list.length;i < len;i++){
-			var firstArr = list[i].value;
-			for(var j = 0,leng = firstArr.length;j<leng;j++){
-				var secondArr = firstArr[j].value;
-				var secondArrItem = firstArr[j];
-				var obj = list[parseInt(i)].value[parseInt(j)];
-				var objData = {
-					category:'',
-					value:[]
-				};
-				if(firstArr[j].category == id){
-					list[parseInt(i)].value[parseInt(j)].checked = !list[parseInt(i)].value[parseInt(j)].checked;
-					objData.category = obj.category;
-					for(var k = 0,lengt = secondArr.length;k<lengt;k++){
-						var item = list[parseInt(i)].value[parseInt(j)].value[parseInt(k)];
-						if(!item.checked){
-							item.checked = !item.checked;
-							//idArr.push(item);
-							objData.value.push(item);
-						}else if(!list[parseInt(i)].value[parseInt(j)].checked){
-							item.checked = !item.checked;
-							that.removeVlue(idArr,obj.category);
-						}
-						if(item.checked){
-							total+= parseFloat(item.amount)*item.price*10000;
-						}else{
-							total = total - parseFloat(item.amount)*item.price*10000;
-						}
-						that.setData({
-							cartInfo:{
-								list:list
-							},
-							//cartId:idArr,
-							totalPrice:parseFloat(total/10000).toFixed(2)
-						});		
-					}
-					if(objData.value.length > 0){
-						idArr.push(objData);
-						that.setData({
-							cartId:idArr,
-						});
-					}
-					if(obj.checked){
-						times++;
-					}
-					if(times == firstArr.length){
-						list[parseInt(i)].checked = !list[parseInt(i)].checked;	
-						that.setData({
-							cartInfo:{
-								list:list
-							}
-						});
-					}else if(times != firstArr.length && list[parseInt(i)].checked){
-						list[parseInt(i)].checked = !list[parseInt(i)].checked;					
-						that.setData({
-							cartInfo:{
-								list:list
-							}
-						});
-					}
-				}
-				if(secondArrItem.checked){
-					secondItemTimes++;
-				}
-				if(secondItemTimes == list.length){
-					that.data.allSelect = true;
-					that.setData({
-						allSelect:that.data.allSelect
-					})
-				}else{
-					that.data.allSelect = false;
-					that.setData({
-						allSelect:that.data.allSelect
-					})
-				}
-			}
-		}*/
 	},
 	checkboxChangeB: function(e){ // 选择具体
 		var that = this;			
@@ -503,10 +473,10 @@ Page({
 			  url: '/pages/price/submitOrder'
 			})
 		}else{
-			wx.showModal({
-			  title: '提示',
-			  content: '请选择结算的订单！',
-			  showCancel: false
+			wx.showToast({
+				title: '请选择结算的订单！',
+				icon: 'none',
+				duration: 2000
 			});
 		}
     },
@@ -525,16 +495,11 @@ Page({
 						if(item.product_id == id){
 							//list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount--;
 							var a = list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount;
-							a = (a*10000 - 10000)/10000;							
+							a = (a*10000 - 500)/10000;							
 							if(a > 0){
 								list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount = a.toFixed(4);
 							}
-							amount = list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount;
-							if(amount < 0.05){
-								that.setData({
-									disabledColor:true,
-								});
-							}
+							amount = list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount;							
 							that.setData({
 								cartInfo:{
 									list:list
@@ -544,7 +509,7 @@ Page({
 					}
 				}
 			}
-			var minusNum = parseInt(e.currentTarget.dataset.item.amount) - amount;
+			var minusNum = (parseFloat(e.currentTarget.dataset.item.amount)*10000 - parseFloat(amount)*10000)/10000;
 			if(minusNum > 0){
 				that.deleteCart(id,minusNum.toFixed(2));
 			}else{				
@@ -565,7 +530,7 @@ Page({
 						if(item.product_id == id){
 							//list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount++;
 							var a = list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount;
-							a = (a*10000 + 10000)/10000;
+							a = (a*10000 + 500)/10000;
 							list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount = a.toFixed(4);							
 							amount = list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount;
 							that.setData({
@@ -577,7 +542,7 @@ Page({
 					}
 				}
 			}
-			var addNum = amount - e.currentTarget.dataset.item.amount;
+			var addNum = amount;
 			var options = {
 					product_id:id,
 					userkey:app.data.user.userKey,
@@ -622,11 +587,19 @@ Page({
 						},
 						success: function(res) {
 							if(res.data.resultCode == 0){
-								that.setData({
-									cartInfo:{
-										list:res.data.data.goods
-									}
-								})
+								if(res.data.data.length == 0){
+									that.setData({
+										cartInfo:{
+											list:res.data.data
+										}
+									});
+								}else{
+									that.setData({
+										cartInfo:{
+											list:res.data.data.goods
+										}
+									});
+								}
 							}
 						},
 						fail: function(res) {

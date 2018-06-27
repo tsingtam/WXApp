@@ -1,10 +1,4 @@
 /**index.wxss**/
-page {
-    background: #F6F6F6;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
 
 .list-group {
     position: relative;
@@ -32,7 +26,7 @@ page {
     background-color: #fff;
     padding: 0 40rpx;
     line-height: 88rpx;
-	font-size: 24rpx;
+	font-size: 13px;
     position: relative;
 }
 
@@ -44,7 +38,6 @@ page {
 	width:40%;
 }
 .c_disabled {
-    font-size: 24rpx;
     color: #666;
 }
 .txt-small{
@@ -71,7 +64,7 @@ page {
 .cont-wrap {
     font-size: 28rpx;
     line-height: 50rpx;
-	background-color:#f6f6f6;
+	background-color:#f9f9f9;
 	margin-bottom: 4rpx;
 	padding:20rpx 40rpx;
 }

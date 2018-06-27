@@ -1,4 +1,4 @@
 /**index.wxss**/
-.weui-media-box__cont{background:#eee;margin:-15px -15px 0;padding:15px;}
+.weui-media-box__cont{background:#f9f9f9;margin:-15px -15px 0;padding:15px;}
 .weui-media-box__cont .weui-media-box__title{font-size:13px;}
 .weui-panel__hd:after{display:none;}

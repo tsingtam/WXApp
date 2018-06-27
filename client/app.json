@@ -2,6 +2,7 @@
   "pages":[
     "pages/bid/hall",
     "pages/bid/detail",
+    "pages/bid/contact",
     "pages/price/index",
     "pages/price/submitOrder",
     "pages/order/index",

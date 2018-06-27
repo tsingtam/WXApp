@@ -350,8 +350,8 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
 
 }
 .model-item{
-  margin-bottom:20rpx;
-  padding: 20rpx 40rpx;
+  margin-bottom:10rpx;
+  padding: 10rpx 40rpx;
 }
 .model-item .title{
   font-size:28rpx;
@@ -364,13 +364,17 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
   border-radius:10rpx;
   padding:10rpx 20rpx;
 }
+.model-item .con.ware{
+	margin-bottom:20rpx;
+	display:inline-block;
+}
 .model-item .con.active{
   background-color:#3478f6;
   color:#fff;
   border-color:#3478f6;
 }
 .add-minus{
-  padding:20rpx 40rpx;
+  padding:20rpx 40rpx 0 0;
   height:60rpx;
 }
 .buy-num{
@@ -379,6 +383,10 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
   height: 60rpx;
   float:left;
   text-align:center;
+}
+.unit{
+	float:left;
+	padding:10rpx 0rpx 0rpx 6rpx;
 }
 .minus{
   width:62rpx;

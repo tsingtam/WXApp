@@ -51,7 +51,7 @@
 			<view class="mode-topInfo">
 				<view class="infoL">
 					<view class="title">{{productDetail.brand || '精细氧化铝'}}</view>
-					<view class="price">￥{{productInfo.price || productDetail.price}}</view>
+					<view class="price">￥{{productInfo.price}}</view>
 				</view>
 				<view class="closeArea" bindtap="closeModel">
 					<image src="../../image/close.png" class="closeIcon" background-size="cover"></image>
@@ -64,22 +64,26 @@
 			<view class="model-item" hidden="{{isShow}}">
 				<view class="title">提货地</view>
 				<block wx:for="{{warehouse}}" >
-				<text class="con {{company == item.w_id  ? 'active':''}}" bindtap="companyItemTap" data-index="{{item.w_id}}" data-name="{{item.warehouse.name}}">{{item.warehouse.name}}</text>
+				<text class="con ware {{company == item.w_id  ? 'active':''}}" bindtap="companyItemTap" data-index="{{item.w_id}}" data-name="{{item.warehouse.name}}">{{item.warehouse.name}}</text>
 				</block>
 			</view>
 			<view class="model-item">
 				<view class="title">包装</view>
-				<text class="con {{pack == 1 ? 'active':''}}" bindtap="lableItemTap" data-name="25公斤" data-index="1">25公斤</text>
-				<text class="con {{pack == 2 ? 'active':''}}" bindtap="lableItemTap" data-name="50公斤" data-index="2">50公斤</text>
-				<text class="con {{pack == 3 ? 'active':''}}" bindtap="lableItemTap" data-name="1吨" data-index="3">1吨</text>
+				<text class="con {{pack == 1 ? 'active':''}}" bindtap="lableItemTap" data-name="25公斤装" data-index="1">25公斤装</text>
+				<text class="con {{pack == 2 ? 'active':''}}" bindtap="lableItemTap" data-name="50公斤装" data-index="2">50公斤装</text>
+				<text class="con {{pack == 3 ? 'active':''}}" bindtap="lableItemTap" data-name="1吨装" data-index="3">1吨装</text>
 			</view>
-			<view class="add-minus">
-				<view class="minus {{buynumber == buynumbermin ? 'disabled':''}}" bindtap="minusTap">
-					<image src="../../image/minus2.png" class="minusIcon"></image>
-				</view>
-				<input class="buy-num" bindinput="getAmount" value="{{buynumber}}" />
-				<view class="plus {{buynumber == buynumbermax ? 'disabled':''}}" bindtap="plusTap">
-					<image src="../../image/plus2.png" class="plusIcon"></image>
+			<view class="model-item">
+				<view class="title">购买数量</view>
+				<view class="add-minus">
+					<view class="minus {{buynumber == buynumbermin ? 'disabled':''}}" bindtap="minusTap">
+						<image src="../../image/minus2.png" class="minusIcon"></image>
+					</view>
+					<input class="buy-num" bindchange="getAmount" value="{{buynumber}}" />
+					<text class="unit">吨</text>
+					<view class="plus {{buynumber == buynumbermax ? 'disabled':''}}" bindtap="plusTap">
+						<image src="../../image/plus2.png" class="plusIcon"></image>
+					</view>
 				</view>
 			</view>
 			<button class="btnSure" bindtap="addGoodsTap">确定</button>

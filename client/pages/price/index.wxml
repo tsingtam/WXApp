@@ -1,6 +1,5 @@
 <!--index.wxml-->
-<scroll-view scroll-y="true" style="height: 100%;">
-<template name="no-goods">
+<view name="no-goods" wx:if="{{cartInfo.list.length == 0}}">
 	<view class="title-box">
 		<image src="../../image/icon-cart.png"  background-size= "cover" class="cart-null"></image>
 		<view>购物车空空如也</view>
@@ -8,10 +7,9 @@
 	<button class="to-index-btn" bindtap="toIndexPage">
            去逛逛
 	</button>
-</template>
-<view class="cart-page">
-	<template name="cart-page">
-		<view class="list-group" wx:for="{{list}}" wx:for-item="items" wx:key="{{index}}">
+</view>
+<view class="cart-page" wx:if="{{cartInfo.list.length > 0}}">
+		<view class="list-group" wx:for="{{cartInfo.list}}" wx:for-item="items" wx:key="{{index}}">
 			<view class="list-item">
 				<view class="type-wrap">
 					<label class="weui-cell weui-check__label">
@@ -49,7 +47,7 @@
 								<view class="numInfo">
 									<view class="priceL">现汇价：<text class="active">￥{{lastChild.price}}</text></view>
 									<view class="numR">
-										<text class="btn minus {{disabledColor? 'disabled':''}}" bindtap="minusTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">-</text>
+										<text class="btn minus" bindtap="minusTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">-</text>
 										<input type="number" class="buy-num" value="{{lastChild.amount}}" bindchange="getAmount" data-item="{{lastChild}}" />
 										<text class="btn plus" bindtap="addTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">+</text>
 										<text>吨</text>
@@ -65,7 +63,7 @@
 		<view class="weui-loadmore weui-loadmore_line" wx:if="{{isNoMore}}">
 			<view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多了</view>
 		</view>
-	</template>
+		<view class="pageBottom"></view>
 </view>
 <view class="count" wx:if="{{cartInfo.list.length > 0}}">
 	<label>
@@ -80,8 +78,6 @@
 	</view>
 	<view class="btnBuy" bindtap="btnBuy">立即下单</view>
 </view>
-<template is="{{cartInfo.list.length > 0 ? 'cart-page' : 'no-goods'}}" data="{{...cartInfo}}"></template>
-</scroll-view>
 
 		
 	

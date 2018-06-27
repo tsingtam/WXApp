@@ -19,7 +19,7 @@ Page({
 		productDetail:{},
 		isDisplay:true,
 		selectList:true,
-		buynumber:1,
+		buynumber:0.05,
 		buynumbermin:0.05,
 		buynumbermax:10000,
 		
@@ -48,6 +48,7 @@ Page({
 						isNoMore:false
 					})
 				}
+				wx.stopPullDownRefresh();
 			},
 			fail: function(res) {
 				console.log('失败', res)
@@ -86,6 +87,22 @@ Page({
 		// wx.navigateTo({
 		//   url: '/pages/login/index'
 		// });
+
+        // wx.showModal({
+        //     title: '用户协议',
+        //     content: '弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内',
+        //     confirmText: "我知道了",
+        //     confirmColor: "#366ec8",
+        //     showCancel: false,
+        //     success: function (res) {
+        //         console.log(res);
+        //         if (res.confirm) {
+        //             console.log('用户点击主操作')
+        //         }else{
+        //             console.log('用户点击辅助操作')
+        //         }
+        //     }
+        // });
 
 		that.setData({
 			user: app.data.user
@@ -165,6 +182,7 @@ Page({
 	},
 	check_all: function(e){
 		var that = this;
+		var objData = {};
 		if(e.currentTarget.dataset.name == '全部' && that.data.shownavindex == 0){
 			that.data.nav_title[Number(that.data.shownavindex)] = '品种';
 		}else{
@@ -173,9 +191,15 @@ Page({
 		that.setData({
 			nav_title:that.data.nav_title
 		});
+		if(that.data.nav_title[0] != '品种'){
+			objData.category = that.data.nav_title[0];
+		}
+		if(that.data.nav_title[1] != '用途'){
+			objData.uses = that.data.nav_title[1]; 
+		}
 		wx.request({
 			url: config.service.productListUrl,
-			data: {},
+			data: objData,
 			success: function(res) {
 				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
 					productList = res.data.data.products;
@@ -290,7 +314,10 @@ Page({
 		}else{
 			that.setData({
 				company:0,
-				companyName:''
+				companyName:'',
+				productInfo:{
+					price:that.data.productDetail.price
+				}
 			});
 		}
 	},
@@ -317,7 +344,8 @@ Page({
 				productInfo:e.currentTarget.dataset.detail
 			});
 			that.setData({
-				isDisplay:false
+				isDisplay:false,
+				buynumber:0.05
 			});			
 		}else{
 			wx.navigateTo({
@@ -328,9 +356,21 @@ Page({
 	},
 	addGoodsTap:function(){
 		var that = this;
-		if(that.data.deliver == 0 || that.data.pack == 0 || that.data.company == 0){	
+		if(that.data.deliver == 0){	
 			wx.showToast({
-				title: '请选择商品规格！',
+				title: '请选择商品交货方式！',
+				icon: 'none',
+				duration: 2000
+			});
+		}else if(that.data.company == 0){
+			wx.showToast({
+				title: '请选择商品提货地！',
+				icon: 'none',
+				duration: 2000
+			});
+		}else if(that.data.pack == 0){
+			wx.showToast({
+				title: '请选择商品包装规格！',
 				icon: 'none',
 				duration: 2000
 			});
@@ -383,31 +423,46 @@ Page({
 			isShow:true,
 			companyName:'',
 			warehouse:[],
-			buynumber:1,
+			buynumber:0.05,
 			packType:'',
 			pack:0
 		})
 	},
 	getAmount:function(e){
+		var that = this;
 		var val = e.detail.value;
+		if(!isNaN(val)){
+			if(val > that.data.buynumbermin){
+				val = val;
+			}else{
+				val = that.data.buynumbermin;
+			}
+		}else{
+			val = that.data.buynumber;
+		}
 		this.setData({
-			buynumber:parseInt(val)
+			buynumber:val
 		});
 	},
 	minusTap:function(){
-		if(this.data.buynumber > this.data.buynumbermin){
-			var currentNum = this.data.buynumber;
-			currentNum--;
+		var that = this;
+		if(that.data.buynumber > that.data.buynumbermin){
+			var currentNum = that.data.buynumber;
+			currentNum = (currentNum*10000 - 500)/10000;
+			if(currentNum < that.data.buynumbermin){
+				currentNum = that.data.buynumbermin;
+			}
 			this.setData({
 				buynumber:currentNum
 			});
 		}
 	},
 	plusTap:function(){
-		if(this.data.buynumber < this.data.buynumbermax){
-			var currentNum = this.data.buynumber;
-			currentNum++;
-			this.setData({
+		var that = this;
+		if(that.data.buynumber < that.data.buynumbermax){
+			var currentNum = that.data.buynumber;
+			currentNum = (currentNum*10000 + 500)/10000;
+			that.setData({
 				buynumber:currentNum
 			});
 		}

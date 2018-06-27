@@ -7,65 +7,8 @@ App({
     	var that = this;
     	console.log(e, 'launch...');
         // qcloud.setLoginUrl(config.service.loginUrl)
-	    wx.login({
-	      success: function(res) {
-	        if (res.code) {
-	          wx.request({
-	            url: config.service.loginUrl,
-	            data: {
-	              jscode: res.code
-	            },
-	            success: function(res){
-	            	console.log(res, 'login success');
-	            	if (res.data.resultCode == 0){
-		            	that.data.user = res.data.data;
-						var userkey = res.data.data.userKey;
-						that.getCurrentPage().setData({
-							user: res.data.data
-						});
-						wx.request({ //获取购物车数量
-							url: config.service.getCartNumUrl,
-							data: {
-								userkey:userkey
-							},
-							success: function(res) {				
-								if(res.data.resultCode == 0){
-									if(res.data.data.count > 0){
-										//that.setData({
-										that.data.cartNum = parseInt(res.data.data.count);
-										//});
-										wx.setStorageSync('cartNum', res.data.data.count);
-										wx.setTabBarBadge({
-											index: 1,
-											text: res.data.data.count
-										});									
-									}
-								}
-							},
-							fail: function(res) {
-								console.log('失败', res)
-							}
-						});
-	            	}
-	            	else {
 
-	            	}
-	            }
-	          })
-	          // wx.request({
-	          //   url: config.service.productTypeUrl,
-	          //   data: {
-	              
-	          //   },
-	          //   success: function(res){
-	          //   	console.log(res, '__product__');
-	          //   }
-	          // })
-	        } else {
-	          console.log('登录失败！' + res.errMsg)
-	        }
-	      }
-	    });
+        that.login();
     },
 	onShow: function (e) {
 		var that = this;
@@ -140,6 +83,68 @@ App({
 		cartNum:0,
 		newsContent: {}
 	},
+	login: function(){ // 登录
+		var that = this;
+	    wx.login({
+	      success: function(res) {
+	        if (res.code) {
+	          wx.request({
+	            url: config.service.loginUrl,
+	            data: {
+	              jscode: res.code
+	            },
+	            success: function(res){
+	            	console.log(res, 'login success');
+	            	if (res.data.resultCode == 0){
+		            	that.data.user = res.data.data;
+						var userkey = res.data.data.userKey;
+						that.getCurrentPage().setData({
+							user: res.data.data
+						});
+						wx.request({ //获取购物车数量
+							url: config.service.getCartNumUrl,
+							data: {
+								userkey:userkey
+							},
+							success: function(res) {				
+								if(res.data.resultCode == 0){
+									if(res.data.data.count > 0){
+										//that.setData({
+										that.data.cartNum = parseInt(res.data.data.count);
+										//});
+										wx.setStorageSync('cartNum', res.data.data.count);
+										wx.setTabBarBadge({
+											index: 1,
+											text: res.data.data.count
+										});									
+									}
+								}
+							},
+							fail: function(res) {
+								console.log('失败', res)
+							}
+						});
+	            	}
+	            	else {
+
+	            	}
+	            }
+	          })
+	          // wx.request({
+	          //   url: config.service.productTypeUrl,
+	          //   data: {
+	              
+	          //   },
+	          //   success: function(res){
+	          //   	console.log(res, '__product__');
+	          //   }
+	          // })
+	        } else {
+	          console.log('登录失败！' + res.errMsg)
+	        }
+	      }
+	    });
+	},
 	getCartNum: function(userKey){//获取购物车数量
 		wx.request({ 
 			url: config.service.getCartNumUrl,
@@ -160,6 +165,7 @@ App({
 						});
 					}
 				}
+				wx.stopPullDownRefresh();
 			},
 			fail: function(res) {
 				console.log('失败', res)

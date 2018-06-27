@@ -14,7 +14,7 @@ Page({
 		
 		mobile:'',//获取手机验证码的手机号
         index: 0,
-        array: ['山东地区', '华北地区', '华东地区', '西南地区', '西北地区', '华南地区']
+        array: ['请选择地区','山东地区', '华北地区', '华东地区', '西南地区', '西北地区', '华南地区']
     },
 	getTimer: function (options) {
 		var that = this;
@@ -103,12 +103,6 @@ Page({
 				icon: 'none',
 				duration: 1500
 			})
-		}else if(Data.comIdCode == ''){
-			wx.showToast({
-				title: '企业识别码不能为空',
-				icon: 'none',
-				duration: 1500
-			})
 		}else if(Data.mobile == ''){
 			wx.showToast({
 				title: '手机号不能为空',
@@ -133,7 +127,9 @@ Page({
 						  icon: 'success',
 						  duration: 2000
 						});
-						setTimeout(function(){
+						setTimeout(function(){					
+							app.data.user.auth = true;
+							app.login();
 							wx.navigateBack();
 						}, 2000);
 					}else{
@@ -142,9 +138,9 @@ Page({
 						  icon: 'none',
 						  duration: 2000
 						});
-						setTimeout(function(){
+						/*setTimeout(function(){
 							wx.navigateBack();
-						}, 2000);
+						}, 2000);*/
 					}
 				},
 				fail: function(res) {

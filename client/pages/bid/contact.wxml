@@ -1,88 +1,82 @@
 <!--index.wxml-->
   <view class="page-body">
-    <view class="topInfo">
-		<view class="productName">{{productDetail.brand}}{{productDetail.category}}</view>
-		<view class="price-num">
-			<view class="price-wrap">
-				<text class="active">￥{{productDetail.price||'--'}}</text>
-				<text>/ 出厂价</text>
-			</view>
-			<view class="num-wrap">
-				<text class="num">50kg</text>
-				<text>起批</text>
-			</view>
-		</view>
-    </view>
 	<view class="midInfo">
-		<view class="title">产品属性</view>
+		<view class="title">特种氧化铝部</view>
 		<view class="list-item">
-			<text class="nameL">品种</text>
-			<text class="contentR">{{productDetail.category||''}}</text>
+			<text class="nameL">山东区域：</text>
+			<text class="contentR" bindtap="calling" data-phone="13853311537">仇经理（13853311537）</text>
 		</view>
 		<view class="list-item">
-			<text class="nameL">牌号</text>
-			<text class="contentR">{{productDetail.name||''}}</text>
-		</view>
-		<view class="list-item">
-			<text class="nameL">指标</text>
+			<text class="nameL">华北区域：</text>
 			<view class="contentR">
-				<text class="txt">{{productDetail.quota||''}}</text>
+				<text class="txt" bindtap="calling" data-phone="19952293086">岳经理（19952293086）</text>
+				<text class="txt" bindtap="calling" data-phone="19952293869">许经理（19952293869）</text>
 			</view>
 		</view>
 		<view class="list-item">
-			<text class="nameL">使用工业</text>
-			<text class="contentR">{{productDetail.uses||''}}</text>
+			<text class="nameL">华东区域：</text>
+			<text class="contentR" bindtap="calling" data-phone="19952293087">王经理（19952293087）</text>
 		</view>
 		<view class="list-item">
-			<text class="nameL">工艺</text>
-			<text class="contentR">{{productDetail.technology||''}}</text>
+			<text class="nameL">西南区域：</text>
+			<view class="contentR">
+				<text class="txt" bindtap="calling" data-phone="19952293873">王经理（19952293873）</text>
+			</view>
 		</view>
-	</view>
-	<view class="footer">
-		<view class="link" bindtap="phonecall">联系卖方</view>
-		<view class="addCart" bindtap="selectType">
-		<image class="addbuy" src="../../image/buy2.png" background-size="cover"></image>
-		<view class="mark" wx:if="{{cartNum > 0}}">{{cartNum}}</view>
-		加入购物车</view>
-		<view class="btnBuy" bindtap="buyTap">立即下单</view>
-	</view>
-	<view class="selectModel" hidden="{{isDisplay}}">
-		<view class="mode-content">
-			<view class="mode-topInfo">
-				<view class="infoL">
-					<view class="title">{{productDetail.brand || '精细氧化铝'}}</view>
-					<view class="price">￥{{productInfo.price || productDetail.price}}</view>
-				</view>
-				<view class="closeArea" bindtap="closeModel">
-					<image src="../../image/close.png" class="closeIcon" background-size="cover"></image>
-				</view>
+		<view class="list-item">
+			<text class="nameL">西北区域：</text>
+			<view class="contentR">
+				<text class="txt" bindtap="calling" data-phone="19952293089">邢经理（19952293089）</text>
+				<text class="txt" bindtap="calling" data-phone="19952293969">刘经理（19952293969）</text>
 			</view>
-			<view class="model-item">
-				<view class="title">交货方式</view>
-				<text class="con {{deliver == 1 ? 'active':''}}" bindtap="deliverItemTap" data-index="1" data-id="{{productDetail.id}}" data-name="自提">自提</text>
+		</view>
+		<view class="list-item">
+			<text class="nameL">华南区域：</text>
+			<text class="contentR" bindtap="calling" data-phone="19952293153">王经理（19952293153）</text>
+		</view>
+		<view class="title">氢氧化铝部</view>
+		<view class="list-item">
+			<text class="nameL">华东区域：</text>
+			<view class="contentR">
+				<text class="txt" bindtap="calling" data-phone="19952293965">曲经理（19952293965）</text>
+				<text class="txt" bindtap="calling" data-phone="19952293957">范经理（19952293957）</text>
 			</view>
-			<view class="model-item" hidden="{{isShow}}">
-				<view class="title">提货地</view>
-				<block wx:for="{{warehouse}}" >
-				<text class="con {{company == item.w_id  ? 'active':''}}" bindtap="companyItemTap" data-index="{{item.w_id}}" data-name="{{item.warehouse.name}}">{{item.warehouse.name}}</text>
-				</block>
+		</view>
+		<view class="list-item">
+			<text class="nameL">华中区域：</text>
+			<view class="contentR">
+				<text class="txt" bindtap="calling" data-phone="19952293083">许经理（19952293083）</text>
+				<text class="txt" bindtap="calling" data-phone="19952293956">马经理（19952293956）</text>
 			</view>
-			<view class="model-item">
-				<view class="title">包装</view>
-				<text class="con {{pack == 1 ? 'active':''}}" bindtap="lableItemTap" data-name="25公斤" data-index="1">25公斤</text>
-				<text class="con {{pack == 2 ? 'active':''}}" bindtap="lableItemTap" data-name="50公斤" data-index="2">50公斤</text>
-				<text class="con {{pack == 3 ? 'active':''}}" bindtap="lableItemTap" data-name="1吨" data-index="3">1吨</text>
+		</view>
+		<view class="list-item">
+			<text class="nameL">华北区域：</text>
+			<view class="contentR">
+				<text class="txt" bindtap="calling" data-phone="19952293083">许经理（19952293083）</text>
+				<text class="txt" bindtap="calling" data-phone="19952293956">马经理（19952293956）</text>
 			</view>
-			<view class="add-minus">
-				<view class="minus {{buynumber == buynumbermin ? 'disabled':''}}" bindtap="minusTap">
-					<image src="../../image/minus2.png" class="minusIcon"></image>
-				</view>
-				<input class="buy-num" bindinput="getAmount" value="{{buynumber}}" />
-				<view class="plus {{buynumber == buynumbermax ? 'disabled':''}}" bindtap="plusTap">
-					<image src="../../image/plus2.png" class="plusIcon"></image>
-				</view>
+		</view>
+		<view class="list-item">
+			<text class="nameL">西南区域：</text>
+			<view class="contentR">
+				<text class="txt" bindtap="calling" data-phone="19952293959">刘经理（19952293959）</text>
+				<text class="txt" bindtap="calling" data-phone="19952293872">崔经理（19952293872）</text>
 			</view>
-			<button class="btnSure" bindtap="addGoodsTap">确定</button>
+		</view>
+		<view class="list-item">
+			<text class="nameL">华南区域：</text>
+			<view class="contentR">
+				<text class="txt" bindtap="calling" data-phone="19952293151">琚经理（19952293151）</text>
+				<text class="txt" bindtap="calling" data-phone="19952293157">王经理（19952293157）</text>
+			</view>
+		</view>
+		<view class="list-item">
+			<text class="nameL">超细销售：</text>
+			<view class="contentR">
+				<text class="txt" bindtap="calling" data-phone="13953349787">胡经理（13953349787）</text>
+				<text class="txt" bindtap="calling" data-phone="19952293960">王经理（19952293960）</text>
+				<text class="txt" bindtap="calling" data-phone="18916050711">梁经理（18916050711）</text>
+			</view>
 		</view>
 	</view>
   </view>
