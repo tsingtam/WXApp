@@ -19,7 +19,12 @@ page {
 	width:120%;
 	display:flex;
 	overflow: hidden;
-	transition: margin-left 0.2s ease-in-out;
+}
+.cart-page{
+	width:100%;
+}
+.type-li{
+	overflow:hidden;
 }
 .delete-btn{
     width: 120rpx;
@@ -29,12 +34,14 @@ page {
     background:#e64340;
     font-size: 24rpx;
     color: #fff;
+	margin-left:2rpx;
 }
 .checkbox{
 	width:40rpx;
 	height:40rpx;
 	vertical-align: middle;
 }
+
 .type-wrap .weui-cell__hd{
 	zoom:60%;
 }
@@ -94,8 +101,9 @@ page {
 	color:#fff;
 }
 .btn.disabled{
-	background-color:#f0f0f0;
-	color:#999;
+	background-color:#999;
+	color:#fff;
+	border:2rpx solid #999;
 }
 .btn.minus{
 	float:left;
@@ -117,6 +125,9 @@ page {
 .numInfo .numR{
 	float:right;
 }
+.numR .unit{
+	padding-top:4rpx;
+}
 .buy-num{
 	float:left;
 	text-align:center;
@@ -127,6 +138,7 @@ page {
 .list-group{
 	padding-bottom:6rpx;
 	border-bottom:2rpx solid #ccc;
+	width:100%;
 }
 .pageBottom{
 	height:90rpx;

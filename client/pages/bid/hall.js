@@ -21,7 +21,7 @@ Page({
 		selectList:true,
 		buynumber:0.05,
 		buynumbermin:0.05,
-		buynumbermax:10000,
+		buynumbermax:1000,
 		
 		productInfo:[],
 		isShow:true,
@@ -432,7 +432,7 @@ Page({
 		var that = this;
 		var val = e.detail.value;
 		if(!isNaN(val)){
-			if(val > that.data.buynumbermin){
+			if(val > that.data.buynumbermin && val < that.data.buynumbermax){
 				val = val;
 			}else{
 				val = that.data.buynumbermin;

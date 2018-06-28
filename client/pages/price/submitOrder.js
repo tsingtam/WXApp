@@ -23,7 +23,7 @@ Page({
 		var that = this;
 		var amount = 0;
 		var idArray = [];
-		var total = parseInt(that.data.order.price)*parseInt(that.data.order.amount);
+		var total = parseFloat(that.data.order.price)*parseFloat(that.data.order.amount);
 		if(that.data.cartOrderList.length > 0){
 			that.data.cartOrderList.forEach(function(i,o){			
 				i.value.forEach(function(n,f){				
@@ -34,7 +34,7 @@ Page({
 			var total = amount/10000;
 		}
 		that.setData({
-			totalP:total,
+			totalP:total.toFixed(2),
 			cartId:idArray
 		});
 	},

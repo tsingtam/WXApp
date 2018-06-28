@@ -18,10 +18,10 @@
 	font-size:28rpx;
 }
 .price-wrap{
-	width:55%;
+	width:80%;
+	display:inline-block;
 	height:50rpx;
 	line-height:50rpx;
-	float:left;
 }
 .price-wrap .active{
 	color:#ff6c00;

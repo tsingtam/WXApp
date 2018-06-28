@@ -90,24 +90,8 @@ Page({
 		if(app.data.user.userKey){
 			Data.userKey = app.data.user.userKey;
 		}
-		if(app.data.user.type){
-			Data.authType = '2';
-		}else{
-			Data.authType = '';
-		}
-		if(Data.comName == ''){
-			wx.showToast({
-				title: '公司名不能为空',
-				icon: 'none',
-				duration: 1500
-			})
-		}else if(Data.comIdCode == ''){
-			wx.showToast({
-				title: '企业识别码不能为空',
-				icon: 'none',
-				duration: 1500
-			})
-		}else if(Data.mobile == ''){
+		Data.authType = '2';
+		if(Data.mobile == ''){
 			wx.showToast({
 				title: '手机号不能为空',
 				icon: 'none',
@@ -141,9 +125,6 @@ Page({
 						  icon: 'none',
 						  duration: 2000
 						});
-						setTimeout(function(){
-							wx.navigateBack();
-						}, 2000);
 					}
 				},
 				fail: function(res) {

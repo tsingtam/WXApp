@@ -1,6 +1,6 @@
 <!--index.wxml-->
   <view class="page-body">
-	<view class="weui-search-bar">
+	<view class="weui-search-bar" hidden="{{true}}">
 	   <view class="weui-search-bar__form">
 		<view class="weui-search-bar__box">
 		  <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
@@ -11,7 +11,7 @@
     <view class="top">
 		<image src="../../image/companyIcon.png" background-size="cover" class="companyImg"></image>
 		<view class="topR">
-			<text class="companyName">中铝新材料科技公司</text>
+			<text class="companyName">中铝新材料有限公司</text>
 			<text class="small">主营精细氧化铝</text>
 		</view>
 		<view class="manage" wx:if="{{user&&user.auth&&(user.type==2||user.type==3)}}" bindtap="goManage">

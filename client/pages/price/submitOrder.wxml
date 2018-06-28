@@ -58,7 +58,7 @@
 		<view class="total">
 			合计：<text class="active">￥{{totalP}}</text>
 		</view>
-		<view class="btnBuy" bindtap="btnBuy">立即下单</view>
+		<view class="btnBuy" bindtap="btnBuy">提交订单</view>
 	</view>
 	
 </view>

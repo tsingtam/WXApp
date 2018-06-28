@@ -6,11 +6,7 @@
 			<view class="price-wrap">
 				<text class="active">￥{{productDetail.price||'--'}}</text>
 				<text>/ 出厂价</text>
-			</view>
-			<view class="num-wrap">
-				<text class="num">50kg</text>
-				<text>起批</text>
-			</view>
+			</view>	
 		</view>
     </view>
 	<view class="midInfo">
@@ -30,7 +26,7 @@
 			</view>
 		</view>
 		<view class="list-item">
-			<text class="nameL">使用工业</text>
+			<text class="nameL">使用行业</text>
 			<text class="contentR">{{productDetail.uses||''}}</text>
 		</view>
 		<view class="list-item">

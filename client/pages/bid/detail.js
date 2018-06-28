@@ -25,7 +25,7 @@ Page({
 		cartNum:0,
 		buynumber:0.05,
 		buynumbermin:0.05,
-		buynumbermax:10000,
+		buynumbermax:1000,
 		phoneNum:'18500880000'
 	},
 	onLoad:function(query){
@@ -165,6 +165,7 @@ Page({
 		if(app.data.user.auth){
 			this.setData({
 				submitOrder:1,
+				productInfo:this.data.productDetail,
 				isDisplay:false,
 				buynumber:0.05
 			});
@@ -185,7 +186,7 @@ Page({
 			isShow:true,
 			companyName:'',
 			warehouse:[],
-			buynumber:1,
+			buynumber:0.05,
 			productInfo:this.data.productDetail,
 			packType:'',
 			pack:0
@@ -230,9 +231,7 @@ Page({
 							  icon: 'success',
 							  duration: 2000
 							});
-							
-							app.getCartNum(app.data.user.userKey);
-							
+							//app.getCartNum(app.data.user.userKey);
 							that.setData({
 								isDisplay:true,
 								deliver:0,
@@ -243,9 +242,35 @@ Page({
 								buynumber:1,
 								packType:'',					
 								pack:0,
-								addCart:0,
-								cartNum:wx.getStorageSync('cartNum')
-							});						
+								addCart:0			
+							});
+							wx.request({ 
+								url: config.service.getCartNumUrl,
+								data: {
+									userkey:app.data.user.userKey
+								},
+								success: function(res) {				
+									if(res.data.resultCode == 0){
+										wx.setStorageSync('cartNum', res.data.data.count);
+										if(res.data.data.count > 0){
+											wx.setTabBarBadge({
+												index: 1,
+												text: res.data.data.count
+											});
+											that.setData({
+												cartNum:res.data.data.count
+											});
+										}else{
+											wx.removeTabBarBadge({
+												index:1
+											});
+										}
+									}								
+								},
+								fail: function(res) {
+									console.log('失败', res)
+								}
+							});
 						}
 					},
 					fail: function(res) {
@@ -261,6 +286,8 @@ Page({
 					price:that.data.productInfo.price,
 					amount:that.data.buynumber
 				};
+				wx.removeStorageSync('cartInfoSubmit');	
+				wx.removeStorageSync('submitOrder');	
 				wx.setStorageSync('submitOrder',orderData);
 				that.setData({
 					submitOrder:0,
@@ -275,7 +302,7 @@ Page({
 		var that = this;
 		var val = e.detail.value;
 		if(!isNaN(val)){
-			if(val > that.data.buynumbermin){
+			if(val > that.data.buynumbermin && val < that.data.buynumbermax){
 				val = val;
 			}else{
 				val = that.data.buynumbermin;

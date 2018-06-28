@@ -9,7 +9,7 @@
 	</button>
 </view>
 <view class="cart-page" wx:if="{{cartInfo.list.length > 0}}">
-		<view class="list-group" wx:for="{{cartInfo.list}}" wx:for-item="items" wx:key="{{index}}">
+		<view class="list-group" wx:for="{{cartInfo.list}}" wx:for-item="items" wx:key="{{index}}" data-index="{{index}}">
 			<view class="list-item">
 				<view class="type-wrap">
 					<label class="weui-cell weui-check__label">
@@ -21,7 +21,7 @@
 						<view class="weui-cell__bd">{{items.p_category}}</view>
 					</label>
 				</view>
-				<view class="type-li" wx:for="{{items.value}}" wx:for-item="childItem" wx:key="{{index}}">
+				<view class="type-li" wx:for="{{items.value}}" wx:for-item="childItem" wx:key="{{index}}" data-index="{{index}}">
 					<view class="type-wrap-small">
 						<label class="weui-cell weui-check__label">
 							<view class="weui-cell__hd">
@@ -42,15 +42,15 @@
 							<view class="cartInfoR">
 								<view class="productInfo">
 									<text class="info-item">牌号：{{lastChild.product.name}}</text>
-									<text class="info-item">包装：{{lastChild.packing}}</text>
+									<text class="info-item">包装规格：{{lastChild.packing}}</text>
 								</view>
 								<view class="numInfo">
-									<view class="priceL">现汇价：<text class="active">￥{{lastChild.price}}</text></view>
+									<view class="priceL">单价：<text class="active">￥{{lastChild.price}}</text></view>
 									<view class="numR">
 										<text class="btn minus" bindtap="minusTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">-</text>
 										<input type="number" class="buy-num" value="{{lastChild.amount}}" bindchange="getAmount" data-item="{{lastChild}}" />
-										<text class="btn plus" bindtap="addTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">+</text>
-										<text>吨</text>
+										<text class="unit">吨</text>
+										<text class="btn plus {{lastChild.amount == 1000 ? 'disabled':''}}" bindtap="addTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">+</text>
 									</view>
 								</view>
 							</view>

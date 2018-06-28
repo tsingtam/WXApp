@@ -17,7 +17,7 @@
             </view>
 			<view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">提货地</view>
-                <view class="weui-form-preview__value">{{orderDetail.subOrders[0].product.warehouse_name}}</view>
+                <view class="weui-form-preview__value">{{orderDetail.subOrders[0].warehouse_name}}</view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">总金额</view>
@@ -47,7 +47,7 @@
             </view>
 			<view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">总价</view>
-                <view class="weui-form-preview__value">￥{{parseFloat(item.amount)*parseFloat(item.price)*10000/10000}}</view>
+                <view class="weui-form-preview__value">￥{{item.sub_total}}</view>
             </view>
         </view>		
     </view>
