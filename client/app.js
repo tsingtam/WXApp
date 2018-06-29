@@ -95,6 +95,11 @@ App({
 	            },
 	            success: function(res){
 	            	console.log(res, 'login success');
+	            	// wx.getUserInfo({
+	            	// 	success: function(e){
+	            	// 		console.log(e, 'user info');
+	            	// 	}
+	            	// });
 	            	if (res.data.resultCode == 0){
 		            	that.data.user = res.data.data;
 						var userkey = res.data.data.userKey;

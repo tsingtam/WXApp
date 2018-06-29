@@ -29,6 +29,12 @@ form{
 .icoImg{width:16px;height:16px;margin:0 2px -3px;}
 .floatL{float:left;}
 .floatR{float:right;}
+.c_info{color:#4d81d1!important;}
+.c_warning{color:#ff6e00!important;}
+.c_danger{color:#ff4400!important;}
+.c_pass{color:#1dbd54!important;}
+.c_disabled{color:#999!important;}
+.c_tip{color:#ffa800!important;}
 
 /* 自定义样式 */
 button[type="primary"],button[loading][type="primary"],button[disabled][type="primary"],.button-hover[type="primary"] {

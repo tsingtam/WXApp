@@ -37,6 +37,7 @@ Page({
 		wx.request({
 			url: config.service.getWareHouseUrl,
 			data: {
+				userkey:app.data.user.userKey,
 				product_id:product_id
 			},
 			success: function(res) {
@@ -52,6 +53,7 @@ Page({
 		wx.request({
 			url: config.service.productDetailUrl,
 			data: {
+				userkey:app.data.user.userKey,
 				product_id:product_id
 			},
 			success: function(res) {
@@ -302,7 +304,7 @@ Page({
 		var that = this;
 		var val = e.detail.value;
 		if(!isNaN(val)){
-			if(val > that.data.buynumbermin && val < that.data.buynumbermax){
+			if(val > that.data.buynumbermin && val <= that.data.buynumbermax){
 				val = val;
 			}else{
 				val = that.data.buynumbermin;
@@ -324,6 +326,12 @@ Page({
 			this.setData({
 				buynumber:currentNum
 			});
+		}else{
+			wx.showToast({
+				title: '该商品的最小购买量为0.05吨！',
+				icon: 'none',
+				duration: 2000
+			});
 		}
 	},
 	plusTap:function(){
@@ -332,6 +340,12 @@ Page({
 			currentNum = (currentNum*10000 + 500)/10000;
 			this.setData({
 				buynumber:currentNum
+			});
+		}else{
+			wx.showToast({
+				title: '该商品的最大购买量为1000吨！',
+				icon: 'none',
+				duration: 2000
 			});
 		}
 	}

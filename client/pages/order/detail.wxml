@@ -8,16 +8,21 @@
                 <view class="weui-form-preview__value">中铝新材料有限公司</view>
             </view>
 			<view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">产品系列</view>
-                <view class="weui-form-preview__value">{{orderDetail.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</view>
-            </view>
-			<view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">交货方式</view>
                 <view class="weui-form-preview__value">自提</view>
             </view>
 			<view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">提货地</view>
                 <view class="weui-form-preview__value">{{orderDetail.subOrders[0].warehouse_name}}</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">产品系列</view>
+                <view class="weui-form-preview__value">{{orderDetail.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">订单状态</view>
+                <view class="weui-form-preview__value c_pass" wx:if="{{orderDetail.status==0}}">待处理</view>
+                <view class="weui-form-preview__value c_warning" wx:else>已处理</view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">总金额</view>

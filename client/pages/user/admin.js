@@ -27,6 +27,11 @@ Page({
             this.getList(this.data.stat, this.data.lastId);
         }
     },
+    onReady: function(){
+        this.setData({
+            userType: app.data.user.type
+        });
+    },
     onLoad: function () {
         var that = this;
         wx.getSystemInfo({
@@ -70,9 +75,11 @@ Page({
             success: function(res) {
                 if (res.data.resultCode == 0 && res.data.data && res.data.data.data){
                     // 数据预处理
-                    that.setData({
-                        timeDate: ''
-                    });
+                    if (!lastId){
+                        that.setData({
+                            timeDate: ''
+                        });
+                    }
                     res.data.data.data.forEach(function(o, i){
                         var time = o.create_time.slice(0, 10).split('-'),
                             date = time[0] + '年' + time[1] + '月' + time[2] + '日';

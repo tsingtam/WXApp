@@ -9,7 +9,7 @@
 	</button>
 </view>
 <view class="cart-page" wx:if="{{cartInfo.list.length > 0}}">
-		<view class="list-group" wx:for="{{cartInfo.list}}" wx:for-item="items" wx:key="{{index}}" data-index="{{index}}">
+		<view class="list-group" wx:for="{{cartInfo.list}}" wx:for-item="items" wx:key="{{index}}">
 			<view class="list-item">
 				<view class="type-wrap">
 					<label class="weui-cell weui-check__label">
@@ -21,7 +21,7 @@
 						<view class="weui-cell__bd">{{items.p_category}}</view>
 					</label>
 				</view>
-				<view class="type-li" wx:for="{{items.value}}" wx:for-item="childItem" wx:key="{{index}}" data-index="{{index}}">
+				<view class="type-li" wx:for="{{items.value}}" wx:for-item="childItem" wx:key="{{index}}">
 					<view class="type-wrap-small">
 						<label class="weui-cell weui-check__label">
 							<view class="weui-cell__hd">
@@ -32,7 +32,7 @@
 							<view class="weui-cell__bd">{{childItem.category}}</view>
 						</label>
 					</view>
-					<view class="list-info-item" wx:for="{{childItem.value}}" wx:for-item="lastChild" wx:key="{{index}}" data-id="{{lastChild.id}}" bindtap="selectTap" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}">
+					<view class="list-info-item" wx:for="{{childItem.value}}" wx:for-item="lastChild" wx:key="{{index}}" data-item="{{lastChild}}" data-id="{{lastChild.id}}" bindtap="selectTap" bindtouchstart="touchS" bindtouchmove="touchMove" bindtouchend="touchE" data-index="{{index}}">
 						<view class="cartInfo" style="{{lastChild.left}}">
 							<label class="check__label_L">
 								<checkbox-group bindchange="checkboxChangeB" data-index="{{index}}" data-id="{{lastChild.product_id}}" data-category="{{lastChild.product.category_id}}" data-cateType="{{items.p_category}}">
@@ -48,7 +48,7 @@
 									<view class="priceL">单价：<text class="active">￥{{lastChild.price}}</text></view>
 									<view class="numR">
 										<text class="btn minus" bindtap="minusTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">-</text>
-										<input type="number" class="buy-num" value="{{lastChild.amount}}" bindchange="getAmount" data-item="{{lastChild}}" />
+										<input class="buy-num" value="{{lastChild.amount}}" bindchange="getAmount" data-item="{{lastChild}}" />
 										<text class="unit">吨</text>
 										<text class="btn plus {{lastChild.amount == 1000 ? 'disabled':''}}" bindtap="addTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">+</text>
 									</view>

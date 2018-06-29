@@ -6,9 +6,8 @@
 	<view class="list-group" wx:for="{{order.orderList}}" wx:if="{{order.orderList.length > 0}}">
 		<view class="list-group-item myBid" bindtap="check_detail" data-index="{{item.id}}">
 			<text class="title c_disabled">{{item.show_time}}</text>
-			<text class="c_pass floatR title" wx:if="{{item.status == '0'}}">待配货</text>
-			<text class="c_pass floatR title" wx:if="{{item.status == '1'}}">已接单</text>
-			<text class="c_pass floatR title" wx:if="{{item.status == '2'}}">已处理</text>
+			<text class="c_pass floatR title" wx:if="{{item.status == '0'}}">待处理</text>
+			<text class="c_warning floatR title" wx:else>已处理</text>
 			<view class="cont-wrap">
 				<view class="txt">
 					<text>{{item.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</text>

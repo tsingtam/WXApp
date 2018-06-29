@@ -36,9 +36,16 @@ Page({
 	}, 
     onPullDownRefresh: function(){
     	var that = this;
+		var objData = {};
+		if(that.data.nav_title[0] != '品种'){
+			objData.category = that.data.nav_title[0];
+		}
+		if(that.data.nav_title[1] != '用途'){
+			objData.uses = that.data.nav_title[1]; 
+		}
 		wx.request({
 			url: config.service.productListUrl,
-			data: {},
+			data: objData,
 			success: function(res) {
 				if(res.data.resultCode == 0 && res.data.data.products){
 					totalPage = 1;
@@ -57,11 +64,20 @@ Page({
     },
     onReachBottom: function(){
 		var that= this;
+		var objData = {};
+		if(that.data.nav_title[0] != '品种'){
+			objData.category = that.data.nav_title[0];
+		}
+		if(that.data.nav_title[1] != '用途'){
+			objData.uses = that.data.nav_title[1]; 
+		}
 		totalPage++;
 		if(!that.data.isNoMore){
 			wx.request({
 				url: config.service.productListUrl,
 				data: {
+					category:objData.category,
+					uses:objData.uses,
 					page:totalPage
 				},
 				success: function(res) {				
@@ -84,30 +100,7 @@ Page({
     },
 	onLoad: function(){		
 		var that = this;
-		// wx.navigateTo({
-		//   url: '/pages/login/index'
-		// });
-
-        // wx.showModal({
-        //     title: '用户协议',
-        //     content: '弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内',
-        //     confirmText: "我知道了",
-        //     confirmColor: "#366ec8",
-        //     showCancel: false,
-        //     success: function (res) {
-        //         console.log(res);
-        //         if (res.confirm) {
-        //             console.log('用户点击主操作')
-        //         }else{
-        //             console.log('用户点击辅助操作')
-        //         }
-        //     }
-        // });
-
-		that.setData({
-			user: app.data.user
-		});
-
+		//that.onShow();
 		wx.request({
 			url: config.service.productTypeUrl,
 			data: {},
@@ -133,8 +126,37 @@ Page({
 			fail: function(res) {
 				console.log('失败', res)
 			}
-		}) 
+		});
+		// wx.navigateTo({
+		//   url: '/pages/login/index'
+		// });
+
+        // wx.showModal({
+        //     title: '用户协议',
+        //     content: '弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内',
+        //     confirmText: "我知道了",
+        //     confirmColor: "#366ec8",
+        //     showCancel: false,
+        //     success: function (res) {
+        //         console.log(res);
+        //         if (res.confirm) {
+        //             console.log('用户点击主操作')
+        //         }else{
+        //             console.log('用户点击辅助操作')
+        //         }
+        //     }
+        // });
 	}, 
+	onShow: function(){
+		var that = this;
+		that.setData({
+			user: app.data.user
+		});
+		wx.setTabBarBadge({
+			index: 1,
+			text: wx.getStorageSync('cartNum')
+		});
+	},
 	click_nav: function (e) {
 		if (index == e.currentTarget.dataset.index && this.data.nav_centent != null && !this.data.selectList){ 
 			index = e.currentTarget.dataset.index; 
@@ -234,6 +256,7 @@ Page({
 		wx.request({
 			url: config.service.productListUrl,
 			data: {
+				userkey:app.data.user.userKey,
 				category:category,
 				uses:uses
 			},
@@ -271,6 +294,7 @@ Page({
 			wx.request({
 				url: config.service.getWareHouseUrl,
 				data: {
+					userkey:app.data.user.userKey,
 					product_id:product_id
 				},
 				success: function(res) {
@@ -432,7 +456,7 @@ Page({
 		var that = this;
 		var val = e.detail.value;
 		if(!isNaN(val)){
-			if(val > that.data.buynumbermin && val < that.data.buynumbermax){
+			if(val > that.data.buynumbermin && val <= that.data.buynumbermax){
 				val = val;
 			}else{
 				val = that.data.buynumbermin;
@@ -455,6 +479,12 @@ Page({
 			this.setData({
 				buynumber:currentNum
 			});
+		}else{
+			wx.showToast({
+				title: '该商品的最小购买量为0.05吨！',
+				icon: 'none',
+				duration: 2000
+			});
 		}
 	},
 	plusTap:function(){
@@ -464,6 +494,12 @@ Page({
 			currentNum = (currentNum*10000 + 500)/10000;
 			that.setData({
 				buynumber:currentNum
+			});
+		}else{
+			wx.showToast({
+				title: '该商品的最大购买量为1000吨！',
+				icon: 'none',
+				duration: 2000
 			});
 		}
 	},

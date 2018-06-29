@@ -19,6 +19,9 @@ page {
 	width:120%;
 	display:flex;
 	overflow: hidden;
+	transition: 2s;
+	-webkit-transition: 2s;
+	transition-duration: 2s;
 }
 .cart-page{
 	width:100%;

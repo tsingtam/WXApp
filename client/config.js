@@ -46,6 +46,9 @@ var config = {
 		//加入购物车
 		addCartUrl:`${host}/cart/add-goods-to-cart`,
 		
+		//修改购物车
+		modifyCartUrl:`${host}/cart/modify-goods-in-cart`,
+		
 		//删除购物车
 		removeCartUrl:`${host}/cart/del-goods-from-cart`,
 		

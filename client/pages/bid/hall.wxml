@@ -18,7 +18,7 @@
 			<image class="icoImg" src="../../image/set.png" background-size="cover"></image>
 			<text>管理</text>
 		</view>
-		<navigator url="/pages/user/auth"><view class="floatR" style="margin:-60px 0 0 0;"><image class="icoImg" src="../../image/set.png" background-size="cover"></image>管理身份认证</view></navigator>
+		<navigator url="/pages/user/auth" hidden="{{true}}"><view class="floatR" style="margin:-60px 0 0 0;"><image class="icoImg" src="../../image/set.png" background-size="cover"></image>管理身份认证</view></navigator>
     </view>
 	<view class='page_row'>  
 	  <view class="nav" wx:for='{{nav_title}}' wx:key="index">  

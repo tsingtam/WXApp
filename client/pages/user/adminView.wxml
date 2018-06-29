@@ -19,6 +19,24 @@
                 <view class="weui-form-preview__label">所属销售</view>
                 <view class="weui-form-preview__value"><image class="icoImg" src="../../image/user.png" background-size="cover"></image>{{detail.operator_name}}</view>
             </view>
+            <view class="weui-form-preview__item" wx:if="{{activeIndex==1}}">
+                <view class="weui-form-preview__label">交货方式</view>
+                <view class="weui-form-preview__value">自提</view>
+            </view>
+            <view class="weui-form-preview__item" wx:if="{{activeIndex==1}}">
+                <view class="weui-form-preview__label">提货地</view>
+                <view class="weui-form-preview__value">{{detail.order_areaname}}</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">产品系列</view>
+                <view class="weui-form-preview__value">{{detail.order_category}}</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">订单状态</view>
+                <view class="weui-form-preview__value c_pass" wx:if="{{detail.order_status==0}}">待接单</view>
+                <view class="weui-form-preview__value c_pass" wx:if="{{detail.order_status==1}}">待录入ERP</view>
+                <view class="weui-form-preview__value c_warning" wx:if="{{detail.order_status==2}}">已录入ERP</view>
+            </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">总金额</view>
                 <view class="weui-form-preview__value_in-hd">¥{{detail.totalPrice}}</view>

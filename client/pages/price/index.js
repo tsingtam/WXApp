@@ -4,7 +4,6 @@ var config = require('../../config')
 var util = require('../../utils/util.js')
 var app = getApp();
 var detailArr = [];
-var total = 0;
 var totalPage = 1;
 
 Page({
@@ -25,10 +24,10 @@ Page({
 	},
 	onShow: function(){
 		var that = this;
-		total = 0;
+		//total = 0;
 		detailArr = [];
 		that.setData({
-			totalPrice:total,
+			totalPrice:0,
 			cartId:[]
 		});
 		wx.request({
@@ -46,7 +45,7 @@ Page({
 							},
 							isNoMore:false
 						});
-					}else{
+					}else{						
 						that.setData({
 							cartInfo:{
 								list:res.data.data.goods
@@ -104,47 +103,58 @@ Page({
 		var inputValue = e.detail.value;
 		var product = e.currentTarget.dataset.item;		
 		var amount = product.amount;
-		if(inputValue > 0 && inputValue < 0.05){
-			wx.showToast({
-				title: '该商品的最小购买量为0.05吨！',
-				icon: 'none',
-				duration: 2000
-			});
-			that.setData({
-				cartInfo:{
-					list:that.data.cartInfo.list
-				}
-			});
-		} else if(inputValue > 1000){
-			wx.showToast({
-				title: '该商品的最大购买量为1000吨！',
-				icon: 'none',
-				duration: 2000
-			});
-			that.setData({
-				cartInfo:{
-					list:that.data.cartInfo.list
-				}
-			});
-		}else{
-			if(parseFloat(inputValue*10000) > parseInt(amount*10000)){
-				var addNum = parseFloat(inputValue*10000);
-				var obj = {
-						product_id:product.product_id,
-						userkey:app.data.user.userKey,
-						packing:product.packing,
-						//deliver:e.currentTarget.dataset.item.delivery_type,
-						deliver:'自提',
-						warehouse:product.warehouse_id,
-						amount:addNum/10000
-					};
-				that.addCart(obj);	
-			}else if(parseFloat(inputValue*10000) < parseFloat(amount*10000)){
-				var minusNum =parseFloat(amount*10000) - parseFloat(inputValue*10000);
-				if(minusNum > 0){
-					that.deleteCart(product.product_id,minusNum/10000);
-				}else{
-					that.deleteCart(product.product_id);
+		if(!isNaN(inputValue)){
+			if(inputValue > 0 && inputValue < 0.05){
+				wx.showToast({
+					title: '该商品的最小购买量为0.05吨！',
+					icon: 'none',
+					duration: 2000
+				});
+				that.setData({
+					cartInfo:{
+						list:that.data.cartInfo.list
+					}
+				});
+			} else if(inputValue > 1000){
+				wx.showToast({
+					title: '该商品的最大购买量为1000吨！',
+					icon: 'none',
+					duration: 2000
+				});
+				that.setData({
+					cartInfo:{
+						list:that.data.cartInfo.list
+					}
+				});
+			}else{
+				if(parseFloat(inputValue*10000) > parseInt(amount*10000)){
+					var addNum = parseFloat(inputValue*10000);
+					var obj = {
+							product_id:product.product_id,
+							userkey:app.data.user.userKey,
+							packing:product.packing,
+							//deliver:e.currentTarget.dataset.item.delivery_type,
+							deliver:'自提',
+							warehouse:product.warehouse_id,
+							amount:addNum/10000
+						};
+					that.addCart(obj);	
+				}else if(parseFloat(inputValue*10000) < parseFloat(amount*10000)){
+					var minusNum = parseFloat(inputValue*10000);
+					if(minusNum > 0){
+						var obj = {
+							product_id:product.product_id,
+							userkey:app.data.user.userKey,
+							packing:product.packing,
+							//deliver:e.currentTarget.dataset.item.delivery_type,
+							deliver:'自提',
+							warehouse:product.warehouse_id,
+							amount:minusNum/10000
+						};
+						that.updateCart(obj);
+					}else{
+						that.deleteCart(product.product_id);
+					}
 				}
 			}
 		}
@@ -155,6 +165,7 @@ Page({
 		var list = that.data.cartInfo.list;
 		var idArr = that.data.cartId;
 		var marks =0;
+		var totalP = 0;
 		if(index!=="" && index != null){
 			list[parseInt(index)].checked = !list[parseInt(index)].checked ; 
 			var firstArr = list[parseInt(index)].value;
@@ -170,8 +181,7 @@ Page({
 					list[parseInt(index)].value[parseInt(j)].checked = !list[parseInt(index)].value[parseInt(j)].checked;
 				}
 				for(var k = 0,lengt = secondArr.length;k<lengt;k++){
-					var item = list[parseInt(index)].value[parseInt(j)].value[parseInt(k)];
-					console.log(list[parseInt(index)].value[parseInt(j)].category);
+					var item = list[parseInt(index)].value[parseInt(j)].value[parseInt(k)];					
 					if(list[parseInt(index)].checked && !item.checked){
 						item.checked = !item.checked;						
 						objData.value.push(item);
@@ -180,15 +190,15 @@ Page({
 						that.removeVlue(objData.value,item.id);
 					}
 					if(item.checked){
-						total+= parseFloat(item.amount)*item.price*10000;
+						totalP = that.data.totalPrice*10000 + parseFloat(item.amount)*item.price*10000;
 					}else{
-						total = total - parseFloat(item.amount)*item.price*10000;
-					}
+						totalP = that.data.totalPrice*10000 - parseFloat(item.amount)*item.price*10000;						
+					}				
 					that.setData({
 						cartInfo:{
 							list:list
 						},			
-						totalPrice:(total/10000).toFixed(2)
+						totalPrice:(totalP/10000).toFixed(2)
 					});		
 				}				
 				idArr.push(objData);
@@ -219,13 +229,12 @@ Page({
 		var id = e.currentTarget.dataset.id;
 		var cateType = e.currentTarget.dataset.type;
 		var list = that.data.cartInfo.list;
+		var total = 0;
 		var times = 0;
 		var secondItemTimes = 0;
 		var idArr = that.data.cartId;
 		list.forEach(function(i,o){
-
 			i.value.forEach(function(j,m){
-
 				var objData = {
 					category:'',
 					value:[]
@@ -235,24 +244,22 @@ Page({
 					objData.category = j.category;
 					j.value.forEach(function(k,n){
 						if(!k.checked){
-							k.checked = !k.checked;
-							//idArr.push(item);
+							k.checked = !k.checked;							
 							objData.value.push(k);
 						}else if(!j.checked){
 							k.checked = !k.checked;
 							that.removeVlue(idArr,j.category);
 						}						
 						if(j.checked){
-							total+= parseFloat(k.amount)*k.price*10000;
+							total = that.data.totalPrice*10000 + parseFloat(k.amount)*k.price*10000;
 						}else{
-							total = total - parseFloat(k.amount)*k.price*10000;
+							total = that.data.totalPrice*10000 - parseFloat(k.amount)*k.price*10000;
 						}
 						console.log(list,'list');
 						that.setData({
 							cartInfo:{
 								list:list
-							},
-							//cartId:idArr,
+							},							
 							totalPrice:parseFloat(total/10000).toFixed(2)
 						});
 					});
@@ -306,6 +313,7 @@ Page({
 		var category_id = e.currentTarget.dataset.category;
 		var cateType = e.currentTarget.dataset.catetype;
 		var selectTimes = 0;
+		var total = 0;
 		var secondItemTime = 0;
 		var firstItemTime = 0;
 		list.forEach(function(i,o){
@@ -336,7 +344,7 @@ Page({
 							}else{
 								detailArr.push(objData);								
 							}						
-							total = (that.data.totalPrice*1000 + parseFloat(k.amount)*k.price*1000)/1000
+							total = (that.data.totalPrice*10000 + parseFloat(k.amount)*k.price*10000)/10000
 						}else{					
 							detailArr.forEach(function(p,o){							
 								if(p.category == type && p.value.length > 1){
@@ -346,7 +354,7 @@ Page({
 									that.removeVlue(detailArr,type);									
 								}
 							})
-							total = (that.data.totalPrice*1000 - parseFloat(k.amount)*k.price*1000)/1000
+							total = (that.data.totalPrice*10000 - parseFloat(k.amount)*k.price*10000)/10000
 						}						
 						that.setData({
 							cartInfo:{
@@ -433,7 +441,8 @@ Page({
 			cartId:idArr
 		});
 		for(var i = 0,len = list.length;i < len;i++){
-			if(!list[i].checked && that.data.allSelect || list[i].checked && !that.data.allSelect){
+			console.log(!list[i].checked,that.data.allSelect,'that.data.allSelect');
+			if((!list[i].checked && that.data.allSelect) || (list[i].checked && !that.data.allSelect)){
 				list[i].checked = !list[i].checked;
 				var firstArr = list[i].value;
 				for(var j = 0,leng = firstArr.length;j<leng;j++){
@@ -450,14 +459,14 @@ Page({
 						}else if(!list[parseInt(i)].checked){
 							item.checked = !item.checked;						
 						}
-						if(item.checked){
-							total+= parseFloat(item.amount)*item.price*1000;
+						if(item.checked){					
+							total+= parseFloat(item.amount)*item.price*10000;
 						}
 						that.setData({
 							cartInfo:{
 								list:list
 							},						
-							totalPrice:(total/1000).toFixed(2)
+							totalPrice:(total/10000).toFixed(2)
 						});		
 					}
 				}
@@ -481,6 +490,14 @@ Page({
 			}
 		}
 	},
+	removeCart: function(arr,val){
+		for(var i=0; i<arr.length; i++) {
+			if(arr[i].product_id == val) {
+			  arr.splice(i, 1);
+			  break;
+			}
+		}
+	},
     btnBuy: function(){ // 提交订单
 		var that = this;
 		if(that.data.cartId.length > 0){
@@ -499,37 +516,53 @@ Page({
 		}
     },
 	minusTap: function(e){ //减操作
-		console.log(e.currentTarget.dataset);
 			var that = this;
 			var id = e.currentTarget.dataset.id;
 			var list = that.data.cartInfo.list;
-			var amount = 0;
-			for(var i = 0,len = list.length;i < len;i++){
-				var firstArr = list[i].value;
-				for(var j = 0,leng = firstArr.length;j<leng;j++){
-					var secondArr = firstArr[j].value;	
-					for(var k = 0,lengt = secondArr.length;k<lengt;k++){		
-						var item = secondArr[k];
-						if(item.product_id == id){
-							//list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount--;
-							var a = list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount;
-							a = (a*10000 - 500)/10000;							
-							if(a > 0){
-								list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount = a.toFixed(4);
+			var amount = 0;			
+			list.forEach(function(i,o){
+				i.value.forEach(function(j,m){
+					j.value.forEach(function(k,h){
+						if(k.product_id == id){
+							var num = k.amount;
+							num = (num*10000 - 500)/10000;
+							if(num > 0.05){
+								k.amount = num.toFixed(4);
+								amount = k.amount;								
+								that.setData({
+									cartInfo:{
+										list:list
+									}									
+								});					
+							}else{					
+								wx.showToast({
+									title: '该商品的最小购买量为0.05吨！',
+									icon: 'none',
+									duration: 2000
+								});
+								that.setData({
+									cartInfo:{
+										list:list
+									}
+								});						
 							}
-							amount = list[parseInt(i)].value[parseInt(j)].value[parseInt(k)].amount;							
-							that.setData({
-								cartInfo:{
-									list:list
-								}
-							});
-						}			
-					}
-				}
-			}
-			var minusNum = (parseFloat(e.currentTarget.dataset.item.amount)*10000 - parseFloat(amount)*10000)/10000;
-			if(minusNum > 0){
-				that.deleteCart(id,minusNum.toFixed(2));
+						}
+					})
+				})
+			})
+			var minusNum = amount;
+			var options = {
+					product_id:id,
+					userkey:app.data.user.userKey,
+					packing:e.currentTarget.dataset.item.packing,
+					//deliver:e.currentTarget.dataset.item.delivery_type,
+					deliver:'自提',
+					warehouse:e.currentTarget.dataset.item.warehouse_id,
+					amount:minusNum
+				};
+			console.log(minusNum,'minusNum');
+			if(minusNum > 0.05){
+				that.updateCart(options);
 			}else{				
 				that.deleteCart(id);
 			}
@@ -547,7 +580,7 @@ Page({
 							num = (num*10000 + 500)/10000;
 							if(num < 1000 || num == 1000){
 								k.amount = num.toFixed(4);
-								amount = k.amount;
+								amount = k.amount;							
 								that.setData({
 									cartInfo:{
 										list:list
@@ -599,87 +632,118 @@ Page({
 		})
 		//that.deleteCart(product_id);
 	},
-	deleteCart: function(id,amount){ //删除购物车数量
+	deleteCart: function(id){ //删除购物车数量
 		var that = this;
-		var getData = {};
-		if(amount){
-			getData = {
-				userkey:app.data.user.userKey,
-				product_id:id,
-				amount:amount
+		var list = that.data.cartInfo.list;
+		console.log(id);
+		list.forEach(function(i,o){
+			console.log(i,'i');
+			//if(i.value.length > 1){
+				i.value.forEach(function(m,n){
+					//if(m.value.length > 1){
+						that.removeCart(m.value,id);
+					//}
+				})
+			//}else{
+				//that.removeVlue()
+			//}
+		});
+		console.log(list);
+		/*that.setData({
+			cartInfo:{
+				list:list
 			}
-		}else{
-			getData = {
-				userkey:app.data.user.userKey,
-				product_id:id				
-			}
-		}
+		})
 		wx.request({
 			url: config.service.removeCartUrl,
-			data: getData,
+			data: {
+				userkey:app.data.user.userKey,
+				product_id:id
+			},
 			success: function(res) {
 				if(res.data.resultCode == 0){
-					wx.request({
-						url: config.service.getCartInfoUrl,
-						data: {
-							userkey:app.data.user.userKey
-						},
-						success: function(res) {
-							if(res.data.resultCode == 0){
-								if(res.data.data.length == 0){
-									that.setData({
-										cartInfo:{
-											list:res.data.data
-										}
-									});
-								}else{
-									that.setData({
-										cartInfo:{
-											list:res.data.data.goods
-										}
-									});
-								}
-							}
-						},
-						fail: function(res) {
-							console.log('失败', res)
-						}
-					});			
+					list.forEach(function(i,o){
+							i.value.forEach(function(m,n){
+								m.value.forEach(function(j,k){						
+								})
+							})
+						});
+						that.setData({
+							cartInfo:{
+								list:list
+							},
+							totalPrice:totalP.toFixed(2)
+						});		
 					app.getCartNum(app.data.user.userKey);
 				}
 			},
 			fail: function(res) {
 				console.log('失败', res)
 			}
-		});
+		});*/
+	},
+	updateCart: function(options){
+		var that = this;
+		var list = that.data.cartInfo.list;
+		var totalP = 0;
+		wx.request({
+				url: config.service.modifyCartUrl,
+				data: options,
+				success: function(res) {
+						console.log(res)
+					if(res.data.resultCode == 0){
+						list.forEach(function(i,o){
+							i.value.forEach(function(m,n){
+								m.value.forEach(function(j,k){
+									if(j.product_id == options.product_id){
+										j.amount = parseFloat(options.amount).toFixed(4);									
+									}
+									if(j.checked){																			
+										totalP += parseFloat(j.amount)*j.price*1000/1000;
+									}
+								})
+							})
+						});
+						that.setData({
+							cartInfo:{
+								list:list
+							},
+							totalPrice:totalP.toFixed(2)
+						});			
+					}
+				},
+				fail: function(res) {
+					console.log('失败', res)
+				}
+			})
 	},
 	addCart: function(options){//增加购物车数量
 		var that = this;
+		var list = that.data.cartInfo.list;
+		var total = 0;
 		wx.request({
 				url: config.service.addCartUrl,
 				data: options,
 				success: function(res) {			
-					if(res.data.resultCode == 0){					
-						wx.request({
-							url: config.service.getCartInfoUrl,
-							data: {
-								userkey:app.data.user.userKey
+					if(res.data.resultCode == 0){
+						list.forEach(function(i,o){
+							i.value.forEach(function(m,n){
+								m.value.forEach(function(j,k){
+									if(j.product_id == options.product_id){
+										j.amount = parseFloat(options.amount).toFixed(4);								
+									}
+									if(j.checked){
+										total += parseFloat(j.amount)*j.price*1000/1000;
+									}
+								})
+							})
+						});						
+						that.setData({
+							cartInfo:{
+								list:list
 							},
-							success: function(res) {
-								if(res.data.resultCode == 0){
-									that.setData({
-										cartInfo:{
-											list:res.data.data.goods
-										}
-									})
-								}
-							},
-							fail: function(res) {
-								console.log('失败', res)
-							}
-						});	
-						app.getCartNum(app.data.user.userKey);
-									
+							totalPrice:total.toFixed(2)
+						});				
 					}
 				},
 				fail: function(res) {
@@ -696,31 +760,24 @@ Page({
 			var disX = this.data.startX - endX;
 			var delBtnWidth = this.data.delBtnWidth;
 			//如果距离小于删除按钮的1/2，不显示删除按钮
-			var left = disX > delBtnWidth/2 ? "margin-left:-"+delBtnWidth+"rpx":"margin-left:0px";
+			var left = disX > delBtnWidth/3 ? "margin-left:-"+delBtnWidth+"rpx":"margin-left:0px";
 			var list = that.data.cartInfo.list;
-			console.log(left,'left');
-			//if(disX > delBtnWidth/2)
 			list.forEach(function(i,o){
 				i.value.forEach(function(j,m){
 					j.value.forEach(function(k,n){
 						if(k.id == id){
 							k.left = left;
-							that.setData({
-								cartInfo:{
-									list:list
-								}
-							});
 						}else{
 							k.left = '';
-							that.setData({
-								cartInfo:{
-									list:list
-								}
-							});
 						}
 					})
 				})
-			})		   
+			});
+			that.setData({
+				cartInfo:{
+					list:list
+				}
+			});
 		}
 	},
 	touchS:function(e){
@@ -749,28 +806,25 @@ Page({
 				}
 			}
 			var list = that.data.cartInfo.list;
-			console.log(left,'leftM');
 			list.forEach(function(i,o){
 				i.value.forEach(function(j,m){
 					j.value.forEach(function(k,n){
 						if(k.id == id){
 							k.left = left;
-							that.setData({
-								cartInfo:{
-									list:list
-								}
-							});
 						}else{
 							k.left = '';
-							that.setData({
-								cartInfo:{
-									list:list
-								}
-							});
 						}
 					})
 				})
-			})
+			});
+			//list[0].value[0].value[0].left = left;
+			if(disX < delBtnWidth/3 || Math.random() > 0.7)
+				return;
+			that.setData({
+				cartInfo:{
+					list:list
+				}
+			});
 		}
 	}
 })

@@ -17,7 +17,7 @@
             	<block wx:for="{{orderList}}">
 				<view class="weui-time" wx:if="{{item.timeDate}}"><view class="cont">{{item.timeDate}}</view></view>
             	<view class="weui-panel" bindtap="view" data-id="{{item.order_id}}">
-				    <view class="weui-panel__hd">{{item.create_time}}<image class="icoImg floatR" src="../../image/new.png" background-size="cover" wx:if="{{item.new_title}}"></image><view class="floatR" wx:if="{{item.operator_name}}"><image class="icoImg" src="../../image/user.png" background-size="cover"></image>{{item.operator_name}}</view></view>
+				    <view class="weui-panel__hd">{{item.create_time}}<image class="icoImg floatR" src="../../image/new.png" background-size="cover" wx:if="{{item.new_title&&activeIndex==0}}"></image><view class="floatR c_pass" wx:if="{{item.order_status==0}}">待接单</view><view class="floatR c_pass" wx:if="{{item.order_status==1}}">待录入ERP</view><view class="floatR c_warning" wx:if="{{item.order_status==2}}">已录入ERP</view><view class="floatR" wx:if="{{item.operator_name&&userType==2}}"><image class="icoImg" src="../../image/user.png" background-size="cover"></image>{{item.operator_name}}</view></view>
 				    <view class="weui-panel__bd">
 				        <view class="weui-media-box weui-media-box_text">
 				        	<view class="weui-media-box__cont">
