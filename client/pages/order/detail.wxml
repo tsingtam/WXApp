@@ -51,7 +51,7 @@
                 <view class="weui-form-preview__value">{{item.packing}}</view>
             </view>
 			<view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">总价</view>
+                <view class="weui-form-preview__label">金额</view>
                 <view class="weui-form-preview__value">￥{{item.sub_total}}</view>
             </view>
         </view>		

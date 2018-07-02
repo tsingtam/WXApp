@@ -19,11 +19,15 @@
                 <view class="weui-form-preview__label">所属销售</view>
                 <view class="weui-form-preview__value"><image class="icoImg" src="../../image/user.png" background-size="cover"></image>{{detail.operator_name}}</view>
             </view>
+            <view class="weui-form-preview__item" wx:else>
+                <view class="weui-form-preview__label">所属销售</view>
+                <view class="weui-form-preview__value">无</view>
+            </view>
             <view class="weui-form-preview__item" wx:if="{{activeIndex==1}}">
                 <view class="weui-form-preview__label">交货方式</view>
                 <view class="weui-form-preview__value">自提</view>
             </view>
-            <view class="weui-form-preview__item" wx:if="{{activeIndex==1}}">
+            <view class="weui-form-preview__item" wx:if="{{detail.order_areaname&&activeIndex==1}}">
                 <view class="weui-form-preview__label">提货地</view>
                 <view class="weui-form-preview__value">{{detail.order_areaname}}</view>
             </view>
@@ -67,12 +71,12 @@
     </view>
     <view class="weui-btn-area" wx:if="{{activeIndex==0&&userType!=2}}">
         <button class="weui-btn" type="primary" bindtap="receive" wx:if="{{detail.order_status==0}}">接单</button>
-        <button class="weui-btn" type="primary" bindtap="deal" wx:if="{{detail.order_status==1}}">完成ERP</button>
-        <picker bindchange="bindPickerChange" value="{{index}}" range="{{sales}}">
+        <button class="weui-btn" type="primary" bindtap="deal" wx:if="{{detail.order_status==1}}">完成ERP录入</button>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{sales}}" wx:if="{{detail.order_status==1}}">
         	<button class="weui-btn" type="default">转单</button>
         </picker>
     </view>
-	<view class="btn-area" wx:if="{{activeIndex==1&&userType!=2}}">
+	<view class="btn-area" wx:if="{{activeIndex==1&&userType!=2&&false}}">
 		<button form-type="submit" type="primary" bindtap="create">生成购销单</button>
 	</view>
 </view>

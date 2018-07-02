@@ -27,12 +27,7 @@ Page({
             this.getList(this.data.stat, this.data.lastId);
         }
     },
-    onReady: function(){
-        this.setData({
-            userType: app.data.user.type
-        });
-    },
-    onLoad: function () {
+    onShow: function () {
         var that = this;
         wx.getSystemInfo({
             success: function(res) {
@@ -46,9 +41,12 @@ Page({
         that.setData({
             isNoMore: false
         });
-        this.getList(1);
+        this.getList(that.data.stat);
     },
     onReady: function(){
+        this.setData({
+            userType: app.data.user.type
+        });
         wx.setNavigationBarTitle({
             title: (app.data.user.type == 2 ? '部门经理' : '业务员') + '管理'
         });
@@ -104,6 +102,7 @@ Page({
                         isNoMore: true
                     });
                 }
+                wx.stopPullDownRefresh();
             },
             fail: function(res) {
                 console.log('失败', res)

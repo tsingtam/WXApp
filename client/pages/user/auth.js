@@ -117,7 +117,10 @@ Page({
 						});
 						setTimeout(function(){
 							app.login();
-							wx.navigateBack();
+							// wx.navigateBack();
+							wx.switchTab({
+							  url: '/pages/bid/hall'
+							});
 						}, 2000);
 					}else{
 						wx.showToast({

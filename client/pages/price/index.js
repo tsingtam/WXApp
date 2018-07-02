@@ -14,7 +14,7 @@ Page({
 		cartId:[],
 		isNoMore:false,
 		testArr:[],
-		totalPrice:0,
+		totalPrice:'0.00',
 		disabledColor:false,
 		allSelect:false,//全选
 		delBtnWidth:120   //删除按钮宽度单位（rpx）
@@ -27,8 +27,9 @@ Page({
 		//total = 0;
 		detailArr = [];
 		that.setData({
-			totalPrice:0,
-			cartId:[]
+			totalPrice:'0.00',
+			cartId:[],
+			allSelect:false
 		});
 		wx.request({
 			url: config.service.getCartInfoUrl,
@@ -189,17 +190,18 @@ Page({
 						item.checked = !item.checked;
 						that.removeVlue(objData.value,item.id);
 					}
-					if(item.checked){
+					/*if(item.checked){
 						totalP = that.data.totalPrice*10000 + parseFloat(item.amount)*item.price*10000;
 					}else{
 						totalP = that.data.totalPrice*10000 - parseFloat(item.amount)*item.price*10000;						
-					}				
+					}*/				
 					that.setData({
 						cartInfo:{
 							list:list
-						},			
-						totalPrice:(totalP/10000).toFixed(2)
-					});		
+						}		
+						//totalPrice:(totalP/10000).toFixed(2)
+					});
+					that.getTotal();
 				}				
 				idArr.push(objData);
 				that.setData({
@@ -250,19 +252,20 @@ Page({
 							k.checked = !k.checked;
 							that.removeVlue(idArr,j.category);
 						}						
-						if(j.checked){
+						/*if(j.checked){
 							total = that.data.totalPrice*10000 + parseFloat(k.amount)*k.price*10000;
 						}else{
 							total = that.data.totalPrice*10000 - parseFloat(k.amount)*k.price*10000;
-						}
+						}*/
 						console.log(list,'list');
 						that.setData({
 							cartInfo:{
 								list:list
-							},							
-							totalPrice:parseFloat(total/10000).toFixed(2)
+							}							
+							//totalPrice:parseFloat(total/10000).toFixed(2)
 						});
 					});
+					that.getTotal();
 					if(objData.value.length > 0){
 						idArr.push(objData);
 						that.setData({
@@ -344,7 +347,7 @@ Page({
 							}else{
 								detailArr.push(objData);								
 							}						
-							total = (that.data.totalPrice*10000 + parseFloat(k.amount)*k.price*10000)/10000
+							//total = (that.data.totalPrice*10000 + parseFloat(k.amount)*k.price*10000)/10000
 						}else{					
 							detailArr.forEach(function(p,o){							
 								if(p.category == type && p.value.length > 1){
@@ -354,15 +357,16 @@ Page({
 									that.removeVlue(detailArr,type);									
 								}
 							})
-							total = (that.data.totalPrice*10000 - parseFloat(k.amount)*k.price*10000)/10000
+							//total = (that.data.totalPrice*10000 - parseFloat(k.amount)*k.price*10000)/10000
 						}						
 						that.setData({
 							cartInfo:{
 								list:list
 							},
-							cartId:detailArr,
-							totalPrice:total.toFixed(2)
+							cartId:detailArr
+							//totalPrice:total.toFixed(2)
 						});
+						that.getTotal();
 					}
 								
 					if(k.checked && category_id == k.product.category_id){
@@ -441,7 +445,6 @@ Page({
 			cartId:idArr
 		});
 		for(var i = 0,len = list.length;i < len;i++){
-			console.log(!list[i].checked,that.data.allSelect,'that.data.allSelect');
 			if((!list[i].checked && that.data.allSelect) || (list[i].checked && !that.data.allSelect)){
 				list[i].checked = !list[i].checked;
 				var firstArr = list[i].value;
@@ -458,25 +461,46 @@ Page({
 							item.checked = !item.checked;					
 						}else if(!list[parseInt(i)].checked){
 							item.checked = !item.checked;						
-						}
-						if(item.checked){					
-							total+= parseFloat(item.amount)*item.price*10000;
-						}
+						}						
 						that.setData({
 							cartInfo:{
 								list:list
-							},						
-							totalPrice:(total/10000).toFixed(2)
+							}													
 						});		
 					}
 				}
-			}
-				
+			}		
 		}
+		that.getTotal();
+	},
+	getTotal: function(){
+		var that = this;
+		var total = 0;
+		var list = that.data.cartInfo.list;
+		list.forEach(function(m,n){
+			m.value.forEach(function(w,f){
+				w.value.forEach(function(t,k){
+					if(t.checked){
+						total+= parseFloat(t.amount)*t.price*10000;
+					}
+				})
+			})
+		})
+		that.setData({
+			totalPrice:(total/10000).toFixed(2)
+		})
 	},
 	removeVlue: function(arr,val){
 		for(var i=0; i<arr.length; i++) {
 			if(arr[i].category == val) {
+			  arr.splice(i, 1);
+			  break;
+			}
+		}
+	},
+	removeVluep: function(arr,val){
+		for(var i=0; i<arr.length; i++) {
+			if(arr[i].p_category == val) {
 			  arr.splice(i, 1);
 			  break;
 			}
@@ -497,6 +521,76 @@ Page({
 			  break;
 			}
 		}
+	},
+	delItem: function(e){
+		var that = this;
+		console.log(e.currentTarget.dataset);
+		var id = e.currentTarget.dataset.id;
+		var product_id = e.currentTarget.dataset.pid;
+		var bigCate = e.currentTarget.dataset.topcate;
+		var smallCate = e.currentTarget.dataset.category;
+		wx.showModal({
+		  content: '是否确认删除此商品？',
+		  success: function(res) {
+			if (res.confirm) {
+			  that.deleteCart(product_id,bigCate,smallCate);
+			} else if (res.cancel) {
+			  console.log('用户点击取消')
+			}
+		  }
+		})
+		//that.deleteCart(product_id);
+	},
+	deleteCart: function(id,p_category,category){ //删除购物车数量
+		var that = this;
+		var list = that.data.cartInfo.list;
+		var total = 0;
+		wx.request({
+			url: config.service.removeCartUrl,
+			data: {
+				userkey:app.data.user.userKey,
+				product_id:id
+			},
+			success: function(res) {
+				if(res.data.resultCode == 0){
+					list.forEach(function(i,o){			
+						i.value.forEach(function(m,n){
+							if(m.value.length > 1){
+								that.removeCart(m.value,id);
+							}else{
+								if(m.category == category){
+									if(i.value.length > 1){
+										that.removeVlue(i.value,category);
+									}else{
+										that.removeVluep(list,p_category);
+									}
+								}
+							}
+						})
+					});	
+					/*list.forEach(function(m,n){
+						m.value.forEach(function(w,f){
+							w.value.forEach(function(t,k){
+								if(t.checked){
+									total+= parseFloat(t.amount)*t.price*10000;
+								}
+							})
+						})
+					})*/			
+					that.setData({
+						cartInfo:{
+							list:list
+						}
+						//totalPrice:(total/10000).toFixed(2)
+					});	
+					app.getCartNum(app.data.user.userKey);
+					that.getTotal();
+				}
+			},
+			fail: function(res) {
+				console.log('失败', res)
+			}
+		});
 	},
     btnBuy: function(){ // 提交订单
 		var that = this;
@@ -616,72 +710,6 @@ Page({
 				that.addCart(options);
 			}
 	},
-	delItem: function(e){
-		var that = this;
-		var id = e.currentTarget.dataset.id;
-		var product_id = e.currentTarget.dataset.pid;
-		wx.showModal({
-		  content: '是否确认删除此商品？',
-		  success: function(res) {
-			if (res.confirm) {
-			  that.deleteCart(product_id);
-			} else if (res.cancel) {
-			  console.log('用户点击取消')
-			}
-		  }
-		})
-		//that.deleteCart(product_id);
-	},
-	deleteCart: function(id){ //删除购物车数量
-		var that = this;
-		var list = that.data.cartInfo.list;
-		console.log(id);
-		list.forEach(function(i,o){
-			console.log(i,'i');
-			//if(i.value.length > 1){
-				i.value.forEach(function(m,n){
-					//if(m.value.length > 1){
-						that.removeCart(m.value,id);
-					//}
-				})
-			//}else{
-				//that.removeVlue()
-			//}
-		});
-		console.log(list);
-		/*that.setData({
-			cartInfo:{
-				list:list
-			}
-		})
-		wx.request({
-			url: config.service.removeCartUrl,
-			data: {
-				userkey:app.data.user.userKey,
-				product_id:id
-			},
-			success: function(res) {
-				if(res.data.resultCode == 0){
-					list.forEach(function(i,o){
-							i.value.forEach(function(m,n){
-								m.value.forEach(function(j,k){						
-								})
-							})
-						});
-						that.setData({
-							cartInfo:{
-								list:list
-							},
-							totalPrice:totalP.toFixed(2)
-						});		
-					app.getCartNum(app.data.user.userKey);
-				}
-			},
-			fail: function(res) {
-				console.log('失败', res)
-			}
-		});*/
-	},
 	updateCart: function(options){
 		var that = this;
 		var list = that.data.cartInfo.list;
@@ -698,18 +726,19 @@ Page({
 									if(j.product_id == options.product_id){
 										j.amount = parseFloat(options.amount).toFixed(4);									
 									}
-									if(j.checked){																			
+									/*if(j.checked){																			
 										totalP += parseFloat(j.amount)*j.price*1000/1000;
-									}
+									}*/
 								})
 							})
 						});
 						that.setData({
 							cartInfo:{
 								list:list
-							},
-							totalPrice:totalP.toFixed(2)
-						});			
+							}
+							//totalPrice:totalP.toFixed(2)
+						});	
+						that.getTotal();
 					}
 				},
 				fail: function(res) {
@@ -732,18 +761,19 @@ Page({
 									if(j.product_id == options.product_id){
 										j.amount = parseFloat(options.amount).toFixed(4);								
 									}
-									if(j.checked){
-										total += parseFloat(j.amount)*j.price*1000/1000;
-									}
+									//if(j.checked){
+									//	total += parseFloat(j.amount)*j.price*1000/1000;
+									//}
 								})
 							})
 						});						
 						that.setData({
 							cartInfo:{
 								list:list
-							},
-							totalPrice:total.toFixed(2)
-						});				
+							}
+							//totalPrice:total.toFixed(2)
+						});	
+						that.getTotal();
 					}
 				},
 				fail: function(res) {

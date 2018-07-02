@@ -76,36 +76,48 @@ Page({
     receive: function(){ // 接单
         var that = this;
 
-        wx.request({
-            url: config.service.adminOrderReceiveUrl,
-            data: {
-                order_id: app.data.orderDetailId,
-                userkey: app.data.user && app.data.user.userKey
-            },
-            success: function(res) {
-                if (res.data.resultCode == 0 && res.data.data){
-                    wx.showToast({
-                      title: '接单成功',
-                      icon: 'success',
-                      duration: 2000
-                    });
-                    // setTimeout(function(){
-                    //     wx.navigateBack();
-                    // }, 2000);
-                    that.setData({
-                        'detail.order_status' : 1
+        wx.showModal({
+            title: '确认接单？',
+            content: '接单后将确认订单归属人',
+            confirmText: "确认",
+            confirmColor: "#366ec8",
+            cancelText: "取消",
+            success: function (res) {
+                console.log(res);
+                if (res.confirm) {
+                    wx.request({
+                        url: config.service.adminOrderReceiveUrl,
+                        data: {
+                            order_id: app.data.orderDetailId,
+                            userkey: app.data.user && app.data.user.userKey
+                        },
+                        success: function(res) {
+                            if (res.data.resultCode == 0 && res.data.data){
+                                wx.showToast({
+                                  title: '接单成功',
+                                  icon: 'success',
+                                  duration: 2000
+                                });
+                                // setTimeout(function(){
+                                //     wx.navigateBack();
+                                // }, 2000);
+                                that.setData({
+                                    'detail.order_status' : 1
+                                });
+                            }
+                            else {
+                                wx.showToast({
+                                  title: res.data.msg || '系统繁忙，请稍后再试',
+                                  icon: 'none',
+                                  duration: 2000
+                                });
+                            }
+                        },
+                        fail: function(res) {
+                            console.log('失败', res)
+                        }
                     });
                 }
-                else {
-                    wx.showToast({
-                      title: res.data.msg || '系统繁忙，请稍后再试',
-                      icon: 'none',
-                      duration: 2000
-                    });
-                }
-            },
-            fail: function(res) {
-                console.log('失败', res)
             }
         });
     },
@@ -145,33 +157,45 @@ Page({
     deal: function(){ // 完成ERP
         var that = this;
 
-        wx.request({
-            url: config.service.adminOrderDealUrl,
-            data: {
-                order_id: app.data.orderDetailId,
-                userkey: app.data.user && app.data.user.userKey
-            },
-            success: function(res) {
-                if (res.data.resultCode == 0 && res.data.data){
-                    wx.showToast({
-                      title: '完成ERP成功',
-                      icon: 'success',
-                      duration: 2000
+        wx.showModal({
+            title: '确认已录入ERP？',
+            content: '',
+            confirmText: "确认",
+            confirmColor: "#366ec8",
+            cancelText: "取消",
+            success: function (res) {
+                console.log(res);
+                if (res.confirm) {
+                    wx.request({
+                        url: config.service.adminOrderDealUrl,
+                        data: {
+                            order_id: app.data.orderDetailId,
+                            userkey: app.data.user && app.data.user.userKey
+                        },
+                        success: function(res) {
+                            if (res.data.resultCode == 0 && res.data.data){
+                                wx.showToast({
+                                  title: '完成ERP成功',
+                                  icon: 'success',
+                                  duration: 2000
+                                });
+                                setTimeout(function(){
+                                    wx.navigateBack();
+                                }, 2000);
+                            }
+                            else {
+                                wx.showToast({
+                                  title: res.data.msg || '系统繁忙，请稍后再试',
+                                  icon: 'none',
+                                  duration: 2000
+                                });
+                            }
+                        },
+                        fail: function(res) {
+                            console.log('失败', res)
+                        }
                     });
-                    setTimeout(function(){
-                        wx.navigateBack();
-                    }, 2000);
                 }
-                else {
-                    wx.showToast({
-                      title: res.data.msg || '系统繁忙，请稍后再试',
-                      icon: 'none',
-                      duration: 2000
-                    });
-                }
-            },
-            fail: function(res) {
-                console.log('失败', res)
             }
         });
     },
@@ -183,31 +207,46 @@ Page({
         });
         
         if (that.data.salesList[e.detail.value]){
-            wx.request({
-                url: config.service.adminOrderTransferUrl,
-                data: {
-                    order_id: app.data.orderDetailId,
-                    sale_id: that.data.salesList[e.detail.value].id,
-                    userkey: app.data.user && app.data.user.userKey
-                },
-                success: function(res) {
-                    if (res.data.resultCode == 0 && res.data.data){
-                        wx.showToast({
-                          title: '转单成功',
-                          icon: 'success',
-                          duration: 2000
+            wx.showModal({
+                title: '确认转给其他业务员？',
+                content: '',
+                confirmText: "确认",
+                confirmColor: "#366ec8",
+                cancelText: "取消",
+                success: function (res) {
+                    console.log(res);
+                    if (res.confirm) {
+                        wx.request({
+                            url: config.service.adminOrderTransferUrl,
+                            data: {
+                                order_id: app.data.orderDetailId,
+                                sale_id: that.data.salesList[e.detail.value].id,
+                                userkey: app.data.user && app.data.user.userKey
+                            },
+                            success: function(res) {
+                                if (res.data.resultCode == 0 && res.data.data){
+                                    wx.showToast({
+                                      title: '转单成功',
+                                      icon: 'success',
+                                      duration: 2000
+                                    });
+                                    setTimeout(function(){
+                                        wx.navigateBack();
+                                    }, 2000);
+                                }
+                                else {
+                                    wx.showToast({
+                                      title: res.data.msg || '系统繁忙，请稍后再试',
+                                      icon: 'none',
+                                      duration: 2000
+                                    });
+                                }
+                            },
+                            fail: function(res) {
+                                console.log('失败', res)
+                            }
                         });
                     }
-                    else {
-                        wx.showToast({
-                          title: res.data.msg || '系统繁忙，请稍后再试',
-                          icon: 'none',
-                          duration: 2000
-                        });
-                    }
-                },
-                fail: function(res) {
-                    console.log('失败', res)
                 }
             });
         }

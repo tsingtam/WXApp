@@ -27,6 +27,9 @@ var config = {
 		
 		// 获取手机验证码
 		getVerfCodeUrl:`${host}/site/gen-verf-code`,
+        
+        // 用户协议
+        licenseUrl:`${host}/client/view-license`,
 		
 		// 企业认证
 		companyAuthUrl:`${host}/client/authenticate`,
@@ -37,8 +40,11 @@ var config = {
 		//产品列表(分类)
 		productListUrl:`${host}/product/get-products`,
 		
-		//产品详情
-		productDetailUrl:`${host}/product/detail`,
+        //产品详情
+        productDetailUrl:`${host}/product/detail`,
+        
+		//产品详情-联系卖方
+		productDetailContactUrl:`${host}/product/sales`,
 		
 		//获取提货地
 		getWareHouseUrl:`${host}/product/get-warehouses`,

@@ -55,7 +55,7 @@
 								</view>
 							</view>
 						</view>
-						<view class="delete-btn" data-index="{{index}}" data-id="{{lastChild.id}}" data-pid="{{lastChild.product_id}}" catchtap="delItem">删除</view>
+						<view class="delete-btn" data-index="{{index}}" data-topCate="{{items.p_category}}" data-category="{{childItem.category}}" data-id="{{lastChild.id}}" data-pid="{{lastChild.product_id}}" catchtap="delItem">删除</view>
 					</view>
 				</view>
 			</view>

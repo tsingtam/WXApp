@@ -7,6 +7,7 @@ var app = getApp()
 Page({  
 	data: {
 		isDisplay:true,
+		id: null, // 产品id
 		productDetail:{},
 		productInfo:{},
 		
@@ -22,23 +23,67 @@ Page({
 		companyName:'',
 		company:0,
 		
+		contact: [], // 联系卖家
+		array: [],
+		index: 0,
+		userAuth: false, // 用户是否认证
+		isPicker: false, // 是否下拉
+
 		cartNum:0,
 		buynumber:0.05,
 		buynumbermin:0.05,
 		buynumbermax:1000,
 		phoneNum:'18500880000'
 	},
+	onShow: function(){
+		var that = this;
+		that.setData({
+			isPicker: false
+		});
+		wx.request({
+			url: config.service.productDetailContactUrl,
+			data: {
+				product_id: that.data.id,
+				userkey: app.data.user && app.data.user.userKey
+			},
+			success: function(res) {
+				if (res.data.resultCode == 0 && res.data.data){
+					that.setData({
+						contact:res.data.data
+					});
+					var contact = [];
+					res.data.data.forEach(function(o, i){
+						contact.push(o.contact + ' ' + o.mobile);
+					});
+					that.setData({
+						array:contact
+					});
+					if (contact.length > 1){
+						that.setData({
+							isPicker: true
+						});
+					}
+					console.log(res.data.data, contact, 'contact...');
+				}
+			},
+			fail: function(res) {
+				console.log('失败', res)
+			}
+		});
+	},
 	onLoad:function(query){
 		var that = this;
 		var product_id = query.id;
 		that.setData({
-			cartNum:wx.getStorageSync('cartNum')
+			cartNum:wx.getStorageSync('cartNum'),
+			userAuth:app.data.user.auth,
+			id: query.id
 		});
 		wx.request({
 			url: config.service.getWareHouseUrl,
 			data: {
-				userkey:app.data.user.userKey,
-				product_id:product_id
+				product_id:product_id,
+				userkey: app.data.user && app.data.user.userKey
 			},
 			success: function(res) {
 				that.setData({
@@ -53,8 +98,8 @@ Page({
 		wx.request({
 			url: config.service.productDetailUrl,
 			data: {
-				userkey:app.data.user.userKey,
-				product_id:product_id
+				product_id:product_id,
+				userkey: app.data.user && app.data.user.userKey
 			},
 			success: function(res) {
 				console.log(res.data.data);
@@ -73,10 +118,32 @@ Page({
 			phoneNumber: that.data.phoneNum
 		});
 	},
-	contact:function(){ // 联系卖方
-		wx.navigateTo({
-			url: '/pages/bid/contact'
-		});
+	contact:function(e){ // 联系卖方
+		// wx.navigateTo({
+		// 	url: '/pages/bid/contact'
+		// });
+		if (this.data.userAuth){
+			wx.makePhoneCall({
+				phoneNumber: this.data.contact[0].mobile
+			});
+		}
+		else {
+			wx.navigateTo({
+				url: '/pages/login/index'
+			});
+		}
+	},
+	bindPickerChange: function(e){
+        var index = e.detail.value,
+        	contact = this.data.contact[index];
+        this.setData({
+            index: index
+        });
+        if (contact){
+			wx.makePhoneCall({
+				phoneNumber: contact.mobile
+			});
+        }
 	},
 	deliverItemTap:function(e){
 		var that = this;
@@ -86,7 +153,8 @@ Page({
 			wx.request({
 				url: config.service.getWareHouseUrl,
 				data: {
-					product_id:product_id
+					product_id:product_id,
+					userkey:app.data.user.userKey
 				},
 				success: function(res) {
 					that.setData({
@@ -196,107 +264,121 @@ Page({
 	},
 	addGoodsTap:function(){
 		var that = this;
-		if(that.data.deliver == 0){	
+		if(app.data.user.type != 1 && that.data.addCart == 1){
 			wx.showToast({
-				title: '请选择商品交货方式！',
+				title: '管理人员不能进行加入购物车操作！',
 				icon: 'none',
 				duration: 2000
 			});
-		}else if(that.data.company == 0){
+		}else if(app.data.user.type != 1 && that.data.submitOrder == 1){
 			wx.showToast({
-				title: '请选择商品提货地！',
-				icon: 'none',
-				duration: 2000
-			});
-		}else if(that.data.pack == 0){
-			wx.showToast({
-				title: '请选择商品包装规格！',
+				title: '管理人员不能进行下单操作！',
 				icon: 'none',
 				duration: 2000
 			});
 		}else{
-			if(that.data.addCart == 1){
-				wx.request({
-					url: config.service.addCartUrl,
-					data: {
-						product_id:that.data.productDetail.id,
-						userkey:app.data.user.userKey,
+			if(that.data.deliver == 0){	
+				wx.showToast({
+					title: '请选择商品交货方式！',
+					icon: 'none',
+					duration: 2000
+				});
+			}else if(that.data.company == 0){
+				wx.showToast({
+					title: '请选择商品提货地！',
+					icon: 'none',
+					duration: 2000
+				});
+			}else if(that.data.pack == 0){
+				wx.showToast({
+					title: '请选择商品包装规格！',
+					icon: 'none',
+					duration: 2000
+				});
+			}else{
+				if(that.data.addCart == 1){
+					wx.request({
+						url: config.service.addCartUrl,
+						data: {
+							product_id:that.data.productDetail.id,
+							userkey:app.data.user.userKey,
+							packing:that.data.packType,
+							deliver:that.data.deliverType,
+							warehouse:that.data.company,
+							amount:that.data.buynumber
+						},
+						success: function(res) {			
+							if(res.data.resultCode == 0){					
+								wx.showToast({
+								  title: '加入购物车成功',
+								  icon: 'success',
+								  duration: 2000
+								});
+								//app.getCartNum(app.data.user.userKey);
+								that.setData({
+									isDisplay:true,
+									deliver:0,
+									deliverType:'',
+									company:0,
+									isShow:true,
+									companyName:'',
+									buynumber:1,
+									packType:'',					
+									pack:0,
+									addCart:0			
+								});
+								wx.request({ 
+									url: config.service.getCartNumUrl,
+									data: {
+										userkey:app.data.user.userKey
+									},
+									success: function(res) {				
+										if(res.data.resultCode == 0){
+											wx.setStorageSync('cartNum', res.data.data.count);
+											if(res.data.data.count > 0){
+												wx.setTabBarBadge({
+													index: 1,
+													text: res.data.data.count
+												});
+												that.setData({
+													cartNum:res.data.data.count
+												});
+											}else{
+												wx.removeTabBarBadge({
+													index:1
+												});
+											}
+										}								
+									},
+									fail: function(res) {
+										console.log('失败', res)
+									}
+								});
+							}
+						},
+						fail: function(res) {
+							console.log('失败', res)
+						}
+					})
+				}else if(that.data.submitOrder == 1){
+					var orderData = {
+						product:that.data.productDetail,					
 						packing:that.data.packType,
 						deliver:that.data.deliverType,
 						warehouse:that.data.company,
+						price:that.data.productInfo.price,
 						amount:that.data.buynumber
-					},
-					success: function(res) {			
-						if(res.data.resultCode == 0){					
-							wx.showToast({
-							  title: '加入购物车成功',
-							  icon: 'success',
-							  duration: 2000
-							});
-							//app.getCartNum(app.data.user.userKey);
-							that.setData({
-								isDisplay:true,
-								deliver:0,
-								deliverType:'',
-								company:0,
-								isShow:true,
-								companyName:'',
-								buynumber:1,
-								packType:'',					
-								pack:0,
-								addCart:0			
-							});
-							wx.request({ 
-								url: config.service.getCartNumUrl,
-								data: {
-									userkey:app.data.user.userKey
-								},
-								success: function(res) {				
-									if(res.data.resultCode == 0){
-										wx.setStorageSync('cartNum', res.data.data.count);
-										if(res.data.data.count > 0){
-											wx.setTabBarBadge({
-												index: 1,
-												text: res.data.data.count
-											});
-											that.setData({
-												cartNum:res.data.data.count
-											});
-										}else{
-											wx.removeTabBarBadge({
-												index:1
-											});
-										}
-									}								
-								},
-								fail: function(res) {
-									console.log('失败', res)
-								}
-							});
-						}
-					},
-					fail: function(res) {
-						console.log('失败', res)
-					}
-				})
-			}else if(that.data.submitOrder == 1){
-				var orderData = {
-					product:that.data.productDetail,					
-					packing:that.data.packType,
-					deliver:that.data.deliverType,
-					warehouse:that.data.company,
-					price:that.data.productInfo.price,
-					amount:that.data.buynumber
-				};
-				wx.removeStorageSync('cartInfoSubmit');	
-				wx.removeStorageSync('submitOrder');	
-				wx.setStorageSync('submitOrder',orderData);
-				that.setData({
-					submitOrder:0,
-				});
-				wx.navigateTo({
-				  url: '/pages/price/submitOrder'
-				});
+					};
+					wx.removeStorageSync('cartInfoSubmit');	
+					wx.removeStorageSync('submitOrder');	
+					wx.setStorageSync('submitOrder',orderData);
+					that.setData({
+						submitOrder:0,
+					});
+					wx.navigateTo({
+					  url: '/pages/price/submitOrder'
+					});
+				}
 			}
 		}
 	},
