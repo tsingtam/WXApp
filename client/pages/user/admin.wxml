@@ -87,7 +87,7 @@
 				    </view>
 				</view>
 				-->
-			    <view class="weui-loadmore weui-loadmore_line" wx:if="{{!orderList||orderList.data.length==0}}">
+			    <view class="weui-loadmore weui-loadmore_line" wx:if="{{!orderList||orderList.length==0}}">
 			        <view class="weui-loadmore__tips_in-line">暂无订单</view>
 			    </view>
             </view>

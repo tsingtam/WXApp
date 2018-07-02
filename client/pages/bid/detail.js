@@ -47,7 +47,7 @@ Page({
 				userkey: app.data.user && app.data.user.userKey
 			},
 			success: function(res) {
-				if (res.data.resultCode == 0 && res.data.data){
+				if (res.data.resultCode == 0 && res.data.data && res.data.data.length){
 					that.setData({
 						contact:res.data.data
 					});
@@ -122,14 +122,25 @@ Page({
 		// wx.navigateTo({
 		// 	url: '/pages/bid/contact'
 		// });
-		if (this.data.userAuth){
-			wx.makePhoneCall({
-				phoneNumber: this.data.contact[0].mobile
-			});
+
+		var mobile = this.data.contact[0];
+		if (mobile){
+			if (this.data.userAuth){
+				wx.makePhoneCall({
+					phoneNumber: mobile
+				});
+			}
+			else {
+				wx.navigateTo({
+					url: '/pages/login/index'
+				});
+			}
 		}
 		else {
-			wx.navigateTo({
-				url: '/pages/login/index'
+			wx.showToast({
+				title: '暂无联系方式',
+				icon: 'none',
+				duration: 2000
 			});
 		}
 	},

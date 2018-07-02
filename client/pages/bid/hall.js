@@ -67,10 +67,16 @@ Page({
 		var objData = {};
 		if(that.data.nav_title[0] != '品种'){
 			objData.category = that.data.nav_title[0];
+		}else{
+			objData.category = '';
 		}
+		
 		if(that.data.nav_title[1] != '用途'){
 			objData.uses = that.data.nav_title[1]; 
+		}else{
+			objData.uses = '';
 		}
+		
 		totalPage++;
 		if(!that.data.isNoMore){
 			wx.request({

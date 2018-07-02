@@ -13,7 +13,7 @@
             </view>
 			<view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">提货地</view>
-                <view class="weui-form-preview__value">{{orderDetail.subOrders[0].warehouse_name}}</view>
+                <view class="weui-form-preview__value">{{orderDetail.subOrders[0].warehouse_name||''}}</view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">产品系列</view>
