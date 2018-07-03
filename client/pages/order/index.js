@@ -14,10 +14,15 @@ Page({
 		isNoMore:false
     },
 	onLoad: function(){
-		this.onShow();
+		//this.onShow();
 	},
 	onShow: function(){
 		this.getOrderList();
+		if(wx.getStorageSync('cartNum') == '0'){
+			wx.removeTabBarBadge({
+				index: 1
+			});
+		}
 	},
 	getOrderList: function(){
 		var that = this;		

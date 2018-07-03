@@ -93,7 +93,7 @@
     "pages/API/pages/storage/storage"
   ],
   "window":{
-    "backgroundColor":"#F6F6F6",
+    "backgroundColor":"#f0f0f0",
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#326ccb",
     "navigationBarTitleText": "铝大牛",

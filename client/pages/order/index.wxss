@@ -29,13 +29,15 @@
 	font-size: 13px;
     position: relative;
 }
-
+.txt.c_disabled{
+	font-size:12px;
+}
 .floatR {
     float: right;
 }
 .floatL{
 	display:block;
-	width:40%;
+	width:65%;
 }
 .c_disabled {
     color: #666;
@@ -52,7 +54,7 @@
 }
 .btn-wrap{
 	margin:0 40rpx;
-	border-top:2rpx solid #ddd;
+	border-top:2rpx solid #eee;
 }
 .btnAgain{
 	width:200rpx;

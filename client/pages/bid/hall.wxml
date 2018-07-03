@@ -57,7 +57,7 @@
 					<text class="grad">{{item.uses}}</text>
 				</view>
 				<view class="contentR">
-					<view><text class="active">{{item.price||'--'}}</text>元/吨</view>
+					<view><text class="active">￥{{item.price||'--'}}</text></view>
 					<image src="../../image/buy.png" class="add" catchtap="addCartTap" data-index="{{item.id}}" data-detail="{{item}}"></image>
 				</view>
 			</view>
@@ -73,7 +73,7 @@
 		<view class="mode-content">
 			<view class="mode-topInfo">
 				<view class="infoL">
-					<view class="title">{{productDetail.brand || '精细氧化铝'}}</view>
+					<view class="title">{{productDetail.category.name || '精细氧化铝'}}</view>
 					<view class="price">￥{{productInfo.price||'--'}}</view>
 				</view>
 				<view class="closeArea" bindtap="closeModel">

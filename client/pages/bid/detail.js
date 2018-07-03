@@ -275,7 +275,7 @@ Page({
 	},
 	addGoodsTap:function(){
 		var that = this;
-		if(app.data.user.type != 1 && that.data.addCart == 1){
+		/*if(app.data.user.type != 1 && that.data.addCart == 1){
 			wx.showToast({
 				title: '管理人员不能进行加入购物车操作！',
 				icon: 'none',
@@ -287,7 +287,7 @@ Page({
 				icon: 'none',
 				duration: 2000
 			});
-		}else{
+		}else{*/
 			if(that.data.deliver == 0){	
 				wx.showToast({
 					title: '请选择商品交货方式！',
@@ -391,7 +391,7 @@ Page({
 					});
 				}
 			}
-		}
+		//}
 	},
 	getAmount:function(e){
 		var that = this;

@@ -96,11 +96,12 @@ Page({
                         tabs: ['待处理订单' + (res.data.data.count ? ' (' + res.data.data.count + ')' : ''), '已处理订单']
                     });
                     console.log(res.data.data, util.formatTime, 1111111111);
-                }
-                else if (res.data.resultCode == 0 && res.data.data && res.data.data.length == 0 && lastId){ // 加载完了
-                    that.setData({
-                        isNoMore: true
-                    });
+                    
+                    if (res.data.data.data.length == 0 && lastId){ // 加载完了
+                        that.setData({
+                            isNoMore: true
+                        });
+                    }
                 }
                 wx.stopPullDownRefresh();
             },

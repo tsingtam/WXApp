@@ -49,7 +49,7 @@
 		<view class="mode-content">
 			<view class="mode-topInfo">
 				<view class="infoL">
-					<view class="title">{{productDetail.brand || '精细氧化铝'}}</view>
+					<view class="title">{{productDetail.category || '精细氧化铝'}}</view>
 					<view class="price">￥{{productInfo.price}}</view>
 				</view>
 				<view class="closeArea" bindtap="closeModel">

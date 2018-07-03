@@ -20,7 +20,7 @@ Page({
 		delBtnWidth:120   //删除按钮宽度单位（rpx）
     },
 	onLoad: function(){
-		this.onShow();
+		//this.onShow();
 	},
 	onShow: function(){
 		var that = this;

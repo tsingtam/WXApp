@@ -13,9 +13,9 @@
 					<text>{{item.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</text>
 				</view>
 				<view class="txt c_disabled" wx:for="{{item.subOrders}}">
-					<text class="txt-item floatL">{{item.product.name}}  {{item.packing}}</text>
+					<text class="txt-item floatL">{{item.product.lCategory.name}} {{item.product.name}}</text>
 					<text class="txt-item">￥{{item.price}}</text>
-					<text class="txt-item floatR">×{{item.amount}}</text>
+					<text class="txt-item">×{{item.amount}}</text>
 				</view>
 			</view>
 			<view class="countInfo">

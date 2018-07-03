@@ -28,7 +28,7 @@
 				        	<view class="weui-media-box__cont">
 					            <view class="weui-media-box__title weui-media-box__title_in-text">{{item.com_name}} <view class="floatR" wx:if="{{item.mobile}}" catchtap="calling" data-phone="{{item.mobile}}"><image class="icoImg" src="../../image/phone2.png" background-size="cover"></image>{{item.mobile}}</view></view>
 					            <view wx:for="{{item.subOrders}}">
-						            <view class="weui-media-box__desc">{{item.product_category||''}}{{item.product_grade||''}}{{item.product_name||''}} {{item.packing}} <view class="floatR">￥{{item.price}} x{{item.amount}}</view></view>
+						            <view class="weui-media-box__desc">{{item.product_category||''}}{{item.product_grade||''}}{{item.product_name||''}} <view class="floatR">￥{{item.price}} x{{item.amount}}</view></view>
 					            </view>
 				        	</view>
 			            	<view class="weui-media-box__title">共{{item.subOrders.length}}件商品<view class="floatR">合计： ￥{{item.totalPrice}}<!-- / {{item.totalAmount}}吨--></view></view>

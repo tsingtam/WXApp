@@ -26,23 +26,7 @@ Page({
         // })
 
         // 订单详情
-        wx.request({
-            url: config.service.adminOrderDetailUrl,
-            data: {
-                order_id: app.data.orderDetailId,
-                userkey: app.data.user && app.data.user.userKey
-            },
-            success: function(res) {
-                if (res.data.resultCode == 0 && res.data.data){
-                    that.setData({
-                        detail: res.data.data
-                    });
-                }
-            },
-            fail: function(res) {
-                console.log('失败', res)
-            }
-        });
+        that.getDetail();
 
         // 业务员列表
         wx.request({
@@ -71,6 +55,26 @@ Page({
     calling: function(e){ // 拨打电话
         wx.makePhoneCall({
             phoneNumber: e.currentTarget.dataset.phone
+        });
+    },
+    getDetail: function(){ // 订单详情
+        var that = this;
+        wx.request({
+            url: config.service.adminOrderDetailUrl,
+            data: {
+                order_id: app.data.orderDetailId,
+                userkey: app.data.user && app.data.user.userKey
+            },
+            success: function(res) {
+                if (res.data.resultCode == 0 && res.data.data){
+                    that.setData({
+                        detail: res.data.data
+                    });
+                }
+            },
+            fail: function(res) {
+                console.log('失败', res)
+            }
         });
     },
     receive: function(){ // 接单
@@ -104,6 +108,7 @@ Page({
                                 that.setData({
                                     'detail.order_status' : 1
                                 });
+                                that.getDetail();
                             }
                             else {
                                 wx.showToast({

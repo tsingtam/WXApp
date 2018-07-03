@@ -1,7 +1,6 @@
 /**index.wxss**/
 @import "../common/lib/weui.wxss";
 page {
-    background: #fff;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

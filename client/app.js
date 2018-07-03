@@ -8,7 +8,7 @@ App({
     	console.log(e, 'launch...');
         // qcloud.setLoginUrl(config.service.loginUrl)
 
-        that.login();
+    	// that.login();
     },
 	onShow: function (e) {
 		var that = this;
@@ -102,8 +102,9 @@ App({
 	            	// });
 	            	if (res.data.resultCode == 0){
 		            	that.data.user = res.data.data;
-						var userkey = res.data.data.userKey;
-						that.getCurrentPage().setData({
+						var userkey = res.data.data.userKey,
+							page = getCurrentPages()[0];
+						page && page.setData({
 							user: res.data.data
 						});
 						wx.request({ //获取购物车数量
@@ -122,6 +123,10 @@ App({
 											index: 1,
 											text: res.data.data.count
 										});									
+									}else if(res.data.data.count == 0){
+										wx.removeTabBarBadge({
+											index:1
+										});	
 									}
 								}
 							},
