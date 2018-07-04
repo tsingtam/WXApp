@@ -34,6 +34,9 @@ var config = {
 		// 企业认证
 		companyAuthUrl:`${host}/client/authenticate`,
 		
+		//企业识别码判断
+		companyCodeUrl:`${host}/client/auth-required`,
+		
 		// 产品类别
 		productTypeUrl:`${host}/product/get-search-label`,
 		

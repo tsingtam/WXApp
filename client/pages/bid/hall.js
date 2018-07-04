@@ -19,8 +19,8 @@ Page({
 		productDetail:{},
 		isDisplay:true,
 		selectList:true,
-		buynumber:0.05,
-		buynumbermin:0.05,
+		buynumber:1,
+		buynumbermin:1,
 		buynumbermax:1000,
 		
 		productInfo:[],
@@ -140,6 +140,9 @@ Page({
 			fail: function(res) {
 				console.log('失败', res)
 			}
+		});
+		wx.showShareMenu({
+		  withShareTicket: true
 		});
 	}, 
 	onShow: function(){
@@ -365,7 +368,7 @@ Page({
 			});
 			that.setData({
 				isDisplay:false,
-				buynumber:0.05
+				buynumber:1
 			});			
 		}else{
 			wx.navigateTo({
@@ -451,7 +454,7 @@ Page({
 			isShow:true,
 			companyName:'',
 			warehouse:[],
-			buynumber:0.05,
+			buynumber:1,
 			packType:'',
 			pack:0
 		})
@@ -476,7 +479,7 @@ Page({
 		var that = this;
 		if(that.data.buynumber > that.data.buynumbermin){
 			var currentNum = that.data.buynumber;
-			currentNum = (currentNum*10000 - 500)/10000;
+			currentNum = (currentNum*10000 - 10000)/10000;
 			if(currentNum < that.data.buynumbermin){
 				currentNum = that.data.buynumbermin;
 			}
@@ -485,7 +488,7 @@ Page({
 			});
 		}else{
 			wx.showToast({
-				title: '该商品的最小购买量为0.05吨！',
+				title: '该商品的最小购买量为1吨！',
 				icon: 'none',
 				duration: 2000
 			});
@@ -495,7 +498,7 @@ Page({
 		var that = this;
 		if(that.data.buynumber < that.data.buynumbermax){
 			var currentNum = that.data.buynumber;
-			currentNum = (currentNum*10000 + 500)/10000;
+			currentNum = (currentNum*10000 + 10000)/10000;
 			that.setData({
 				buynumber:currentNum
 			});
@@ -510,6 +513,11 @@ Page({
 	goManage: function(){
 		wx.navigateTo({
 		  url: '/pages/user/admin'
+		});
+	},
+	goCompany: function(){
+		wx.navigateTo({
+		  url: '/pages/company/index'
 		});
 	}
 })  

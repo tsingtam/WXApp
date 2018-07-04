@@ -6,7 +6,7 @@ page {
     justify-content: flex-start;
 }
 .type-wrap{
-	border-bottom:2rpx solid #ddd;
+	border-bottom:2rpx solid #f0f0f0;
 	background-color:#f0f0f0;
 	font-size:34rpx;
 }
@@ -24,6 +24,7 @@ page {
 }
 .cart-page{
 	width:100%;
+	background: #fff;
 }
 .type-li{
 	overflow:hidden;
@@ -69,11 +70,16 @@ page {
 	height:50rpx;
 }
 .cartInfo .productInfo .info-item{
-	width:50%;
 	float:left;
 	overflow:hidden;
 	height:50rpx;
 	word-break:break-all;
+}
+.info-item.brands{
+	width:60%;
+}
+.info-item.packs{
+	width:40%;
 }
 .check__label_L{
 	float:left;
@@ -145,6 +151,7 @@ page {
 .pageBottom{
 	height:90rpx;
 	width:100%;
+	background: #f0f0f0;
 }
 .count{
 	position:fixed;

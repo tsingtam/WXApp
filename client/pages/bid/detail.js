@@ -30,10 +30,10 @@ Page({
 		isPicker: false, // 是否下拉
 
 		cartNum:0,
-		buynumber:0.05,
-		buynumbermin:0.05,
+		buynumber:1,
+		buynumbermin:1,
 		buynumbermax:1000,
-		phoneNum:'18500880000'
+	
 	},
 	onShow: function(){
 		var that = this;
@@ -111,23 +111,26 @@ Page({
 				console.log('失败', res)
 			}
 		});
-	},
-	phoneCall:function(e){ // 拨打电话
-		var that = this;
-		wx.makePhoneCall({
-			phoneNumber: that.data.phoneNum
+		wx.showShareMenu({
+		  withShareTicket: true
 		});
 	},
+	// phoneCall:function(e){ // 拨打电话
+	// 	var that = this;
+	// 	wx.makePhoneCall({
+	// 		phoneNumber: that.data.phoneNum
+	// 	});
+	// },
 	contact:function(e){ // 联系卖方
 		// wx.navigateTo({
 		// 	url: '/pages/bid/contact'
 		// });
 
-		var mobile = this.data.contact[0];
-		if (mobile){
+		var contact = this.data.contact[0];
+		if (contact){
 			if (this.data.userAuth){
 				wx.makePhoneCall({
-					phoneNumber: mobile
+					phoneNumber: contact.mobile
 				});
 			}
 			else {
@@ -234,7 +237,7 @@ Page({
 				addCart:1,
 				productInfo:this.data.productDetail,
 				isDisplay:false,
-				buynumber:0.05
+				buynumber:1
 			});
 		}else{
 			wx.navigateTo({
@@ -248,7 +251,7 @@ Page({
 				submitOrder:1,
 				productInfo:this.data.productDetail,
 				isDisplay:false,
-				buynumber:0.05
+				buynumber:1
 			});
 		}else{
 			wx.navigateTo({
@@ -267,7 +270,7 @@ Page({
 			isShow:true,
 			companyName:'',
 			warehouse:[],
-			buynumber:0.05,
+			buynumber:1,
 			productInfo:this.data.productDetail,
 			packType:'',
 			pack:0
@@ -412,7 +415,7 @@ Page({
 	minusTap:function(){
 		if(this.data.buynumber > this.data.buynumbermin){
 			var currentNum = this.data.buynumber;
-			currentNum = (currentNum*10000 - 500)/10000;
+			currentNum = (currentNum*10000 - 10000)/10000;
 			if(currentNum < that.data.buynumbermin){
 				currentNum = that.data.buynumbermin;
 			}
@@ -421,7 +424,7 @@ Page({
 			});
 		}else{
 			wx.showToast({
-				title: '该商品的最小购买量为0.05吨！',
+				title: '该商品的最小购买量为1吨！',
 				icon: 'none',
 				duration: 2000
 			});
@@ -430,7 +433,7 @@ Page({
 	plusTap:function(){
 		if(this.data.buynumber < this.data.buynumbermax){
 			var currentNum = this.data.buynumber;
-			currentNum = (currentNum*10000 + 500)/10000;
+			currentNum = (currentNum*10000 + 10000)/10000;
 			this.setData({
 				buynumber:currentNum
 			});

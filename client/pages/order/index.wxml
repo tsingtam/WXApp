@@ -1,8 +1,17 @@
 <!--index.wxml-->
-	<view class="weui-loadmore weui-loadmore_line" wx:if="{{order.orderList.length == 0}}">
+	<view class="orderStatus">
+		<view class="status-item {{allOrders == 1 ? 'active' : ''}}" bindtap="allOrder">全部</view>
+		<view class="status-item {{payOrders == 1 ? 'active' : ''}}" bindtap="wait_pay">待付款</view>
+		<view class="status-item {{sendOrders == 1 ? 'active' : ''}}" bindtap="wait_send">待发货</view>
+		<view class="status-item {{receiveOrders == 1 ? 'active' : ''}}" bindtap="wait_receive">待收货</view>
+		<view class="status-item {{invoiceOrders == 1 ? 'active' : ''}}" bindtap="wait_invoice">代开票</view>
+	</view>
+	<view class="weui-loadmore weui-loadmore_line nullOrder" wx:if="{{order.orderList.length == 0 && allOrders == 1}}">
 		<view class="weui-loadmore__tips_in-line">暂无订单</view>
 	</view>
-
+	<view class="weui-loadmore weui-loadmore_line nullOrder" wx:if="{{order.orderList.length == 0 && allOrders != 1}}">
+		<view class="weui-loadmore__tips_in-line">新功能即将开放，敬请期待！</view>
+	</view>
 	<view class="list-group" wx:for="{{order.orderList}}" wx:if="{{order.orderList.length > 0}}">
 		<view class="list-group-item myBid" bindtap="check_detail" data-index="{{item.id}}">
 			<text class="title c_disabled">{{item.show_time}}</text>

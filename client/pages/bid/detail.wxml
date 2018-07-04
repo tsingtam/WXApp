@@ -36,9 +36,9 @@
 	</view>
 	<view class="footer">
         <picker class="link" bindchange="bindPickerChange" name="area" value="{{index}}" range="{{array}}" wx:if="{{userAuth&&isPicker}}">
-			<view bindtap="phonecall">联系卖方</view>
+			<view>联系卖方</view>
 		</picker>
-		<view class="link" bindtap="phonecall" bindtap="contact" wx:else>联系卖方</view>
+		<view class="link" bindtap="contact" wx:else>联系卖方</view>
 		<view class="addCart" bindtap="selectType">
 		<image class="addbuy" src="../../image/buy2.png" background-size="cover"></image>
 		<view class="mark" wx:if="{{cartNum > 0}}">{{cartNum}}</view>

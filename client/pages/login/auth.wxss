@@ -1,0 +1,6 @@
+/**index.wxss**/
+page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}

@@ -41,13 +41,13 @@
 							</label>
 							<view class="cartInfoR">
 								<view class="productInfo">
-									<text class="info-item">牌号：{{lastChild.product.name}}</text>
-									<text class="info-item">包装规格：{{lastChild.packing}}</text>
+									<text class="info-item brands">牌号：{{lastChild.product.name}}</text>
+									<text class="info-item packs">包装规格：{{lastChild.packing}}</text>
 								</view>
 								<view class="numInfo">
 									<view class="priceL">单价：<text class="active">￥{{lastChild.price}}</text></view>
 									<view class="numR">
-										<text class="btn minus" bindtap="minusTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">-</text>
+										<text class="btn minus {{lastChild.amount == 1 ? 'disabled':''}}" bindtap="minusTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">-</text>
 										<input class="buy-num" value="{{lastChild.amount}}" bindchange="getAmount" data-item="{{lastChild}}" />
 										<text class="unit">吨</text>
 										<text class="btn plus {{lastChild.amount == 1000 ? 'disabled':''}}" bindtap="addTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">+</text>
@@ -59,9 +59,6 @@
 					</view>
 				</view>
 			</view>
-		</view>
-		<view class="weui-loadmore weui-loadmore_line" wx:if="{{isNoMore}}">
-			<view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多了</view>
 		</view>
 		<view class="pageBottom"></view>
 </view>

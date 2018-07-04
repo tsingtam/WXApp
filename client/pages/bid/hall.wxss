@@ -12,7 +12,7 @@
 }
 .topR{
   display: inline-block;
-  padding: 25rpx 0 0 5rpx;
+  padding: 15rpx 0 0 5rpx;
 }
 .companyImg{
   height: 150rpx;
@@ -43,6 +43,7 @@
   height: 30rpx;
   line-height: 30rpx;
   color: #999;
+  width: 200px;
 }
 .nav {  
   height: 80rpx;  

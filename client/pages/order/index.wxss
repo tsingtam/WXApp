@@ -1,5 +1,23 @@
 /**index.wxss**/
-
+.orderStatus{
+	display:flex;
+	background-color:#fff;
+	margin-bottom:6rpx;
+	height:60rpx;
+	line-height:60rpx;
+}
+.nullOrder{
+	margin-top:12rem;
+	font-size:32rpx;
+}
+.status-item{
+	width:20%;
+	text-align:center;
+    font-size:13px;
+}
+.status-item.active{
+	border-bottom:6rpx solid #366ec8;
+}
 .list-group {
     position: relative;
     z-index: 0;

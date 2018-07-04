@@ -11,7 +11,12 @@ Page({
 		order:{
 			orderList:[]
 		},
-		isNoMore:false
+		isNoMore:false,
+		allOrders:1,
+		payOrders:0,
+		sendOrders:0,
+		receiveOrders:0,
+		invoiceOrders:0
     },
 	onLoad: function(){
 		//this.onShow();
@@ -21,6 +26,11 @@ Page({
 		if(wx.getStorageSync('cartNum') == '0'){
 			wx.removeTabBarBadge({
 				index: 1
+			});
+		}else{
+			wx.setTabBarBadge({
+				index:1,
+				text:wx.getStorageSync('cartNum')
 			});
 		}
 	},
@@ -89,6 +99,69 @@ Page({
 		var id = e.currentTarget.dataset.index;
 		wx.navigateTo({
 			url:'../order/detail?id='+id
+		})
+	},
+	allOrder: function(){
+		var that = this;
+		that.getOrderList();
+		that.setData({
+			allOrders:1,
+			payOrders:0,
+			sendOrders:0,
+			receiveOrders:0,
+			invoiceOrders:0
+		})
+	},
+	wait_pay: function(){
+		var that = this;
+		that.setData({
+			order:{
+				orderList:[]
+			},
+			allOrders:0,
+			payOrders:1,
+			sendOrders:0,
+			receiveOrders:0,
+			invoiceOrders:0
+		})
+	},
+	wait_send: function(){
+		var that = this;
+		that.setData({
+			order:{
+				orderList:[]
+			},
+			allOrders:0,
+			payOrders:0,
+			sendOrders:1,
+			receiveOrders:0,
+			invoiceOrders:0
+		})
+	},
+	wait_receive: function(){
+		var that = this;
+		that.setData({
+			order:{
+				orderList:[]
+			},
+			allOrders:0,
+			payOrders:0,
+			sendOrders:0,
+			receiveOrders:1,
+			invoiceOrders:0
+		})
+	},
+	wait_invoice: function(){
+		var that = this;
+		that.setData({
+			order:{
+				orderList:[]
+			},
+			allOrders:0,
+			payOrders:0,
+			sendOrders:0,
+			receiveOrders:0,
+			invoiceOrders:1
 		})
 	}
 })

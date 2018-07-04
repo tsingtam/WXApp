@@ -105,9 +105,9 @@ Page({
 		var product = e.currentTarget.dataset.item;		
 		var amount = product.amount;
 		if(!isNaN(inputValue)){
-			if(inputValue > 0 && inputValue < 0.05){
+			if(inputValue > 0 && inputValue < 1){
 				wx.showToast({
-					title: '该商品的最小购买量为0.05吨！',
+					title: '该商品的最小购买量为1吨！',
 					icon: 'none',
 					duration: 2000
 				});
@@ -567,21 +567,11 @@ Page({
 								}
 							}
 						})
-					});	
-					/*list.forEach(function(m,n){
-						m.value.forEach(function(w,f){
-							w.value.forEach(function(t,k){
-								if(t.checked){
-									total+= parseFloat(t.amount)*t.price*10000;
-								}
-							})
-						})
-					})*/			
+					});									
 					that.setData({
 						cartInfo:{
 							list:list
-						}
-						//totalPrice:(total/10000).toFixed(2)
+						}						
 					});	
 					app.getCartNum(app.data.user.userKey);
 					that.getTotal();
@@ -619,8 +609,8 @@ Page({
 					j.value.forEach(function(k,h){
 						if(k.product_id == id){
 							var num = k.amount;
-							num = (num*10000 - 500)/10000;
-							if(num > 0.05){
+							num = (num*10000 - 10000)/10000;
+							if(num >= 1){
 								k.amount = num.toFixed(4);
 								amount = k.amount;								
 								that.setData({
@@ -630,10 +620,11 @@ Page({
 								});					
 							}else{					
 								wx.showToast({
-									title: '该商品的最小购买量为0.05吨！',
+									title: '该商品的最小购买量为1吨！',
 									icon: 'none',
 									duration: 2000
 								});
+								amount = 1;
 								that.setData({
 									cartInfo:{
 										list:list
@@ -655,7 +646,7 @@ Page({
 					amount:minusNum
 				};
 			console.log(minusNum,'minusNum');
-			if(minusNum > 0.05){
+			if(minusNum >= 1){
 				that.updateCart(options);
 			}else{				
 				that.deleteCart(id);
@@ -671,7 +662,7 @@ Page({
 					j.value.forEach(function(k,h){
 						if(k.product_id == id){
 							var num = k.amount;
-							num = (num*10000 + 500)/10000;
+							num = (num*10000 + 10000)/10000;
 							if(num < 1000 || num == 1000){
 								k.amount = num.toFixed(4);
 								amount = k.amount;							

@@ -1,0 +1,23 @@
+﻿<!--index.wxml-->
+	<view class="page-body">
+        <view class="weui-article">
+            <view class="weui-article__h1">中铝新材料有限公司简介</view>
+            <view class="weui-article__section">
+                <view class="weui-article__p">
+                    中铝新材料有限公司是世界500强企业中国铝业集团有限公司的精细氧化铝国内统一营销平台, 2018年4月在江苏无锡注册成立，由中铝国际贸易有限公司、中铝山东有限公司和中铝中州铝业有限公司投资组建。
+                </view>
+                <view class="weui-article__p">
+                    公司遵循创新、协调、绿色、开放、共享五大发展理念，依托中铝企业精细氧化铝的技术和生产优势，致力于精细氧化铝的研发和销售，主要经营特种氢氧化铝、特种氧化铝、沸石分子筛和催化剂载体等系列产品，广泛应用于建材、耐火材料、洗涤用品、电器 、电子元件、陶瓷、塑料、橡胶、石油化工和航空航天等30余个行业，年销售总量居全球前列。公司励精图治、创新求强，以建设具有全球竞争力的专业营销平台、打造世界一流的精细氧化铝供应商和集成服务商为战略定位，秉承“创造价值，乐于交往”的经营理念，为客户提供优质的产品和服务。
+                </view>
+                <view class="weui-article__p">
+                    中铝新材料，成就美好生活。竭诚欢迎各界朋友莅临指导，洽商业务，共谋发展。
+                </view>
+                <view class="weui-article__p">
+                    地址：江苏省无锡市滨湖区太湖西大道2168号中锐佳诚国际大厦A座23层。
+                </view>
+                <view class="weui-article__p">
+                    联系方式：<text bindtap="calling" data-phone="0510-82393780">0510-82393780</text>
+                </view>
+            </view>
+        </view>
+	</view>

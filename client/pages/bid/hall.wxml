@@ -9,10 +9,10 @@
 	  </view>
 	</view>
     <view class="top">
-		<image src="../../image/companyIcon.png" background-size="cover" class="companyImg"></image>
-		<view class="topR">
+		<image src="../../image/companyIcon.png" background-size="cover" class="companyImg" bindtap="goCompany"></image>
+		<view class="topR" bindtap="goCompany">
 			<text class="companyName">中铝新材料有限公司</text>
-			<text class="small">主营精细氧化铝</text>
+			<text class="small">主营特种氢氧化铝、特种氧化铝、沸石分子筛和催化剂载体等系列产品</text>
 		</view>
 		<view class="manage" wx:if="{{user&&user.auth&&(user.type==2||user.type==3)}}" bindtap="goManage">
 			<image class="icoImg" src="../../image/set.png" background-size="cover"></image>

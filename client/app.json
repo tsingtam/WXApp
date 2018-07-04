@@ -12,6 +12,8 @@
     "pages/user/adminView",
     "pages/user/auth",
     "pages/login/index",
+	"pages/login/auth",
+    "pages/company/index",
     "pages/search/search",
     
     "pages/index/index",

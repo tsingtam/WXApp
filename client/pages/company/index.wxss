@@ -1,0 +1,4 @@
+/**index.wxss**/
+.weui-article{padding-top:0;}
+.weui-article__h1{text-align:center;}
+.weui-article__p{text-indent:2em;}
