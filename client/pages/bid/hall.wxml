@@ -50,9 +50,9 @@
 		<view class="list-group-item">
 			<view class="cont-wrap" bindtap="check_detail" data-index="{{item.id}}">
 				<view class="contentL">
-					<text class="productName">{{item.category.name}}</text>
+					<text class="productName">{{item.name}}</text>
 					<view class="mid">
-						<text class="midF">{{item.name}}</text>
+						<text class="midF">{{item.category.name}}</text>
 					</view>
 					<text class="grad">{{item.uses}}</text>
 				</view>

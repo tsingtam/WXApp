@@ -2,7 +2,6 @@
 <view class="container">
 	<form bindsubmit="formSubmit">
 	<view class="page-body">
-        <view class="weui-cells__title"></view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__hd">
@@ -11,15 +10,7 @@
                 <view class="weui-cell__bd">
                     <input name="comName" class="weui-input" placeholder="请输入您的企业名称"/>
                 </view>
-            </view>
-            <view class="weui-cell weui-cell_input">
-                <view class="weui-cell__hd">
-                    <view class="weui-label">企业识别码</view>
-                </view>
-                <view class="weui-cell__bd">
-                    <input class="weui-input" name="comIdCode" placeholder="请输入您的企业识别码"/>
-                </view>
-            </view>
+            </view>      
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__hd">
                     <view class="weui-label">所属地区</view>
@@ -30,31 +21,9 @@
                     </picker>
                 </view>
             </view>
-        </view>
-        <view class="weui-cells__title"></view>
-        <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell weui-cell_input weui-cell_vcode">
-                <view class="weui-cell__hd">
-                    <view class="weui-label">手机号</view>
-                </view>
-                <view class="weui-cell__bd">
-                    <input class="weui-input" name="mobile" bindinput="getMobile" placeholder="请输入手机号" />
-                </view>
-            </view>
-            <view class="weui-cell weui-cell_input weui-cell_vcode">
-                <view class="weui-cell__hd">
-                    <view class="weui-label">验证码</view>
-                </view>
-                <view class="weui-cell__bd">
-                    <input class="weui-input" name="smsVerfCode" placeholder="请输入验证码" />
-                </view>
-                <view class="weui-cell__ft">
-                    <view class="weui-vcode-btn" bindtap="getCode" disabled="{{disabled}}">{{time}}</view>
-                </view>
-            </view>
-        </view>
+        </view>   
 		<view class="btn-area">
-			<button form-type="submit" type="primary">确定</button>
+			<button form-type="submit" type="primary">下一步</button>
 		</view>
 	</view>
 	</form>

@@ -59,9 +59,17 @@ Page({
 							icon: 'success',
 							duration: 2000
 						});
-						wx.switchTab({
-						  url: '/pages/order/index'
-						})
+						setTimeout(function(){	
+							wx.switchTab({
+							  url: '/pages/order/index'
+							});
+						},2000);
+					}else{
+						wx.showToast({
+						  title: res.data.msg || '系统繁忙，请稍后再试',
+						  icon: 'none',
+						  duration: 2000
+						});
 					}
 				},
 				fail: function(res) {
@@ -88,9 +96,17 @@ Page({
 							duration: 2000
 						});
 						app.getCartNum(app.data.user.userKey);
-						wx.switchTab({
-						  url: '/pages/order/index'
-						})
+						setTimeout(function(){	
+							wx.switchTab({
+							  url: '/pages/order/index'
+							});
+						},2000);
+					}else{
+						wx.showToast({
+						  title: res.data.msg || '系统繁忙，请稍后再试',
+						  icon: 'none',
+						  duration: 2000
+						});
 					}
 				},
 				fail: function(res) {

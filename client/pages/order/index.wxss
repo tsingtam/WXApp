@@ -9,6 +9,7 @@
 .nullOrder{
 	margin-top:12rem;
 	font-size:32rpx;
+	width:70%;
 }
 .status-item{
 	width:20%;

@@ -436,6 +436,12 @@ Page({
 								packType:'',
 								pack:0
 							});
+						}else{
+							wx.showToast({
+							  title: res.data.msg || '系统繁忙，请稍后再试',
+							  icon: 'none',
+							  duration: 2000
+							});
 						}
 					},
 					fail: function(res) {

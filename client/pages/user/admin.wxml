@@ -31,7 +31,19 @@
 						            <view class="weui-media-box__desc">{{item.product_category||''}}{{item.product_grade||''}}{{item.product_name||''}} <view class="floatR">￥{{item.price}} x{{item.amount}}</view></view>
 					            </view>
 				        	</view>
-			            	<view class="weui-media-box__title">共{{item.subOrders.length}}件商品<view class="floatR">合计： ￥{{item.totalPrice}}<!-- / {{item.totalAmount}}吨--></view></view>
+			            	<view class="weui-media-box__title">共{{item.subOrders.length}}件商品
+				            	<view class="floatR">合计： ￥{{item.totalPrice}}<!-- / {{item.totalAmount}}吨--></view>
+							    <view class="weui-media-box__btn" wx:if="{{activeIndex==0&&userType!=2}}" catchtap="catch">
+							        <picker bindchange="bindPickerChange" data-id="{{item.order_id}}" value="{{index}}" range="{{sales}}" wx:if="{{item.order_status==1}}">
+							        	<button class="weui-btn mini-btn" type="default" size="mini">转单</button>
+							        </picker>
+							        <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="deal" data-id="{{item.order_id}}" wx:if="{{item.order_status==1}}">完成ERP录入</button>
+							        <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="receive" data-id="{{item.order_id}}" wx:if="{{item.order_status==0}}">接单</button>
+							    </view>
+								<view class="weui-media-box__btn" wx:if="{{activeIndex==1&&userType!=2}}" catchtap="catch">
+									<button class="weui-btn mini-btn" form-type="submit" type="primary" size="mini" bindtap="create" data-id="{{item.order_id}}">生成购销单</button>
+								</view>
+							</view>
 				        </view>
 				    </view>
 				</view>

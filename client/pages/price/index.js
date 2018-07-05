@@ -575,6 +575,12 @@ Page({
 					});	
 					app.getCartNum(app.data.user.userKey);
 					that.getTotal();
+				}else{
+					wx.showToast({
+                      title: res.data.msg || '系统繁忙，请稍后再试',
+                      icon: 'none',
+                      duration: 2000
+                    });
 				}
 			},
 			fail: function(res) {

@@ -76,7 +76,7 @@
         	<button class="weui-btn" type="default">转单</button>
         </picker>
     </view>
-	<view class="btn-area" wx:if="{{activeIndex==1&&userType!=2&&false}}">
+	<view class="btn-area" wx:if="{{activeIndex==1&&userType!=2}}">
 		<button form-type="submit" type="primary" bindtap="create">生成购销单</button>
 	</view>
 </view>

@@ -129,6 +129,13 @@ Page({
     create: function(){ // 生成购销单
         var that = this;
 
+        wx.showToast({
+          title: '新功能即将开放，敬请期待！',
+          icon: 'none',
+          duration: 2000
+        });
+        return;
+
         wx.request({
             url: config.service.adminOrderCreateUrl,
             data: {
