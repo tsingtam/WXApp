@@ -39,6 +39,11 @@ Page({
                 if (res.data.resultCode == 0 && res.data.data){
                     var sales = [];
                     res.data.data.forEach(function(o, i){
+                        if(app.data.user.mobile == o.mobile){ // 过滤掉自己
+                            res.data.data.splice(i, 1);
+                        }
+                    });
+                    res.data.data.forEach(function(o, i){
                         sales.push(o.real_name + ' ' + o.mobile);
                     });
                     that.setData({

@@ -38,7 +38,8 @@
 				<view class="typeName" data-name="{{item.name}}">{{item.name}}</view>
 				<view class="cont">
 					<block wx:for="{{item.child}}" wx:key="index">  
-						<text class="cont-item" data-name="{{item.name}}" bindtap="select_type">{{item.name}}</text>
+						<text class="cont-item {{((category.length>0&&categoryObj[item.name])||category.length==0)?'':'c_disabled'}}" data-name="{{item.name}}" bindtap="select_type" wx:if="{{shownavindex==0}}">{{item.name}}</text>
+						<text class="cont-item {{((uses.length>0&&usesObj[item.name])||uses.length==0)?'':'c_disabled'}}" data-name="{{item.name}}" bindtap="select_type" wx:if="{{shownavindex==1}}">{{item.name}}</text>
 					</block>
 				</view>
 			</view>
@@ -82,9 +83,9 @@
 			</view>
 			<view class="model-item">
 				<view class="title">交货方式</view>
-				<text class="con {{deliver == 1 ? 'active':''}}" bindtap="deliverItemTap" data-index="1" data-id="{{productDetail.id}}" data-name="自提">自提</text>
+				<text class="con active" bindtap="deliverItemTaps" data-index="1" data-id="{{productDetail.id}}" data-name="自提">自提</text>
 			</view>
-			<view class="model-item" hidden="{{isShow}}">
+			<view class="model-item house">
 				<view class="title">提货地</view>
 				<block wx:for="{{warehouse}}" >
 				<text class="con ware {{company == item.w_id  ? 'active':''}}" bindtap="companyItemTap" data-index="{{item.w_id}}" data-name="{{item.warehouse.name}}">{{item.warehouse.name}}</text>

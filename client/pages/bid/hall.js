@@ -17,6 +17,8 @@ Page({
 		nav_centent: null,
 		productList:[],
 		productDetail:{},
+		category: [], // 品种（可点击）
+		uses: [], // 分类（可点击）
 		isDisplay:true,
 		selectList:true,
 		buynumber:1,
@@ -24,9 +26,9 @@ Page({
 		buynumbermax:1000,
 		
 		productInfo:[],
-		isShow:true,
+		isShow:false,
 		isNoMore:false,
-		deliver:0,
+		deliver:1,
 		deliverType:'',
 		pack:0,
 		packType:'',
@@ -52,6 +54,8 @@ Page({
 					productList = res.data.data.products
 					that.setData({
 						productList:productList,
+						category:[],
+						uses:[],
 						isNoMore:false
 					})
 				}
@@ -112,7 +116,12 @@ Page({
 	onLoad: function(){		
 		var that = this;
 		// wx.navigateTo({
-		//   url: '/pages/login/index'
+		//   url: '/pages/user/auth'
+		// });
+		// wx.getUserInfo({
+		// 	success: function(e){
+		// 		console.log(e.rawData);
+		// 	}
 		// });
 
 		wx.request({
@@ -133,7 +142,9 @@ Page({
 				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
 					productList = res.data.data.products
 					that.setData({
-						productList:productList
+						productList:productList,
+						category:[],
+						uses:[],
 					});
 				}
 			},
@@ -226,8 +237,20 @@ Page({
 				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
 					productList = res.data.data.products;
 					totalPage = 1;
+					var categoryObj = {},
+						usesObj = {};
+					res.data.data.category.forEach(function(o, i){
+						categoryObj[o] = 1;
+					});
+					res.data.data.uses.forEach(function(o, i){
+						usesObj[o] = 1;
+					});
 					that.setData({
 						productList:productList,
+						category: res.data.data.category,
+						uses: res.data.data.uses,
+						categoryObj: categoryObj,
+						usesObj: usesObj,
 						isNoMore:false,
 					});
 				}
@@ -263,8 +286,20 @@ Page({
 				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
 					productList = res.data.data.products;
 					totalPage = 1;
+					var categoryObj = {},
+						usesObj = {};
+					res.data.data.category.forEach(function(o, i){
+						categoryObj[o] = 1;
+					});
+					res.data.data.uses.forEach(function(o, i){
+						usesObj[o] = 1;
+					});
 					that.setData({
 						productList:productList,
+						category: res.data.data.category,
+						uses: res.data.data.uses,
+						categoryObj: categoryObj,
+						usesObj: usesObj,
 						isNoMore:false,
 					});
 				}
@@ -364,12 +399,36 @@ Page({
 		if(app.data.user.auth){
 			that.setData({
 				productDetail:e.currentTarget.dataset.detail,
-				productInfo:e.currentTarget.dataset.detail
-			});
-			that.setData({
+				productInfo:e.currentTarget.dataset.detail,
 				isDisplay:false,
 				buynumber:1
-			});			
+			});	
+			wx.request({
+				url: config.service.getWareHouseUrl,
+				data: {
+					product_id:index,
+					userkey:app.data.user.userKey
+				},
+				success: function(res) {
+					if(res.data.resultCode == 0){
+						that.setData({
+							isShow:false,
+							deliver:1,
+							warehouse:res.data.data.warehouses,
+							deliverType:'自提'
+						});
+					}else{
+						wx.showToast({
+							title: res.data.msg || '系统繁忙，请稍后再试',
+							icon: 'none',
+							duration: 2000
+						});
+					}
+				},
+				fail: function(res) {
+					console.log('失败', res)
+				}
+			});
 		}else{
 			wx.navigateTo({
 			  url: '/pages/login/index'
@@ -411,7 +470,8 @@ Page({
 						product_id:that.data.productDetail.id,
 						userkey:app.data.user.userKey,
 						packing:that.data.packType,
-						deliver:that.data.deliverType,
+						//deliver:that.data.deliverType,
+						deliver:'自提',
 						warehouse:that.data.company,
 						amount:that.data.buynumber
 					},

@@ -359,6 +359,9 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
   margin-bottom:10rpx;
   padding: 10rpx 40rpx;
 }
+.model-item.house{
+  height:116rpx;
+}
 .model-item .title{
   font-size:28rpx;
   margin-bottom:20rpx;

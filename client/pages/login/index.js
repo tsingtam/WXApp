@@ -35,7 +35,7 @@ Page({
 		}
 		if(Data.comName == ''){
 			wx.showToast({
-				title: '公司名不能为空',
+				title: '企业名不能为空',
 				icon: 'none',
 				duration: 1500
 			})

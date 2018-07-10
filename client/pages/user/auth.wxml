@@ -24,7 +24,7 @@
                 </view>
             </view>
         </view>
-		<view class="btn-area" bindtap="submit">
+		<view class="btn-area">
 			<button form-type="submit" type="primary">确定</button>
 		</view>
     </form>

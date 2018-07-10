@@ -14,6 +14,9 @@ Page({
 		currentTime:60,
 		mobile:'' //获取手机验证码的手机号
     },
+    onReady: function(){
+    	app.login();
+    },
 	getTimer: function (options) {
 		var that = this;
 		var currentTime = that.data.currentTime
@@ -87,7 +90,7 @@ Page({
     formSubmit: function(e){
     	var that = this;
 		var Data = e.detail.value;
-		if(app.data.user.userKey){
+		if(app.data.user && app.data.user.userKey){
 			Data.userKey = app.data.user.userKey;
 		}
 		Data.authType = '2';

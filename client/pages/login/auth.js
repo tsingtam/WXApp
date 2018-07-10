@@ -13,7 +13,7 @@ Page({
 		currentTime:60,
 		
 		mobile:'',//获取手机验证码的手机号
-		codeShow:true,
+		codeShow:false,
         index: 0,
         array: ['请选择地区','山东地区', '华北地区', '华东地区', '西南地区', '西北地区', '华南地区', '华中地区']
     },
@@ -73,30 +73,31 @@ Page({
 				duration: 1500
 			})
 		}else{
-			wx.request({
-				url: config.service.getVerfCodeUrl,
-				data: {
-					mobile:that.data.mobile
-				},
-				success: function(res) {	
-					console.log(res);
-					if(res.data.resultCode == 0){
-						that.getTimer();
-						that.setData({
-							disabled:true
-						})
-					}else{
-						wx.showToast({
-						  title: res.data.msg || '系统繁忙，请稍后再试',
-						  icon: 'none',
-						  duration: 2000
-						});
+			if(!that.data.disabled){
+				wx.request({
+					url: config.service.getVerfCodeUrl,
+					data: {
+						mobile:that.data.mobile
+					},
+					success: function(res) {	
+						if(res.data.resultCode == 0){
+							that.getTimer();
+							that.setData({
+								disabled:true
+							})
+						}else{
+							wx.showToast({
+							  title: res.data.msg || '系统繁忙，请稍后再试',
+							  icon: 'none',
+							  duration: 2000
+							});
+						}
+					},
+					fail: function(res) {
+						console.log('失败', res)
 					}
-				},
-				fail: function(res) {
-					console.log('失败', res)
-				}
-			})
+				})
+			}
 		}
 	},
     formSubmit: function(e){
@@ -111,7 +112,7 @@ Page({
 		}
 		if(Data.comName == ''){
 			wx.showToast({
-				title: '公司名不能为空',
+				title: '企业名不能为空',
 				icon: 'none',
 				duration: 1500
 			})

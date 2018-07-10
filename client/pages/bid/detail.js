@@ -15,7 +15,7 @@ Page({
 		submitOrder:0,
 		
 		isShow:true,
-		deliver:0,
+		deliver:1,
 		deliverType:'',
 		pack:0,
 		packType:'',
@@ -159,7 +159,7 @@ Page({
 			});
         }
 	},
-	deliverItemTap:function(e){
+	deliverItemTaps:function(e){
 		var that = this;
 		var index = e.currentTarget.dataset.index;
 		var product_id = e.currentTarget.dataset.id;
@@ -317,7 +317,8 @@ Page({
 							product_id:that.data.productDetail.id,
 							userkey:app.data.user.userKey,
 							packing:that.data.packType,
-							deliver:that.data.deliverType,
+							//deliver:that.data.deliverType,
+							deliver:'自提',
 							warehouse:that.data.company,
 							amount:that.data.buynumber
 						},
@@ -384,7 +385,8 @@ Page({
 					var orderData = {
 						product:that.data.productDetail,					
 						packing:that.data.packType,
-						deliver:that.data.deliverType,
+						//deliver:that.data.deliverType,
+						deliver:'自提',
 						warehouse:that.data.company,
 						price:that.data.productInfo.price,
 						amount:that.data.buynumber

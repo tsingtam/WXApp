@@ -1,7 +1,7 @@
 <!--index.wxml-->
   <view class="page-body">
     <view class="topInfo">
-		<view class="productName">{{productDetail.brand}}{{productDetail.category}}</view>
+		<view class="productName">{{productDetail.name}}</view>
 		<view class="price-num">
 			<view class="price-wrap">
 				<text class="active">￥{{productDetail.price||'--'}}</text>
@@ -12,12 +12,12 @@
 	<view class="midInfo">
 		<view class="title">产品属性</view>
 		<view class="list-item">
-			<text class="nameL">品种</text>
-			<text class="contentR">{{productDetail.category||''}}</text>
-		</view>
-		<view class="list-item">
 			<text class="nameL">牌号</text>
 			<text class="contentR">{{productDetail.name||''}}</text>
+		</view>
+		<view class="list-item">
+			<text class="nameL">品种</text>
+			<text class="contentR">{{productDetail.category||''}}</text>
 		</view>
 		<view class="list-item">
 			<text class="nameL">指标</text>
@@ -58,9 +58,9 @@
 			</view>
 			<view class="model-item">
 				<view class="title">交货方式</view>
-				<text class="con {{deliver == 1 ? 'active':''}}" bindtap="deliverItemTap" data-index="1" data-id="{{productDetail.id}}" data-name="自提">自提</text>
+				<text class="con active" bindtap="deliverItemTap" data-index="1" data-id="{{productDetail.id}}" data-name="自提">自提</text>
 			</view>
-			<view class="model-item" hidden="{{isShow}}">
+			<view class="model-item house">
 				<view class="title">提货地</view>
 				<block wx:for="{{warehouse}}" >
 				<text class="con ware {{company == item.w_id  ? 'active':''}}" bindtap="companyItemTap" data-index="{{item.w_id}}" data-name="{{item.warehouse.name}}">{{item.warehouse.name}}</text>
