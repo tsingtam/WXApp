@@ -1,34 +1,40 @@
 <!--index.wxml-->
 <view class="page-body">
+    <view class='type-wrap'>
+		<image src='../../image/qu.png' class='quIcon' background-size='cover'></image>
+		<view class='type-cont'>
+			<text>取货方式:</text>
+			<text class='spec'>自提</text>
+		</view>
+    </view>
     <view class="page-top"></view>
+    <view class='company-wrap'>
+		<view class='gs-wrap'>
+			<image src='../../image/gs.png' class='gsIcon' background-size='cover'></image>
+			<text class='com-name'>中铝新材料有限公司</text>
+		</view>
+		<view class="order-wrap">
+			<view class="order-wrap-item">
+				<view class="marks"></view>
+				<view class="proname">{{orderDetail.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</view>
+				<view class="status" wx:if="{{orderDetail.status==0}}">待处理</view>
+				<view class="status c_warning" wx:else>已处理</view>
+			</view>
+			<view class="order-wrap-item">
+				<view class="preview__label">产品系列</view>
+                <view class="preview__value">{{orderDetail.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</view>
+			</view>
+			<view class="order-wrap-item">
+				<view class="preview__label">提货地</view>
+                <view class="preview__value">{{orderDetail.subOrders[0].warehouse_name||''}}</view>
+			</view>
+			<view class="order-wrap-item">
+				<view class="preview__label">总金额</view>
+                <view class="preview__value amount">¥{{orderDetail.total_price}}</view>
+			</view>
+		</view>
+    </view>
     <view class="weui-form-preview">
-		 <view class="weui-form-preview__hd">
-			<view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">卖方</view>
-                <view class="weui-form-preview__value">中铝新材料有限公司</view>
-            </view>
-			<view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">交货方式</view>
-                <view class="weui-form-preview__value">自提</view>
-            </view>
-			<view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">提货地</view>
-                <view class="weui-form-preview__value">{{orderDetail.subOrders[0].warehouse_name||''}}</view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">产品系列</view>
-                <view class="weui-form-preview__value">{{orderDetail.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">订单状态</view>
-                <view class="weui-form-preview__value c_pass" wx:if="{{orderDetail.status==0}}">待处理</view>
-                <view class="weui-form-preview__value c_warning" wx:else>已处理</view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">总金额</view>
-                <view class="weui-form-preview__value_in-hd">¥{{orderDetail.total_price}}</view>
-            </view>     
-        </view>
         <view class="weui-form-preview__bd" wx:for="{{orderDetail.subOrders}}">            
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">品种</view>

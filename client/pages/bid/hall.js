@@ -36,6 +36,13 @@ Page({
 		companyName:'',
 		company:0
 	}, 
+	onShareAppMessage: function (res) {
+		return {
+		  title: '全球最大的精细氧化铝销售平台',
+		  path: '/pages/bid/hall',
+		  imageUrl: '../../image/share.jpg'
+		}
+	},
     onPullDownRefresh: function(){
     	var that = this;
 		var objData = {};

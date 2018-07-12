@@ -1,25 +1,27 @@
 <!--index.wxml-->
   <view class="page-body">
-	<view class="weui-search-bar" hidden="{{true}}">
-	   <view class="weui-search-bar__form">
-		<view class="weui-search-bar__box">
-		  <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-		  <input type="text" class="weui-search-bar__input" placeholder="请输入查询内容" value="" bindtap="search_product" />
+	<view class='banner-wrap' style="background-image: url('../../image/bg.png');">
+		<view class="weui-search-bar" hidden="{{true}}">
+		   <view class="weui-search-bar__form">
+			<view class="weui-search-bar__box">
+			  <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+			  <input type="text" class="weui-search-bar__input" placeholder="请输入查询内容" value="" bindtap="search_product" />
+			</view>
+		  </view>
 		</view>
-	  </view>
+		<view class="top">
+			<image src="../../image/companyIcon.png" background-size="cover" class="companyImg" bindtap="goCompany"></image>
+			<view class="topR" bindtap="goCompany">
+				<text class="companyName">中铝新材料有限公司</text>
+				<text class="small">主营特种氢氧化铝、特种氧化铝、沸石分子筛和催化剂载体等系列产品</text>
+			</view>
+			<view class="manage" wx:if="{{user&&user.auth&&(user.type==2||user.type==3)}}" bindtap="goManage">
+				<image class="icoImg" src="../../image/set.png" background-size="cover"></image>
+				<text>管理</text>
+			</view>
+			<navigator url="/pages/user/auth" hidden="{{true}}"><view class="floatR" style="margin:-60px 0 0 0;"><image class="icoImg" src="../../image/set.png" background-size="cover"></image>管理身份认证</view></navigator>
+		</view>
 	</view>
-    <view class="top">
-		<image src="../../image/companyIcon.png" background-size="cover" class="companyImg" bindtap="goCompany"></image>
-		<view class="topR" bindtap="goCompany">
-			<text class="companyName">中铝新材料有限公司</text>
-			<text class="small">主营特种氢氧化铝、特种氧化铝、沸石分子筛和催化剂载体等系列产品</text>
-		</view>
-		<view class="manage" wx:if="{{user&&user.auth&&(user.type==2||user.type==3)}}" bindtap="goManage">
-			<image class="icoImg" src="../../image/set.png" background-size="cover"></image>
-			<text>管理</text>
-		</view>
-		<navigator url="/pages/user/auth" hidden="{{true}}"><view class="floatR" style="margin:-60px 0 0 0;"><image class="icoImg" src="../../image/set.png" background-size="cover"></image>管理身份认证</view></navigator>
-    </view>
 	<view class='page_row'>  
 	  <view class="nav" wx:for='{{nav_title}}' wx:key="index">  
 		<view class="nav_item page_row {{shownavindex == index? 'on' : ''}} {{shownavindex == index? 'actived' : ''}}" bindtap="click_nav" data-index="{{index}}">  
@@ -55,12 +57,12 @@
 					<view class="mid">
 						<text class="midF">{{item.category.name}}</text>
 					</view>
-					<text class="grad">{{item.uses}}</text>
+					<text class="grad" wx:for="{{item.uses}}">{{item}}</text>
 				</view>
 				<view class="contentR">
 					<view><text class="active">￥{{item.price||'--'}}</text></view>
-					<image src="../../image/buy.png" class="add" catchtap="addCartTap" data-index="{{item.id}}" data-detail="{{item}}"></image>
 				</view>
+        <image src="../../image/buy.png" class="add" catchtap="addCartTap" data-index="{{item.id}}" data-detail="{{item}}"></image>
 			</view>
 		</view>
 	</view>
@@ -78,7 +80,7 @@
 					<view class="price">￥{{productInfo.price||'--'}}</view>
 				</view>
 				<view class="closeArea" bindtap="closeModel">
-					<image src="../../image/close.png" class="closeIcon" background-size="cover"></image>
+					<image src="../../image/close1.png" class="closeIcon" background-size="cover"></image>
 				</view>
 			</view>
 			<view class="model-item">
@@ -97,17 +99,13 @@
 				<text class="con {{pack == 2 ? 'active':''}}" bindtap="lableItemTap" data-name="50公斤装" data-index="2">50公斤装</text>
 				<text class="con {{pack == 3 ? 'active':''}}" bindtap="lableItemTap" data-name="1吨装" data-index="3">1吨装</text>
 			</view>
-			<view class="model-item">
+			<view class="model-item buy-num-wrap">
 				<view class="title">购买数量</view>
 				<view class="add-minus">
-					<view class="minus {{buynumber == buynumbermin ? 'disabled':''}}" bindtap="minusTap">
-						<image src="../../image/minus2.png" class="minusIcon"></image>
-					</view>
+					<text class="btn minus {{buynumber == buynumbermin ? 'disabled':''}}" bindtap="minusTap">-</text>
 					<input class="buy-num" bindchange="getAmount" value="{{buynumber}}" />
-					<text class="unit">吨</text>
-					<view class="plus {{buynumber == buynumbermax ? 'disabled':''}}" bindtap="plusTap">
-						<image src="../../image/plus2.png" class="plusIcon"></image>
-					</view>
+					<text class="btn plus {{buynumber == buynumbermax ? 'disabled':''}}" bindtap="plusTap">+</text>
+          <text class="unit">吨</text>
 				</view>
 			</view>
 			<button class="btnSure" bindtap="addGoodsTap">确定</button>

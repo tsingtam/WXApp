@@ -11,6 +11,7 @@
     "pages/user/admin",
     "pages/user/adminView",
     "pages/user/auth",
+    "pages/user/licence",
     "pages/login/index",
 	"pages/login/auth",
     "pages/company/index",
@@ -96,7 +97,7 @@
   ],
   "window":{
     "backgroundColor":"#f0f0f0",
-    "backgroundTextStyle":"light",
+    "backgroundTextStyle":"dark",
     "navigationBarBackgroundColor": "#326ccb",
     "navigationBarTitleText": "铝大牛",
     "navigationBarTextStyle":"white"

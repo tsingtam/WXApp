@@ -23,13 +23,16 @@
 	</view>
 	<view class="list-group" wx:for="{{order.orderList}}" wx:if="{{order.orderList.length > 0}}">
 		<view class="list-group-item myBid" bindtap="check_detail" data-index="{{item.id}}">
-			<text class="title c_disabled">{{item.show_time}}</text>
-			<text class="c_pass floatR title" wx:if="{{item.status == '0'}}">待处理</text>
-			<text class="c_warning floatR title" wx:else>已处理</text>
+			<view class='name-status-wrap'>
+        <text class='proName'>{{item.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</text>
+        <text class="c_pass floatR title" wx:if="{{item.status == '0'}}">待处理</text>
+			  <text class="c_disabled floatR title" wx:else>已处理</text>
+      </view>
+      <view class='time'>
+      <image src='../../image/clock.png' background-size="cover" class='clock'></image>
+      <text class="title c_disabled">{{item.show_time}}</text>
+      </view>
 			<view class="cont-wrap">
-				<view class="txt">
-					<text>{{item.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</text>
-				</view>
 				<view class="txt c_disabled" wx:for="{{item.subOrders}}">
 					<text class="txt-item floatL">{{item.product.lCategory.name}} {{item.product.name}}</text>
 					<text class="txt-item">￥{{item.price}}</text>
@@ -38,7 +41,7 @@
 			</view>
 			<view class="countInfo">
 				<text class="txt-small">共{{item.subOrders.length}}件商品 合计：</text>
-				<text>￥{{item.total_price}}</text>
+				<text class='active'>￥{{item.total_price}}</text>
 			</view>
 			<view class="btn-wrap">
 				<button class="btnAgain" catchtap="againBuy">再来一单</button>

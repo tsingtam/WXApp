@@ -48,14 +48,14 @@
 									<view class="priceL">单价：<text class="active">￥{{lastChild.price}}</text></view>
 									<view class="numR">
 										<text class="btn minus {{lastChild.amount == 1 ? 'disabled':''}}" bindtap="minusTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">-</text>
-										<input class="buy-num" value="{{lastChild.amount}}" bindchange="getAmount" data-item="{{lastChild}}" />
-										<text class="unit">吨</text>
+										<input class="buy-num" value="{{lastChild.amount}}" bindchange="getAmount" data-item="{{lastChild}}" />					
 										<text class="btn plus {{lastChild.amount == 1000 ? 'disabled':''}}" bindtap="addTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">+</text>
+										<text class="unit">吨</text>
 									</view>
 								</view>
 							</view>
 						</view>
-						<view class="delete-btn" data-index="{{index}}" data-topCate="{{items.p_category}}" data-category="{{childItem.category}}" data-id="{{lastChild.id}}" data-pid="{{lastChild.product_id}}" catchtap="delItem">删除</view>
+						<view class="delete-btn" data-index="{{index}}" data-topCate="{{items.p_category}}" data-category="{{childItem.category}}" data-id="{{lastChild.id}}" data-pid="{{lastChild.product_id}}" catchtap="delItem">删除</view>						
 					</view>
 				</view>
 			</view>

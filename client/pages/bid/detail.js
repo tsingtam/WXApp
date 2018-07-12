@@ -35,6 +35,13 @@ Page({
 		buynumbermax:1000,
 	
 	},
+	onShareAppMessage: function (res) {
+		return {
+		  title: '全球最大的精细氧化铝销售平台',
+		  path: '/pages/bid/hall',
+		  imageUrl: '../../image/share.jpg'
+		}
+	},
 	onShow: function(){
 		var that = this;
 		that.setData({
@@ -269,7 +276,7 @@ Page({
 			addCart:0,
 			isShow:true,
 			companyName:'',
-			warehouse:[],
+			//warehouse:[],
 			buynumber:1,
 			productInfo:this.data.productDetail,
 			packType:'',

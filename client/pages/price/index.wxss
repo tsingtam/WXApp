@@ -6,12 +6,18 @@ page {
     justify-content: flex-start;
 }
 .type-wrap{
-	border-bottom:2rpx solid #f0f0f0;
-	background-color:#f0f0f0;
 	font-size:34rpx;
 }
+.weui-cell{
+  padding: 5px 15px;
+}
 .type-wrap-small{
-	font-size:30rpx;
+	font-size:32rpx;
+  color: #999;
+  margin-left:10px; 
+}
+.cartinfo-delete-wrap{
+  overflow: hidden;
 }
 .list-info-item{
 	position: relative;
@@ -31,11 +37,11 @@ page {
 }
 .delete-btn{
     width: 120rpx;
-    line-height: 126rpx;
-	height:126rpx;
+    line-height: 182rpx;
+	height:182rpx;
     text-align: center;
     background:#e64340;
-    font-size: 24rpx;
+    font-size: 30rpx;
     color: #fff;
 	margin-left:2rpx;
 }
@@ -53,11 +59,14 @@ page {
 }
 .cartInfo{
 	padding:0 30rpx;
-	background-color:#f0f0f0;
+	background-color:#fff;
 	margin-bottom:10rpx;
 	position:relative;
-	width:690rpx;
+	width:660rpx;
 	display:flex;
+  margin:5px 10px;
+  box-shadow:-1px 1px 5px #f0f0f0;
+  background-color:#fff;
 }
 .cartInfo .productName{
 	font-size:28rpx;
@@ -76,10 +85,10 @@ page {
 	word-break:break-all;
 }
 .info-item.brands{
-	width:60%;
+	width:90%;
 }
 .info-item.packs{
-	width:40%;
+	width:90%;
 }
 .check__label_L{
 	float:left;
@@ -103,22 +112,22 @@ page {
 	display:block;
 	height:50rpx;
 	width:50rpx;
-	border:2rpx solid #3478f6;
+	border:2rpx solid #f5f5f5;
 	text-align:center;
 	font-size:28rpx;
-	color:#fff;
+	color:#999;
 }
 .btn.disabled{
-	background-color:#999;
-	color:#fff;
-	border:2rpx solid #999;
+	background-color:#fbfbfb;
+	color:#999;
+	border:2rpx solid #fbfbfb;
 }
 .btn.minus{
 	float:left;
 	margin-right:10rpx;
 }
 .active{
-	color:#ff6c00;
+	color:#fe3925;
 }
 .btn.plus{
 	float:left;
@@ -128,7 +137,7 @@ page {
 .numInfo .priceL{
 	float:left;
 	margin-right:20rpx;
-	width:290rpx;
+	width:280rpx;
 }
 .numInfo .numR{
 	float:right;
@@ -139,9 +148,9 @@ page {
 .buy-num{
 	float:left;
 	text-align:center;
-	width:160rpx;
+	width:140rpx;
 	height:50rpx;
-	border:2rpx solid #ddd;
+	border:0rpx solid #ddd;
 }
 .list-group{
 	padding-bottom:6rpx;
@@ -176,7 +185,7 @@ page {
 	line-height:80rpx;
 	width:33%;
 	text-align:center;
-	background-color:#366ec8;
+	background-color:#1677d2;
 	color:#fff;
 }
 .title-box{

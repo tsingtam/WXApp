@@ -33,16 +33,19 @@
   margin-right: 15rpx;
   margin-left: 5rpx;
 }
-.companyName,.small{
+.companyName{
   display: block;
   line-height: 60rpx;
   height: 60rpx;
+  font-size:38rpx;
+  font-weight: bold; 
 }
 .topR .small{
-  font-size: 24rpx;
+  font-size: 26rpx;
   height: 30rpx;
+  display: block;
   line-height: 30rpx;
-  color: #999;
+  color: #333;
   width: 200px;
 }
 .nav {  
@@ -133,48 +136,50 @@ to {height:500rpx;}
 	padding:20rpx;
   background-color: #fff;
 }
+.cont-wrap{
+  display: flex;
+  justify-content: center;
+}
 .contentL{
-	width:64%;
-	float:left;
+	width:50%;
 	height:140rpx;
 	overflow:hidden;
 }
 .mid{
-	font-size:26rpx;
+	font-size:28rpx;
+  color: #666;
 }
 .midF{
 	margin-right:20rpx;
 }
 .productName{
-	font-size:30rpx;
+	font-size:32rpx;
 	display:block;
+  font-weight: bolder;
 }
 .grad{
 	font-size:26rpx;
-	color: #999;
-	margin:0 0 10px;
-	display:block;
-	width:95%;
+	margin:0 2px 10px 0;
+  padding: 4px;
+  background-color: #1677d2;
+  color: #fff;
 	overflow:hidden;
 	text-overflow:ellipsis;
 	white-space:nowrap;
 }
 .contentR{
 	width:36%;
-	display:inline-block;
-	padding-top:2rpx;
-	text-align:right;
-	padding-right:0;
+	padding-top:20rpx;
 }
 .contentR .active{
-	font-size:32rpx;
-	color:#ff6c00;
+	 font-size: 48rpx;
+    color: #ff0000;
 }
 .add{
 	height:30px;
 	width:30px;
 	display:block;
   float: right;
-  margin-top: 20rpx;
+  margin-top: 30rpx;
   margin-right: 0rpx;
 }

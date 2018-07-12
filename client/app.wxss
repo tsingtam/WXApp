@@ -318,12 +318,15 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
     width: 100%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding-top: .2rem;
+    padding-top: 20rpx;
+    padding-right:40rpx;
+    padding-left:40rpx;  
     background: white;
+    border-top-left-radius:40rpx;
+    border-top-right-radius:40rpx;
 }
 .mode-topInfo{
-  padding:20rpx 40rpx;
-  height:90rpx;
+  height:130rpx;
   border-bottom:2rpx solid #ddd;
 }
 .infoL{
@@ -335,10 +338,11 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
   line-height:50rpx;
   height:50rpx;
   font-size:18px;
+  font-weight:bold;
 }
 .infoL .price{
-  color:#ff6c00;
-  font-size:36rpx;
+  color:#ff0000;
+  font-size:48rpx;
 }
 .closeArea{
 	height:100rpx;
@@ -349,29 +353,43 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
 	vertical-align:middle;
 }
 .closeIcon{
-  height:32rpx;
-  width:32rpx;
+  height:40rpx;
+  width:40rpx;
   margin-top:30rpx;
-  margin-left:30rpx;
+  margin-left:25rpx;
 
 }
 .model-item{
   margin-bottom:10rpx;
-  padding: 10rpx 40rpx;
+  padding: 10rpx 0rpx 15rpx 0rpx;
+  border-bottom:2rpx solid #ddd; 
 }
 .model-item.house{
-  height:116rpx;
+  height:140rpx;
+}
+.buy-num-wrap{
+  display: flex;
+  border-bottom:0px solid #ddd; 
+}
+.buy-num-wrap.model-item .title{
+  width: 35%;
+  height: 60rpx;
+  line-height: 60rpx;
 }
 .model-item .title{
-  font-size:28rpx;
-  margin-bottom:20rpx;
+  font-size:32rpx;
+  margin-bottom:15rpx;
+  color: #333;
+  font-weight: bolder;
 }
 .model-item .con{
   font-size:28rpx;
   margin-right:20rpx;
-  border:2rpx solid #ddd;
-  border-radius:10rpx;
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius:20rpx;
   padding:10rpx 20rpx;
+  display: inline-block;
 }
 .model-item .con.ware{
 	margin-bottom:20rpx;
@@ -383,43 +401,62 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
   border-color:#3478f6;
 }
 .add-minus{
-  padding:20rpx 40rpx 0 0;
+  padding:5rpx 40rpx 0 0;
   height:60rpx;
+  margin-left: 60rpx;
 }
 .buy-num{
-  border:2rpx solid #ddd;
-  width:200rpx;
-  height: 60rpx;
+  border:0rpx solid #ddd;
+  width:140rpx;
+  height: 55rpx;
   float:left;
+  background-color: #f5f5f5;
   text-align:center;
 }
 .unit{
 	float:left;
 	padding:10rpx 0rpx 0rpx 6rpx;
 }
-.minus{
-  width:62rpx;
-  height:60rpx;
-  background-color:#3478f6;
+.btn{
+	display:block;
+	height:50rpx;
+	width:50rpx;
+	border:2rpx solid #f5f5f5;
+	text-align:center;
+	font-size:28rpx;
+	color:#999;
+}
+.btn.disabled{
+	background-color:#fbfbfb;
+	color:#999;
+	border:2rpx solid #fbfbfb;
+}
+.btn.minus{
+	float:left;
+	margin-right:10rpx;
+}
+.active{
+	color:#fe3925;
+}
+.btn.plus{
+	float:left;
+	margin-left:10rpx;
+	margin-right:6rpx;
+}
+.minus,.plus{
+  width:55rpx;
+  height:55rpx;
+  font-size:16px;
+  font-weight: bold;
+  background-color:#f5f5f5;
   float:left;
   border-radius:10rpx;
   margin-right:20rpx; 
-}
-.minus.disabled,.plus.disabled{
-  background-color:#999;
 }
 .minusIcon{
   width:64rpx;
   height:60rpx;
   margin-left:-4rpx;
-}
-.plus{
-  width:62rpx;
-  height:60rpx;
-  background-color:#3478f6;
-  float:left;
-  border-radius:10rpx;
-  margin-left:20rpx; 
 }
 .plusIcon{
   width:64rpx;
@@ -433,6 +470,7 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
   line-height:70rpx;
   font-size:34rpx;
   margin: 10px 20px 18px;
+  border-radius: 36rpx;
 }
 
 /* 公共组件样式 */

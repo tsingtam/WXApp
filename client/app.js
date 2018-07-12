@@ -136,34 +136,37 @@ App({
 						});
 
 						// 用户协议
-				        if (res.data.data.view_license && 0){
-					        wx.showModal({
-					            title: '用户协议',
-					            content: '内容',
-					            confirmText: "我同意",
-					            confirmColor: "#366ec8",
-					            showCancel: false,
-					            success: function (res) {
-					                console.log(res);
-					                if (res.confirm) {
-										wx.request({
-											url: config.service.licenseUrl,
-											data: {
-												userkey: userkey
-											},
-											success: function(res) {
-												console.log(res);
-											},
-											fail: function(res) {
-												console.log('失败', res)
-											}
-										});
-					                    console.log('用户点击主操作')
-					                }else{
-					                    console.log('用户点击辅助操作')
-					                }
-					            }
-					        });
+				        if (!res.data.data.view_license){
+							wx.redirectTo({
+							  url: '/pages/user/licence'
+							});
+					     //    wx.showModal({
+					     //        title: '中铝新材料网络服务协议',
+					     //        content: '内容',
+					     //        confirmText: "我同意",
+					     //        confirmColor: "#366ec8",
+					     //        showCancel: false,
+					     //        success: function (res) {
+					     //            console.log(res);
+					     //            if (res.confirm) {
+										// wx.request({
+										// 	url: config.service.licenseUrl,
+										// 	data: {
+										// 		userkey: userkey
+										// 	},
+										// 	success: function(res) {
+										// 		console.log(res);
+										// 	},
+										// 	fail: function(res) {
+										// 		console.log('失败', res)
+										// 	}
+										// });
+					     //                console.log('用户点击主操作')
+					     //            }else{
+					     //                console.log('用户点击辅助操作')
+					     //            }
+					     //        }
+					     //    });
 				        }
 	            	}
 	            	else {

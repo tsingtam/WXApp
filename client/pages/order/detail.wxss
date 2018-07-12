@@ -14,3 +14,87 @@
 	height:70rpx;
 	line-height:70rpx;
 }
+.type-wrap{
+  display: flex;
+  padding: 20rpx;
+  background-color: #fff;
+}
+.quIcon{
+  height: 60rpx;
+  width: 60rpx;
+  margin-right: 20rpx;
+}
+.gsIcon{
+  height: 40rpx;
+  width: 40rpx;
+  margin-right: 20rpx;
+  vertical-align:middle;
+}
+.company-wrap{
+  background-color: #fff;
+  padding: 20rpx;
+}
+.gs-wrap{
+  padding: 10rpx;
+}
+.com-name{
+  height: 40rpx;
+  line-height: 40rpx;
+  color: #333;
+  padding-top: 5rpx;
+}
+.type-cont{
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+.spec{
+  color: #666;
+  font-size: 15px;
+  padding-left: 10rpx;
+}
+.order-wrap{
+  background-color: #f8f8f8;
+  padding: 10rpx;
+}
+.order-wrap-item{
+  display: flex;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.marks{
+  height: 40rpx;
+  width: 10rpx;
+  background-color: #1677d2;
+  margin-right: 10rpx;
+}
+.proname{
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bolder;
+  width: 70%;
+}
+.status{
+  width: 23%;
+  color: #ff4949;
+  font-size: 30rpx;
+  text-align: right;
+}
+.preview__label{
+  width: 70%;
+  padding-left: 10rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+.preview__value{
+  width: 25%;
+  color: #666;
+  font-size: 28rpx;
+  text-align: right;
+}
+.amount{
+  font-size: 38rpx!important;
+  color: #ff4949;
+  font-weight: bold;
+}
