@@ -1,11 +1,9 @@
 <!--index.wxml-->
 <view class="page-body">
-    <view class="page-top"></view>
 	<view class="weui-form-preview" wx:if="{{cartOrderList.length == 0}}">
-		<view class="weui-form-preview__bd">
-			<view class="weui-form-preview__item">
-				<view class="weui-form-preview__label">{{order.product.category}}</view>            
-			</view>   
+		<view class="category-wrap">
+			<view class="bluemark"></view>
+			<view class="categoryname">{{order.product.category}}</view>
 		</view>
 		<view class="weui-form-preview__hd">                   
 			<view class="weui-form-preview__item">
@@ -27,11 +25,10 @@
 		</view>
 	</view>
 	<view class="weui-form-preview" wx:if="{{cartOrderList.length > 0}}">
-		<view wx:for="{{cartOrderList}}">
-		<view class="weui-form-preview__bd">
-			<view class="weui-form-preview__item">
-				<view class="weui-form-preview__label">{{item.category}}</view>            
-			</view>   
+		<view class="list-wrap" wx:for="{{cartOrderList}}">
+		<view class="category-wrap">
+			<view class="bluemark"></view>
+			<view class="categoryname">{{item.category}}</view>
 		</view>
 		<view class="weui-form-preview__hd" wx:for="{{item.value}}">                   
 			<view class="weui-form-preview__item">

@@ -23,6 +23,45 @@
 		</view>
 	</view>
 	<view class='page_row'>  
+		<view class="nav">  
+			<view class="nav_item page_row blue" bindtap="click_nav_zh">  
+				<view class="content">综合</view>
+			</view>  
+		</view>
+		<view class="nav">  
+			<view class="nav_item page_row" bindtap="click_nav_xl">  
+				<view class="content">销量</view>  
+			</view>  
+		</view>
+		<view class="nav">  
+			<view class="nav_item page_row" bindtap="click_nav_jg">  
+				<view class="content">价格</view>
+				<view class="ico_wrap">
+					<view class="ico_arrows_up"></view>
+					<view class="ico_arrows"></view> 
+				</view>
+			</view>  
+		</view>
+		<view class="nav">  
+			<view class="nav_item page_row" bindtap="click_nav_sx">  
+				<view class="content">筛选</view>  
+				<image src="../../image/choose.png" class="sxicon" background-size="cover"></image>
+			</view>  
+		</view>
+	</view>
+	<view class='nav_centent_arr'>  
+	  <view class="nav_info" bindtap="selecthide">
+		<scroll-view scroll-y="true" style="height: 100%;">
+		<view class="allLi">品种</view>
+		<block wx:for="{{nav_centents.categories}}" wx:key="index">  
+			<view class='nav_centent'>
+				<view class="typeName" data-name="{{item.name}}">{{item.name}}</view>
+			</view>
+		</block> 
+		</scroll-view>
+	  </view>
+	</view>
+	<view class='page_row'>  
 	  <view class="nav" wx:for='{{nav_title}}' wx:key="index">  
 		<view class="nav_item page_row {{shownavindex == index? 'on' : ''}} {{shownavindex == index? 'actived' : ''}}" bindtap="click_nav" data-index="{{index}}">  
 		  <view class="content">{{item}}  

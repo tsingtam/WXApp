@@ -10,7 +10,7 @@
 } 
 
 page {
-  background-color: #f0f0f0;
+  background-color: #fff;
   height: 100%;
   font-size: 32rpx;
   line-height: 1.6;
@@ -477,7 +477,6 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
 .weui-time{text-align:center;margin:10px 0 0 0;}
 .weui-time .cont{font-size:24rpx;background:#ccc;padding:10rpx 0;border-radius:10rpx;color:#fff;width:200rpx;margin:0 auto;line-height:24rpx;}
 .weui-media-box .weui-media-box__title:last-child{margin:10px 0 0 0;}
-.weui-loadmore__tips_in-line{background:#f0f0f0;}
 .weui-panel__hd .icoImg.floatR{margin:-13px 0 0 0;}
 .weui-cell_input .weui-select{padding:0;border:none;}
 .weui-search-bar__cancel-btn{color:#366ec8;}

@@ -1,4 +1,9 @@
 /**index.wxss**/
+.page-top{
+  background-color: #f0f0f0;
+  height: 4px;
+  margin: 0px;
+}
 .imgShow{
 	width: 100%;
     padding-top: 20rpx;
@@ -72,7 +77,6 @@
 .proname{
   font-size: 32rpx;
   color: #333;
-  font-weight: bolder;
   width: 70%;
 }
 .status{
@@ -95,6 +99,5 @@
 }
 .amount{
   font-size: 38rpx!important;
-  color: #ff4949;
-  font-weight: bold;
+  color: #f0250f;
 }

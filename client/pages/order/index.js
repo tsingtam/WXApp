@@ -118,6 +118,7 @@ Page({
 			order:{
 				orderList:[]
 			},
+			isNoMore:false,
 			allOrders:0,
 			payOrders:1,
 			sendOrders:0,
@@ -131,6 +132,7 @@ Page({
 			order:{
 				orderList:[]
 			},
+			isNoMore:false,
 			allOrders:0,
 			payOrders:0,
 			sendOrders:1,
@@ -144,6 +146,7 @@ Page({
 			order:{
 				orderList:[]
 			},
+			isNoMore:false,
 			allOrders:0,
 			payOrders:0,
 			sendOrders:0,
@@ -157,6 +160,7 @@ Page({
 			order:{
 				orderList:[]
 			},
+			isNoMore:false,
 			allOrders:0,
 			payOrders:0,
 			sendOrders:0,

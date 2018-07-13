@@ -1,10 +1,30 @@
 /**index.wxss**/
-.active{
-	color:#ff6c00;
-}
 .page-bottom{
 	height:60rpx;
 	width:100%;
+}
+.weui-form-preview__hd{
+  padding: 0px 15px; 
+}
+.weui-form-preview__label {
+  color: #333;
+  font-size:15px;
+}
+.category-wrap{
+  display: flex;
+  padding: 10px 15px;
+}
+.bluemark{
+  height: 45rpx;
+  width: 10rpx;
+  margin-right:10rpx;
+  margin-top:6rpx;
+  background-color: #366ec8;
+}
+.categoryname{
+  font-size: 34rpx;
+  color: #333;
+  font-weight: bold;
 }
 .numR{
 	float:right;
@@ -38,18 +58,17 @@
 	display:flex;
 	justify-content: space-around;
 	align-items: center;
-	background-color: #f0f0f0;
+	background-color: #fff;
 	z-index:999;
 }
 .total{
-	width:67%;
-	text-align:right;
-	padding-right:20rpx;
+	width:62%;
+	padding-left:30rpx;
 }
 .btnBuy{
 	height:80rpx;
 	line-height:80rpx;
-	width:33%;
+	width:35%;
 	text-align:center;
 	background-color:#366ec8;
 	color:#fff;

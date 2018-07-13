@@ -15,6 +15,7 @@ Page({
 		nav_title:['品种','用途'],  
 		shownavindex: null,  
 		nav_centent: null,
+		nav_centents:{},
 		productList:[],
 		productDetail:{},
 		category: [], // 品种（可点击）
@@ -135,6 +136,10 @@ Page({
 			url: config.service.productTypeUrl,
 			data: {},
 			success: function(res) {
+				console.log(res,'res');
+				that.setData({
+					nav_centents:res.data.data
+				});
 				nav_centent_list[0] = res.data.data.categories
 				nav_centent_list[1] = res.data.data.uses
 			},
