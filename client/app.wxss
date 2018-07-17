@@ -327,7 +327,7 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
 }
 .mode-topInfo{
   height:130rpx;
-  border-bottom:2rpx solid #ddd;
+  border-bottom:2rpx solid #eee;
 }
 .infoL{
   font-size:28rpx;
@@ -338,11 +338,13 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
   line-height:50rpx;
   height:50rpx;
   font-size:18px;
-  font-weight:bold;
 }
 .infoL .price{
   color:#ff0000;
   font-size:48rpx;
+}
+.infoL .price .small{
+  font-size:36rpx;
 }
 .closeArea{
 	height:100rpx;
@@ -362,14 +364,14 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
 .model-item{
   margin-bottom:10rpx;
   padding: 10rpx 0rpx 15rpx 0rpx;
-  border-bottom:2rpx solid #ddd; 
+  border-bottom:2rpx solid #eee;
 }
 .model-item.house{
-  height:140rpx;
+  min-height:128rpx;
 }
 .buy-num-wrap{
   display: flex;
-  border-bottom:0px solid #ddd; 
+  border-bottom:0px solid #eee; 
 }
 .buy-num-wrap.model-item .title{
   width: 35%;
@@ -380,7 +382,6 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
   font-size:32rpx;
   margin-bottom:15rpx;
   color: #333;
-  font-weight: bolder;
 }
 .model-item .con{
   font-size:28rpx;
@@ -392,7 +393,6 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
   display: inline-block;
 }
 .model-item .con.ware{
-	margin-bottom:20rpx;
 	display:inline-block;
 }
 .model-item .con.active{
@@ -466,10 +466,10 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
 .btnSure{
   background-color:#3478f6;
   color:#fff;
-  height:70rpx;
-  line-height:70rpx;
+  height:80rpx;
+  line-height:86rpx;
   font-size:34rpx;
-  margin: 10px 20px 18px;
+  margin: 10px 0 18px;
   border-radius: 36rpx;
 }
 
@@ -479,7 +479,7 @@ button[type="primary"][plain],.button-hover[type="primary"][plain]{
 .weui-media-box .weui-media-box__title:last-child{margin:10px 0 0 0;}
 .weui-panel__hd .icoImg.floatR{margin:-13px 0 0 0;}
 .weui-cell_input .weui-select{padding:0;border:none;}
+.weui-search-bar{border-color:#ddd;background:none;border:none;opacity:0.85;padding-top:16px;}
 .weui-search-bar__cancel-btn{color:#366ec8;}
-.weui-search-bar{border-color:#ddd;background:none;}
-.weui-search-bar__form{border-color:#ddd;}
+.weui-search-bar__form{border-color:#ddd;border:none;border-radius:50px;}
 .wxSearchKeyList{padding:0 0 10px;}

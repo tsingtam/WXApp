@@ -20,11 +20,23 @@ Page({
 		productDetail:{},
 		category: [], // 品种（可点击）
 		uses: [], // 分类（可点击）
+		cateName:'',
+		childArr:[],
+		cateChildName:'',
+		useChildName:'',
+		usesName:'',
+		selecthide:true,
 		isDisplay:true,
 		selectList:true,
 		buynumber:1,
 		buynumbermin:1,
 		buynumbermax:1000,
+		
+		selectZH:1,
+		selectJG:0,
+		priceup:0,
+		selectXL:0,
+		selectSX:0,
 		
 		productInfo:[],
 		isShow:false,
@@ -47,11 +59,11 @@ Page({
     onPullDownRefresh: function(){
     	var that = this;
 		var objData = {};
-		if(that.data.nav_title[0] != '品种'){
-			objData.category = that.data.nav_title[0];
+		if(wx.getStorageSync('selectUseName') != ''){
+			objData.uses = wx.getStorageSync('selectUseName');
 		}
-		if(that.data.nav_title[1] != '用途'){
-			objData.uses = that.data.nav_title[1]; 
+		if(wx.getStorageSync('selectCateName') != ''){
+			objData.category = wx.getStorageSync('selectCateName');
 		}
 		wx.request({
 			url: config.service.productListUrl,
@@ -76,28 +88,58 @@ Page({
     },
     onReachBottom: function(){
 		var that= this;
-		var objData = {};
-		if(that.data.nav_title[0] != '品种'){
-			objData.category = that.data.nav_title[0];
-		}else{
-			objData.category = '';
-		}
-		
-		if(that.data.nav_title[1] != '用途'){
-			objData.uses = that.data.nav_title[1]; 
-		}else{
-			objData.uses = '';
-		}
-		
 		totalPage++;
 		if(!that.data.isNoMore){
+			var objData={};
+			var order = 1;
+			if(that.data.priceup == 1){
+				order = 1;
+			}else if(that.data.priceup == 2){
+				order = 2;
+			}
+			if(that.data.selectJG == 1 && that.data.selectSX == 1){
+				objData = {
+					category:wx.getStorageSync('selectCateName'),
+					uses:wx.getStorageSync('selectUseName'),
+					sort_type:3,
+					order:order,
+					page:totalPage
+				}
+			}else if(that.data.selectJG == 1 && that.data.selectSX != 1){
+				objData = {
+					category:'',
+					uses:'',
+					sort_type:3,
+					order:order,
+					page:totalPage
+				}
+			}else if(that.data.selectXL == 1 && that.data.selectSX == 1){
+				objData = {
+					category:wx.getStorageSync('selectCateName'),
+					uses:wx.getStorageSync('selectUseName'),
+					sort_type:2,
+					order:2,
+					page:totalPage
+				}
+			}else if(that.data.selectXL == 1 && that.data.selectSX != 1){
+				objData = {
+					category:'',
+					uses:'',
+					sort_type:2,
+					order:2,
+					page:totalPage
+				}
+			}else{
+				objData = {
+					category:'',
+					uses:'',
+					page:totalPage
+				}
+			}
+	
 			wx.request({
 				url: config.service.productListUrl,
-				data: {
-					category:objData.category,
-					uses:objData.uses,
-					page:totalPage
-				},
+				data:objData,
 				success: function(res) {				
 					if(res.data.resultCode == 0 && res.data.data && res.data.data.products){					
 						productList = res.data.data.products
@@ -117,21 +159,18 @@ Page({
 		}
     },
     onReady: function(){
-
 		app.login();
-    	
     },
 	onLoad: function(){		
 		var that = this;
-		// wx.navigateTo({
-		//   url: '/pages/user/auth'
-		// });
-		// wx.getUserInfo({
-		// 	success: function(e){
-		// 		console.log(e.rawData);
-		// 	}
-		// });
-
+		wx.removeStorageSync('selectCateName');
+		wx.removeStorageSync('selectUseName');
+		wx.removeStorageSync('selectCate');
+		wx.removeStorageSync('selectUse');
+		wx.removeStorageSync('parentName');
+		wx.removeStorageSync('cateName');
+		wx.removeStorageSync('usesName');
+		wx.removeStorageSync('childName');
 		wx.request({
 			url: config.service.productTypeUrl,
 			data: {},
@@ -171,7 +210,9 @@ Page({
 	onShow: function(){
 		var that = this;
 		that.setData({
-			user: app.data.user
+			user: app.data.user,
+			cateChildName:wx.getStorageSync('selectCateName'),
+			useChildName:wx.getStorageSync('selectUseName')
 		});
 		if(wx.getStorageSync('cartNum') > 0){
 			wx.setTabBarBadge({
@@ -180,44 +221,231 @@ Page({
 			});
 		}
 	},
-	click_nav: function (e) {
-		if (index == e.currentTarget.dataset.index && this.data.nav_centent != null && !this.data.selectList){ 
-			index = e.currentTarget.dataset.index; 
-			this.setData({  
-				nav_centent: null,  
-				shownavindex: null,  
-			})
-			this.setData({
+	click_nav_zh: function(){
+		var that = this;
+		that.setData({
+			selectZH:1,
+			selecthide:true,
+			selectList:true,
+			selectJG:0,
+			selectXL:0
+		});
+	},
+	click_nav_xl: function(){
+		var that = this;
+		that.setData({
+			selectZH:0,
+			selecthide:true,
+			selectList:true,
+			selectJG:0,
+			selectXL:1
+		});
+		var objData = {};
+		if(that.data.selectSX == 1){
+			objData = {
+				category:wx.getStorageSync('selectCateName'),
+				uses:wx.getStorageSync('selectUseName'),
+				sort_type:2,
+				order:2
+			};
+		}else{
+			objData = {
+				category:'',
+				uses:'',
+				sort_type:2,
+				order:2
+			};
+		}
+		wx.request({
+			url: config.service.productListUrl,
+			data:objData,
+			success: function(res) {
+				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
+					productList = res.data.data.products
+					that.setData({
+						productList:productList,
+						category:[],
+						uses:[],
+					});
+				}
+			},
+			fail: function(res) {
+				console.log('失败', res)
+			}
+		});
+	},
+	click_nav_jg: function(){
+		var that = this;
+		that.setData({
+			selectZH:0,
+			selecthide:true,
+			selectList:true,
+			selectJG:1,
+			selectXL:0
+		});
+		if(that.data.priceup != 1){
+			that.setData({
+				priceup:1,
+			});
+		}else if(that.data.priceup == 1){
+			that.setData({
+				priceup:2,
+			});
+		}
+		var order = 1;
+		var objData = {};
+		if(that.data.priceup == 1){
+			order = 1;
+		}else if(that.data.priceup == 2){
+			order = 2;
+		}
+		if(that.data.selectSX == 1){
+			objData = {
+				category:wx.getStorageSync('selectCateName'),
+				uses:wx.getStorageSync('selectUseName'),
+				sort_type:3,
+				order:order
+			};
+		}else{
+			objData = {
+				category:'',
+				uses:'',
+				sort_type:3,
+				order:order
+			};
+		}
+		wx.request({
+			url: config.service.productListUrl,
+			data:objData,
+			success: function(res) {
+				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
+					productList = res.data.data.products
+					that.setData({
+						productList:productList,
+						category:[],
+						uses:[]
+					});
+				}
+			},
+			fail: function(res) {
+				console.log('失败', res)
+			}
+		});
+	},
+	click_nav_sx: function(){
+		var that = this;
+		if(that.data.selecthide){
+			that.setData({
+				selecthide:false,
+				selectList:false
+			});
+		}else{
+			that.setData({
+				selecthide:true,
 				selectList:true
 			});
-		}else if (index == e.currentTarget.dataset.index && this.data.nav_centent != null && this.data.selectList){
-			index = e.currentTarget.dataset.index; 
-			this.setData({  
-				nav_centent: nav_centent_list[Number(index)],  
-				shownavindex: index,  
-			})
-			this.setData({
-				selectList:false
+		}
+	},
+	suretap:function(){
+		var that = this;
+		var objData = {};
+		var order = 1;
+		if(that.data.priceup == 1){
+			order = 1;
+		}else if(that.data.priceup == 2){
+			order = 2;
+		}
+		//if(wx.getStorageSync('selectCateName') != '' || wx.getStorageSync('selectUseName') != ''){
+			if(that.data.selectXL == 1){
+				objData = {
+					category:wx.getStorageSync('selectCateName'),
+					uses:wx.getStorageSync('selectUseName'),
+					sort_type:2,
+					order:2
+				};
+			}else if(that.data.selectJG == 1){
+				objData = {
+					category:wx.getStorageSync('selectCateName'),
+					uses:wx.getStorageSync('selectUseName'),
+					sort_type:3,
+					order:order
+				};
+			}else{
+				objData = {
+					category:wx.getStorageSync('selectCateName'),
+					uses:wx.getStorageSync('selectUseName')
+				};
+			}
+		//}
+			wx.request({
+				url: config.service.productListUrl,
+				data: objData,
+				success: function(res) {
+					if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
+						productList = res.data.data.products
+						that.setData({
+							productList:productList,
+							category:[],
+							uses:[],
+							selecthide:true,
+						});
+						if(wx.getStorageSync('selectCateName') != '' || wx.getStorageSync('selectUseName') != ''){
+							that.setData({
+								selectSX:1,
+								selectList:true,
+							});
+						}else{
+							that.setData({
+								selectSX:0,
+								selectList:true
+							});
+						}
+					}else if(res.data.resultCode != 0){
+						wx.showToast({
+							title: res.data.msg || '系统繁忙，请稍后再试',
+							icon: 'none',
+							duration: 2000
+						});
+					}
+				},
+				fail: function(res) {
+					console.log('失败', res)
+				}
 			});
-		} else if (this.data.nav_centent == null) { 
-			index = e.currentTarget.dataset.index;
-			this.setData({  
-				shownavindex: index,  
-				nav_centent: nav_centent_list[Number(index)]  
-			})
-			this.setData({
-				selectList:false
-			});
-		} else {
-			index = e.currentTarget.dataset.index;
-			this.setData({  
-				shownavindex: index,  
-				nav_centent: nav_centent_list[Number(index)]  
-			})
-			this.setData({
-				selectList:false
-			});	
-		}  
+	},
+	resettap:function(){
+		var that = this;
+		wx.removeStorageSync('selectCateName');
+		wx.removeStorageSync('selectUseName');
+		wx.removeStorageSync('selectCate');
+		wx.removeStorageSync('selectUse');
+		wx.removeStorageSync('parentName');
+		wx.removeStorageSync('cateName');
+		wx.removeStorageSync('usesName');
+		wx.removeStorageSync('childName');
+		that.setData({
+			cateChildName:'',
+			useChildName:'',
+			usesName:'',
+			cateName:''
+		});
+		wx.request({
+			url: config.service.productListUrl,
+			data: {},
+			success: function(res) {
+				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
+					productList = res.data.data.products
+					that.setData({
+						productList:productList,
+						category:[],
+						uses:[],
+					});
+				}
+			},
+			fail: function(res) {
+				console.log('失败', res)
+			}
+		});
 	},
 	check_detail: function(e){
 		var id = e.currentTarget.dataset.index;
@@ -225,111 +453,53 @@ Page({
 			url:'../bid/detail?id='+id
 		})
 	},
-	check_all: function(e){
-		var that = this;
-		var objData = {};
-		if(e.currentTarget.dataset.name == '全部' && that.data.shownavindex == 0){
-			that.data.nav_title[Number(that.data.shownavindex)] = '品种';
-		}else{
-			that.data.nav_title[Number(that.data.shownavindex)] = '用途';
-		}
-		that.setData({
-			nav_title:that.data.nav_title
-		});
-		if(that.data.nav_title[0] != '品种'){
-			objData.category = that.data.nav_title[0];
-		}
-		if(that.data.nav_title[1] != '用途'){
-			objData.uses = that.data.nav_title[1]; 
-		}
-		wx.request({
-			url: config.service.productListUrl,
-			data: objData,
-			success: function(res) {
-				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
-					productList = res.data.data.products;
-					totalPage = 1;
-					var categoryObj = {},
-						usesObj = {};
-					res.data.data.category.forEach(function(o, i){
-						categoryObj[o] = 1;
-					});
-					res.data.data.uses.forEach(function(o, i){
-						usesObj[o] = 1;
-					});
-					that.setData({
-						productList:productList,
-						category: res.data.data.category,
-						uses: res.data.data.uses,
-						categoryObj: categoryObj,
-						usesObj: usesObj,
-						isNoMore:false,
-					});
-				}
-			},
-			fail: function(res) {
-				console.log('失败', res)
-			}
-		}) 
-	},
-	select_type: function(e){
-		var that = this;
-		that.data.nav_title[Number(that.data.shownavindex)] = e.currentTarget.dataset.name;
-		that.setData({
-			nav_title:that.data.nav_title
-		});
-		if(that.data.nav_title[0] === '品种'){
-			var category = '';
-		}else{
-			var category = that.data.nav_title[0];
-		}
-		if(that.data.nav_title[1] === '用途'){
-			var uses = '';
-		}else{
-			var uses = that.data.nav_title[1]; 
-		}
-		wx.request({
-			url: config.service.productListUrl,
-			data: {
-				category:category,
-				uses:uses
-			},
-			success: function(res) {
-				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
-					productList = res.data.data.products;
-					totalPage = 1;
-					var categoryObj = {},
-						usesObj = {};
-					res.data.data.category.forEach(function(o, i){
-						categoryObj[o] = 1;
-					});
-					res.data.data.uses.forEach(function(o, i){
-						usesObj[o] = 1;
-					});
-					that.setData({
-						productList:productList,
-						category: res.data.data.category,
-						uses: res.data.data.uses,
-						categoryObj: categoryObj,
-						usesObj: usesObj,
-						isNoMore:false,
-					});
-				}
-			},
-			fail: function(res) {
-				console.log('失败', res)
-			}
-		});
-	},
-	selecthide: function(){
-		this.setData({
-			shownavindex:null,
-			selectList:true
-		});
-	},
 	search_product: function(e){
+        wx.showToast({
+          title: '新功能即将开放，敬请期待！',
+          icon: 'none',
+          duration: 2000
+        });
+        return false;
 		wx.navigateTo({
 			url:'../search/search'
+		});
+	},
+	selectTapCate: function(e){
+		var that = this;
+		console.log(e);
+		var childArr = e.currentTarget.dataset.child;
+		var cateName = e.currentTarget.dataset.name;
+		var parentName = e.currentTarget.dataset.parentname;
+		that.setData({
+			cateName:cateName
+		});
+		wx.removeStorageSync('childName');
+		wx.removeStorageSync('cateName');
+		wx.removeStorageSync('parentName');
+		wx.setStorageSync('parentName',parentName);
+		wx.setStorageSync('cateName',cateName);
+		wx.setStorageSync('childName',childArr);
+		wx.navigateTo({
+			url:'../bid/select'
+		});
+		
+	},
+	selectTapUse: function(e){
+		var that = this;
+		var childArr = e.currentTarget.dataset.child;
+		var parentName = e.currentTarget.dataset.parentname;
+		var usesName = e.currentTarget.dataset.name;
+		that.setData({
+			usesName:usesName
+		});
+		wx.removeStorageSync('childName');
+		wx.removeStorageSync('parentName');
+		wx.removeStorageSync('usesName');
+		wx.setStorageSync('parentName',parentName);
+		wx.setStorageSync('usesName',usesName);
+		wx.setStorageSync('childName',childArr);
+		wx.navigateTo({
+			url:'../bid/select'
 		})
 	},
 	deliverItemTap:function(e){

@@ -4,6 +4,7 @@ page {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    padding-bottom: 120px;
 }
 .type-wrap{
 	font-size:34rpx;
@@ -155,7 +156,6 @@ page {
 }
 .list-group{
 	padding-bottom:6rpx;
-	border-bottom:2rpx solid #ccc;
 	width:100%;
 }
 .pageBottom{
@@ -171,7 +171,7 @@ page {
 	display:flex;
 	justify-content: space-around;
 	align-items: center;
-	background-color: #f0f0f0;
+	background-color: #fff;
 	z-index:999;
 }
 .count .weui-cell__hd{

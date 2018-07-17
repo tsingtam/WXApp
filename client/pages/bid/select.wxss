@@ -1,0 +1,73 @@
+/**index.wxss**/
+.page-body{
+	padding-bottom: 30rpx;
+	background-color:#fff;
+}
+.topInfo{
+	border:2rpx solid #ddd;
+}
+.topInfo,.midInfo{
+	padding:30rpx 40rpx 30rpx 40rpx;
+}
+.productName{
+	font-size:18px;
+	line-height:60rpx;
+	height:60rpx;
+}
+.price-num{
+	font-size:28rpx;
+}
+.price-wrap{
+	width:55%;
+	height:50rpx;
+	line-height:50rpx;
+	float:left;
+}
+.price-wrap .active{
+	color:#ff6c00;
+	font-size:38rpx;
+	margin-right:10rpx;
+}
+.num-wrap{
+	width:45%;
+	display:inline-block;
+	height:50rpx;
+	line-height:50rpx;
+}
+.num-wrap .num{
+	margin-right:6rpx;
+}
+.midInfo{
+	font-size:28rpx;
+}
+.midInfo .title{
+	font-size:30rpx;
+	color:black;
+	font-weight: bold;
+	margin:20px 0 0 0;
+}
+.midInfo .title:nth-child(1){
+	margin:0;
+}
+.list-item{
+	min-height:60rpx;
+	padding-top:20rpx;
+  font-size: 30rpx;
+}
+.list-item .nameL{
+	width:65%;
+	text-align:left;
+	display:block;
+	float:left;
+}
+.list-item .contentR{
+	width:35%;
+	display:inline-block;
+	text-align:right;
+	word-break:break-word;
+}
+.list-item .contentR .txt{
+	display:block;
+	line-height:60rpx;
+	height:60rpx;
+}

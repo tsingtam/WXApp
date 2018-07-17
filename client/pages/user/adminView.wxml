@@ -27,9 +27,9 @@
                 <view class="weui-form-preview__label">交货方式</view>
                 <view class="weui-form-preview__value">自提</view>
             </view>
-            <view class="weui-form-preview__item" wx:if="{{detail.order_areaname&&activeIndex==1}}">
+            <view class="weui-form-preview__item" wx:if="{{detail.order_warehouse_name&&activeIndex==1}}">
                 <view class="weui-form-preview__label">提货地</view>
-                <view class="weui-form-preview__value">{{detail.order_areaname}}</view>
+                <view class="weui-form-preview__value">{{detail.order_warehouse_name}}</view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">产品系列</view>
@@ -74,7 +74,8 @@
         <button class="weui-btn" type="primary" bindtap="deal" wx:if="{{detail.order_status==1&&activeIndex==0}}">完成ERP录入</button>
 		<button form-type="submit" type="primary" bindtap="create" wx:if="{{detail.order_status==1||detail.order_status==2}}">生成购销单</button>
         <picker bindchange="bindPickerChange" value="{{index}}" range="{{sales}}" wx:if="{{detail.order_status==1&&activeIndex==0}}">
-        	<button class="weui-btn" type="default">转单</button>
+            <button class="weui-btn" type="primary">转单</button>
         </picker>
+        <button class="weui-btn" type="default" bindtap="create" wx:if="{{activeIndex==0}}">取消订单</button>
     </view>
 </view>

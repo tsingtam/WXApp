@@ -60,7 +60,6 @@
 				</view>
 			</view>
 		</view>
-		<view class="pageBottom"></view>
 </view>
 <view class="count" wx:if="{{cartInfo.list.length > 0}}">
 	<label>

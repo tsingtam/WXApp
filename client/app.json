@@ -3,6 +3,7 @@
     "pages/bid/hall",
     "pages/bid/detail",
     "pages/bid/contact",
+	 "pages/bid/select",
     "pages/price/index",
     "pages/price/submitOrder",
     "pages/order/index",

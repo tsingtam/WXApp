@@ -1,0 +1,14 @@
+
+<!--index.wxml-->
+  <view class="page-body">
+	<view class="midInfo">
+		<view class="list-item {{haveActive == true ? 'active':''}}" bindtap="selecter">
+			<text class="nameL">全部</text>
+			<text class="contentR" wx:if="{{haveActive == true}}">√</text>
+		</view>
+		<view class="list-item {{commonName == item.name ? 'active': ''}}" wx:for="{{selectList}}" data-name="{{item.name}}" bindtap="selecter">
+			<text class="nameL">{{item.name}}</text>
+			<text class="contentR" wx:if="{{commonName == item.name}}">√</text>
+		</view>
+	</view>
+  </view>

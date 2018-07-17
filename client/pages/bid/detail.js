@@ -170,7 +170,7 @@ Page({
 		var that = this;
 		var index = e.currentTarget.dataset.index;
 		var product_id = e.currentTarget.dataset.id;
-		if(index == 1 &&  that.data.deliver == 0){
+		if(index == 1 &&  that.data.deliver == 1){
 			wx.request({
 				url: config.service.getWareHouseUrl,
 				data: {
@@ -269,7 +269,7 @@ Page({
 	closeModel:function(){
 		this.setData({
 			isDisplay:true,
-			deliver:0,
+			deliver:1,
 			deliverType:'',
 			company:0,
 			submitOrder:0,
@@ -339,7 +339,7 @@ Page({
 								//app.getCartNum(app.data.user.userKey);
 								that.setData({
 									isDisplay:true,
-									deliver:0,
+									deliver:1,
 									deliverType:'',
 									company:0,
 									isShow:true,
@@ -428,13 +428,14 @@ Page({
 		});
 	},
 	minusTap:function(){
-		if(this.data.buynumber > this.data.buynumbermin){
-			var currentNum = this.data.buynumber;
+		var that = this;
+		if(that.data.buynumber > that.data.buynumbermin){
+			var currentNum = that.data.buynumber;
 			currentNum = (currentNum*10000 - 10000)/10000;
 			if(currentNum < that.data.buynumbermin){
 				currentNum = that.data.buynumbermin;
 			}
-			this.setData({
+			that.setData({
 				buynumber:currentNum
 			});
 		}else{
@@ -446,10 +447,11 @@ Page({
 		}
 	},
 	plusTap:function(){
-		if(this.data.buynumber < this.data.buynumbermax){
-			var currentNum = this.data.buynumber;
+		var that = this;
+		if(that.data.buynumber < that.data.buynumbermax){
+			var currentNum = that.data.buynumber;
 			currentNum = (currentNum*10000 + 10000)/10000;
-			this.setData({
+			that.setData({
 				buynumber:currentNum
 			});
 		}else{
