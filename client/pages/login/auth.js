@@ -53,14 +53,7 @@ Page({
 	},
 	getCode: function(e){
 		var that = this;
-		var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
-		if(!myreg.test(that.data.mobile)){
-			wx.showToast({
-				title: '手机号有误',
-				icon: 'none',
-				duration: 1500
-			})
-		}else if(that.data.mobile.length == 0){
+		if(that.data.mobile.length == 0){
 			wx.showToast({
 				title: '手机号不能为空',
 				icon: 'none',
@@ -104,7 +97,6 @@ Page({
     	var that = this;
 		var firstStep = wx.getStorageSync('firstStepData');
 		var Data = e.detail.value;
-		var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
 		if(app.data.user.userKey){
 			Data.userKey = app.data.user.userKey;
 			Data.comName = firstStep.comName;
@@ -125,12 +117,6 @@ Page({
 		}else if(Data.mobile == ''){
 			wx.showToast({
 				title: '手机号不能为空',
-				icon: 'none',
-				duration: 1500
-			})
-		}else if(!myreg.test(Data.mobile)){
-			wx.showToast({
-				title: '手机号有误',
 				icon: 'none',
 				duration: 1500
 			})

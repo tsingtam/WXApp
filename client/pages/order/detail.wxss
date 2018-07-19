@@ -1,7 +1,7 @@
 /**index.wxss**/
 .page-top{
   background-color: #f0f0f0;
-  height: 4px;
+  height: 8px;
   margin: 0px;
 }
 .imgShow{
@@ -25,14 +25,14 @@
   background-color: #fff;
 }
 .quIcon{
-  height: 60rpx;
-  width: 60rpx;
-  margin-right: 20rpx;
+  height: 50rpx;
+  width: 50rpx;
+  margin: 6rpx 10rpx 0 0;
 }
 .gsIcon{
   height: 40rpx;
   width: 40rpx;
-  margin-right: 20rpx;
+  margin-right: 10rpx;
   vertical-align:middle;
 }
 .company-wrap{
@@ -40,7 +40,7 @@
   padding: 20rpx;
 }
 .gs-wrap{
-  padding: 10rpx;
+  padding: 0 10rpx 10rpx;
 }
 .com-name{
   height: 40rpx;
@@ -61,7 +61,8 @@
 }
 .order-wrap{
   background-color: #f8f8f8;
-  padding: 10rpx;
+  padding: 10rpx 0 10rpx 20rpx;
+  margin: 10rpx 0 0 0;
 }
 .order-wrap-item{
   display: flex;
@@ -73,6 +74,7 @@
   width: 10rpx;
   background-color: #1677d2;
   margin-right: 10rpx;
+  margin-top:6rpx;
 }
 .proname{
   font-size: 32rpx;
@@ -86,13 +88,13 @@
   text-align: right;
 }
 .preview__label{
-  width: 70%;
+  width: 65%;
   padding-left: 10rpx;
   font-size: 28rpx;
   color: #666;
 }
 .preview__value{
-  width: 25%;
+  width: 30%;
   color: #666;
   font-size: 28rpx;
   text-align: right;

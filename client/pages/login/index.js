@@ -29,7 +29,6 @@ Page({
     formSubmit: function(e){
     	var that = this;
 		var Data = e.detail.value;
-		var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
 		if(app.data.user.userKey){
 			Data.userKey = app.data.user.userKey;
 		}

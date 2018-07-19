@@ -27,7 +27,7 @@
                 <view class="weui-form-preview__label">交货方式</view>
                 <view class="weui-form-preview__value">自提</view>
             </view>
-            <view class="weui-form-preview__item" wx:if="{{detail.order_warehouse_name&&activeIndex==1}}">
+            <view class="weui-form-preview__item" wx:if="{{detail.order_warehouse_name}}">
                 <view class="weui-form-preview__label">提货地</view>
                 <view class="weui-form-preview__value">{{detail.order_warehouse_name}}</view>
             </view>

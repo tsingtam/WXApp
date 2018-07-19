@@ -37,9 +37,8 @@ Page({
 	},
 	onShareAppMessage: function (res) {
 		return {
-		  title: '全球最大的精细氧化铝销售平台',
-		  path: '/pages/bid/hall',
-		  imageUrl: '../../image/share.jpg'
+		  title: this.data.productDetail.name + ' - 全球最大的精细氧化铝销售平台',
+		  path: '/pages/bid/hall?id=' + this.data.id
 		}
 	},
 	onShow: function(){
@@ -80,10 +79,11 @@ Page({
 	},
 	onLoad:function(query){
 		var that = this;
+		console.log(query, 'xxxxxxxxx');
 		var product_id = query.id;
 		that.setData({
 			cartNum:wx.getStorageSync('cartNum'),
-			userAuth:app.data.user.auth,
+			userAuth:app.data.user && app.data.user.auth,
 			id: query.id
 		});
 		wx.request({

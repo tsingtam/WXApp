@@ -11,41 +11,43 @@ var totalPage = 1;
 Page({
 	data: {
 		user: null,
+		windowHeight: 0,
 
-		nav_title:['品种','用途'],  
-		shownavindex: null,  
-		nav_centent: null,
-		nav_centents:{},
-		productList:[],
-		productDetail:{},
+		nav_centents:{}, //产品筛选
+		productList:[], //产品列表
+		productDetail:{}, //产品详情
 		category: [], // 品种（可点击）
 		uses: [], // 分类（可点击）
-		cateName:'',
-		childArr:[],
-		cateChildName:'',
-		useChildName:'',
-		usesName:'',
-		selecthide:true,
-		isDisplay:true,
-		selectList:true,
-		buynumber:1,
-		buynumbermin:1,
-		buynumbermax:1000,
+		childArr:[], //品种、用途 选择列表数组
+		cateChildName:'', //品种名称
+		useChildName:'', //用途名称
+		usesName:'', //具体用途名称
+		cateName:'', //具体品种名称
+		categoryStr:'',
+		usesStr:'',
+		cate:'',
+		use:'',
+		selecthide:true, //筛选浮层
+		isDisplay:true, //购物车浮层
+		selectList:true, //产品列表
+		buynumber:1, //购买量
+		buynumbermin:1, //最小购买量
+		buynumbermax:1000, //最大购买量
 		
-		selectZH:1,
-		selectJG:0,
-		priceup:0,
-		selectXL:0,
-		selectSX:0,
+		selectZH:1, //综合
+		selectJG:0, // 价格
+		priceup:0,  // 价格升降
+		selectXL:0, //销量
+		selectSX:0, // 筛选
 		
-		productInfo:[],
-		isShow:false,
-		isNoMore:false,
-		deliver:1,
+		productInfo:[], //具体产品信息
+		isShow:false, //提货地显示
+		isNoMore:false, //没有更多显示
+		deliver:1, //发货方式（自提）
 		deliverType:'',
-		pack:0,
+		pack:0, //包装方式
 		packType:'',
-		warehouse:[],
+		warehouse:[], //发货地
 		companyName:'',
 		company:0
 	}, 
@@ -97,10 +99,11 @@ Page({
 			}else if(that.data.priceup == 2){
 				order = 2;
 			}
-			if(that.data.selectJG == 1 && that.data.selectSX == 1){
+			//价格、销量、综合 和 具体品类、用途的组合筛选
+			if(that.data.selectJG == 1 && that.data.selectSX == 1){ 
 				objData = {
-					category:wx.getStorageSync('selectCateName'),
-					uses:wx.getStorageSync('selectUseName'),
+					category:that.data.categoryStr,
+					uses:that.data.usesStr,
 					sort_type:3,
 					order:order,
 					page:totalPage
@@ -113,10 +116,18 @@ Page({
 					order:order,
 					page:totalPage
 				}
+			}else if(that.data.selectZH == 1 && that.data.selectSX == 1){
+				objData = {
+					category:that.data.categoryStr,
+					uses:that.data.usesStr,
+					sort_type:1,
+					order:1,
+					page:totalPage
+				}
 			}else if(that.data.selectXL == 1 && that.data.selectSX == 1){
 				objData = {
-					category:wx.getStorageSync('selectCateName'),
-					uses:wx.getStorageSync('selectUseName'),
+					category:that.data.categoryStr,
+					uses:that.data.usesStr,
 					sort_type:2,
 					order:2,
 					page:totalPage
@@ -161,8 +172,18 @@ Page({
     onReady: function(){
 		app.login();
     },
-	onLoad: function(){		
+	onLoad: function(query){		
 		var that = this;
+
+		// 详情分享，根据id跳转
+		if (query.id){
+			setTimeout(function(){
+				wx.navigateTo({
+					url:'/pages/bid/detail?id=' + query.id
+				});
+			}, 1000);
+		}
+
 		wx.removeStorageSync('selectCateName');
 		wx.removeStorageSync('selectUseName');
 		wx.removeStorageSync('selectCate');
@@ -175,7 +196,6 @@ Page({
 			url: config.service.productTypeUrl,
 			data: {},
 			success: function(res) {
-				console.log(res,'res');
 				that.setData({
 					nav_centents:res.data.data
 				});
@@ -203,6 +223,16 @@ Page({
 				console.log('失败', res)
 			}
 		});
+
+		// 获取屏幕高度，计算筛选浮层高度
+		wx.getSystemInfo({
+			success: function(e){
+				that.setData({
+					windowHeight: e.windowHeight
+				});
+			}
+		});
+
 		wx.showShareMenu({
 		  withShareTicket: true
 		});
@@ -211,6 +241,8 @@ Page({
 		var that = this;
 		that.setData({
 			user: app.data.user,
+			cateName:wx.getStorageSync('cateName'),
+			usesName:wx.getStorageSync('usesName'),
 			cateChildName:wx.getStorageSync('selectCateName'),
 			useChildName:wx.getStorageSync('selectUseName')
 		});
@@ -221,30 +253,83 @@ Page({
 			});
 		}
 	},
-	click_nav_zh: function(){
+	click_nav_zh: function(){ //综合筛选
 		var that = this;
+		totalPage = 1;
+		var objData={};
 		that.setData({
 			selectZH:1,
+			cateName:that.data.cate,
+			usesName:that.data.use,
+			cateChildName:that.data.categoryStr,
+			useChildName:that.data.usesStr,
 			selecthide:true,
 			selectList:true,
+			isNoMore:false,
 			selectJG:0,
 			selectXL:0
 		});
+		wx.setStorageSync('selectCateName',that.data.categoryStr);
+		wx.setStorageSync('selectUseName',that.data.usesStr);
+		wx.setStorageSync('selectCate',that.data.categoryStr);
+		wx.setStorageSync('selectUse',that.data.usesStr);
+		if(that.data.selectSX == 1){
+			objData = {
+				category:that.data.categoryStr,
+				uses:that.data.usesStr,
+				sort_type:1,
+				order:1
+			};
+		}else{
+			objData = {
+				category:'',
+				uses:'',
+				sort_type:1,
+				order:1
+			};
+		}
+		wx.request({
+			url: config.service.productListUrl,
+			data:objData,
+			success: function(res) {
+				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
+					productList = res.data.data.products
+					that.setData({
+						productList:productList,
+						category:[],
+						uses:[],
+					});
+				}
+			},
+			fail: function(res) {
+				console.log('失败', res)
+			}
+		});
 	},
-	click_nav_xl: function(){
+	click_nav_xl: function(){ //销量筛选
 		var that = this;
+		totalPage = 1;
 		that.setData({
 			selectZH:0,
+			cateName:that.data.cate,
+			usesName:that.data.use,
+			cateChildName:that.data.categoryStr,
+			useChildName:that.data.usesStr,
 			selecthide:true,
 			selectList:true,
+			isNoMore:false,
 			selectJG:0,
 			selectXL:1
 		});
+		wx.setStorageSync('selectCateName',that.data.categoryStr);
+		wx.setStorageSync('selectUseName',that.data.usesStr);
+		wx.setStorageSync('selectCate',that.data.categoryStr);
+		wx.setStorageSync('selectUse',that.data.usesStr);
 		var objData = {};
 		if(that.data.selectSX == 1){
 			objData = {
-				category:wx.getStorageSync('selectCateName'),
-				uses:wx.getStorageSync('selectUseName'),
+				category:that.data.categoryStr,
+				uses:that.data.usesStr,
 				sort_type:2,
 				order:2
 			};
@@ -274,15 +359,25 @@ Page({
 			}
 		});
 	},
-	click_nav_jg: function(){
+	click_nav_jg: function(){ //价格筛选
 		var that = this;
+		totalPage = 1;
 		that.setData({
 			selectZH:0,
 			selecthide:true,
 			selectList:true,
+			isNoMore:false,
+			cateName:that.data.cate,
+			usesName:that.data.use,
+			cateChildName:that.data.categoryStr,
+			useChildName:that.data.usesStr,
 			selectJG:1,
 			selectXL:0
 		});
+		wx.setStorageSync('selectCateName',that.data.categoryStr);
+		wx.setStorageSync('selectUseName',that.data.usesStr);
+		wx.setStorageSync('selectCate',that.data.categoryStr);
+		wx.setStorageSync('selectUse',that.data.usesStr);
 		if(that.data.priceup != 1){
 			that.setData({
 				priceup:1,
@@ -301,8 +396,8 @@ Page({
 		}
 		if(that.data.selectSX == 1){
 			objData = {
-				category:wx.getStorageSync('selectCateName'),
-				uses:wx.getStorageSync('selectUseName'),
+				category:that.data.categoryStr,
+				uses:that.data.usesStr,
 				sort_type:3,
 				order:order
 			};
@@ -332,7 +427,7 @@ Page({
 			}
 		});
 	},
-	click_nav_sx: function(){
+	click_nav_sx: function(){ //筛选
 		var that = this;
 		if(that.data.selecthide){
 			that.setData({
@@ -346,34 +441,43 @@ Page({
 			});
 		}
 	},
-	suretap:function(){
+	suretap:function(){ //确定筛选
 		var that = this;
 		var objData = {};
-		var order = 1;
-		if(that.data.priceup == 1){
+		var order = 1; //价格升降（1.升序 2.降序）
+		if(that.data.priceup == 1){ 
 			order = 1;
 		}else if(that.data.priceup == 2){
 			order = 2;
 		}
+		that.setData({
+			categoryStr:wx.getStorageSync('selectCateName'),
+			usesStr:wx.getStorageSync('selectUseName'),
+			cate:wx.getStorageSync('cateName'),
+			use:wx.getStorageSync('usesName'),
+		});
 		//if(wx.getStorageSync('selectCateName') != '' || wx.getStorageSync('selectUseName') != ''){
+			//判断是否点击 销量 或者 价格 的筛选 
 			if(that.data.selectXL == 1){
 				objData = {
-					category:wx.getStorageSync('selectCateName'),
-					uses:wx.getStorageSync('selectUseName'),
+					category:that.data.categoryStr,
+					uses:that.data.usesStr,
 					sort_type:2,
 					order:2
 				};
 			}else if(that.data.selectJG == 1){
 				objData = {
-					category:wx.getStorageSync('selectCateName'),
-					uses:wx.getStorageSync('selectUseName'),
+					category:that.data.categoryStr,
+					uses:that.data.usesStr,
 					sort_type:3,
 					order:order
 				};
 			}else{
 				objData = {
-					category:wx.getStorageSync('selectCateName'),
-					uses:wx.getStorageSync('selectUseName')
+					category:that.data.categoryStr,
+					uses:that.data.usesStr,
+					sort_type:1,
+					order:1
 				};
 			}
 		//}
@@ -389,7 +493,7 @@ Page({
 							uses:[],
 							selecthide:true,
 						});
-						if(wx.getStorageSync('selectCateName') != '' || wx.getStorageSync('selectUseName') != ''){
+						if(that.data.categoryStr != '' || that.data.usesStr != ''){
 							that.setData({
 								selectSX:1,
 								selectList:true,
@@ -400,6 +504,12 @@ Page({
 								selectList:true
 							});
 						}
+
+						// 重置翻页
+						totalPage = 1;
+						that.setData({
+							isNoMore: false
+						});
 					}else if(res.data.resultCode != 0){
 						wx.showToast({
 							title: res.data.msg || '系统繁忙，请稍后再试',
@@ -413,7 +523,7 @@ Page({
 				}
 			});
 	},
-	resettap:function(){
+	resettap:function(){ //重置筛选
 		var that = this;
 		wx.removeStorageSync('selectCateName');
 		wx.removeStorageSync('selectUseName');
@@ -429,25 +539,29 @@ Page({
 			usesName:'',
 			cateName:''
 		});
-		wx.request({
-			url: config.service.productListUrl,
-			data: {},
-			success: function(res) {
-				if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
-					productList = res.data.data.products
-					that.setData({
-						productList:productList,
-						category:[],
-						uses:[],
-					});
-				}
-			},
-			fail: function(res) {
-				console.log('失败', res)
-			}
-		});
+
+		setTimeout(function(){
+			that.suretap();
+		}, 500);
+		// wx.request({
+		// 	url: config.service.productListUrl,
+		// 	data: {},
+		// 	success: function(res) {
+		// 		if(res.data.resultCode == 0 && res.data.data && res.data.data.products){
+		// 			productList = res.data.data.products
+		// 			that.setData({
+		// 				productList:productList,
+		// 				category:[],
+		// 				uses:[],
+		// 			});
+		// 		}
+		// 	},
+		// 	fail: function(res) {
+		// 		console.log('失败', res)
+		// 	}
+		// });
 	},
-	check_detail: function(e){
+	check_detail: function(e){ // 查看产品详情
 		var id = e.currentTarget.dataset.index;
 		wx.navigateTo({
 			url:'../bid/detail?id='+id
@@ -464,15 +578,15 @@ Page({
 			url:'../search/search'
 		});
 	},
-	selectTapCate: function(e){
+	selectTapCate: function(e){ //进入具体品种列表
 		var that = this;
 		console.log(e);
 		var childArr = e.currentTarget.dataset.child;
 		var cateName = e.currentTarget.dataset.name;
 		var parentName = e.currentTarget.dataset.parentname;
-		that.setData({
+		/*that.setData({
 			cateName:cateName
-		});
+		});*/
 		wx.removeStorageSync('childName');
 		wx.removeStorageSync('cateName');
 		wx.removeStorageSync('parentName');
@@ -484,14 +598,14 @@ Page({
 		});
 		
 	},
-	selectTapUse: function(e){
+	selectTapUse: function(e){ //进入具体用途列表
 		var that = this;
 		var childArr = e.currentTarget.dataset.child;
 		var parentName = e.currentTarget.dataset.parentname;
 		var usesName = e.currentTarget.dataset.name;
-		that.setData({
+		/*that.setData({
 			usesName:usesName
-		});
+		});*/
 		wx.removeStorageSync('childName');
 		wx.removeStorageSync('parentName');
 		wx.removeStorageSync('usesName');
@@ -502,7 +616,7 @@ Page({
 			url:'../bid/select'
 		})
 	},
-	deliverItemTap:function(e){
+	deliverItemTap:function(e){ //选择交货方式
 		var that = this;
 		var index = e.currentTarget.dataset.index;
 		var product_id = e.currentTarget.dataset.id;
@@ -534,7 +648,7 @@ Page({
 			});
 		}
 	},
-	companyItemTap:function(e){
+	companyItemTap:function(e){ //选择提货他
 		var that = this;
 		var index = e.currentTarget.dataset.index;
 		for(var i = 0,len = that.data.warehouse.length;i<len;i++){
@@ -561,7 +675,7 @@ Page({
 			});
 		}
 	},
-	lableItemTap:function(e){
+	lableItemTap:function(e){ //选择包装方式
 		var index = e.currentTarget.dataset.index;
 		if(this.data.pack != index){
 			this.setData({
@@ -575,10 +689,10 @@ Page({
 			});
 		}
 	},
-	addCartTap:function(e){
+	addCartTap:function(e){ // 购物车浮层
 		var that = this;
 		var index = e.currentTarget.dataset.index;
-		if(app.data.user.auth){
+		if(app.data.user.auth){ //判断用户是否认证
 			that.setData({
 				productDetail:e.currentTarget.dataset.detail,
 				productInfo:e.currentTarget.dataset.detail,
@@ -618,7 +732,7 @@ Page({
 		}
 		return false;
 	},
-	addGoodsTap:function(){
+	addGoodsTap:function(){ // 加入购物车
 		var that = this;
 		/*if(app.data.user.type != 1){
 			wx.showToast({
@@ -665,6 +779,7 @@ Page({
 							  duration: 2000
 							});
 							
+							//获取购物车数量
 							app.getCartNum(app.data.user.userKey);
 							
 							that.setData({
@@ -693,7 +808,7 @@ Page({
 			}
 		//}
 	},
-	closeModel:function(){
+	closeModel:function(){ // 关闭购物车浮层
 		this.setData({
 			isDisplay:true,
 			deliver:0,
@@ -707,7 +822,7 @@ Page({
 			pack:0
 		})
 	},
-	getAmount:function(e){
+	getAmount:function(e){ // 修改购买数量
 		var that = this;
 		var val = e.detail.value;
 		if(!isNaN(val)){
@@ -723,7 +838,7 @@ Page({
 			buynumber:val
 		});
 	},
-	minusTap:function(){
+	minusTap:function(){ //减操作
 		var that = this;
 		if(that.data.buynumber > that.data.buynumbermin){
 			var currentNum = that.data.buynumber;
@@ -742,7 +857,7 @@ Page({
 			});
 		}
 	},
-	plusTap:function(){
+	plusTap:function(){ //加操作
 		var that = this;
 		if(that.data.buynumber < that.data.buynumbermax){
 			var currentNum = that.data.buynumber;

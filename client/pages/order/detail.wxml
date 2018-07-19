@@ -3,7 +3,7 @@
     <view class='type-wrap'>
 		<image src='../../image/qu.png' class='quIcon' background-size='cover'></image>
 		<view class='type-cont'>
-			<text>取货方式:</text>
+			<text>取货方式：</text>
 			<text class='spec'>自提</text>
 		</view>
     </view>

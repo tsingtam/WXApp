@@ -11,9 +11,7 @@ Page({
 		cartInfo:{
 			list:[]
 		},
-		cartId:[],
 		isNoMore:false,
-		testArr:[],
 		totalPrice:'0.00',
 		disabledColor:false,
 		allSelect:false,//全选
@@ -24,14 +22,12 @@ Page({
 	},
 	onShow: function(){
 		var that = this;
-		//total = 0;
 		detailArr = [];
 		that.setData({
 			totalPrice:'0.00',
-			cartId:[],
 			allSelect:false
 		});
-		wx.request({
+		wx.request({ //获取购物车信息
 			url: config.service.getCartInfoUrl,
 			data: {
 				userkey:app.data.user.userKey
@@ -99,7 +95,7 @@ Page({
 			url: '/pages/bid/hall'
 		});
 	},
-	getAmount: function(e){
+	getAmount: function(e){ //修改购物车数量
 		var that = this;
 		var inputValue = e.detail.value;
 		var product = e.currentTarget.dataset.item;		
@@ -164,51 +160,34 @@ Page({
 		var that = this;
 		var index = e.currentTarget.dataset.index;
 		var list = that.data.cartInfo.list;
-		var idArr = that.data.cartId;
 		var marks =0;
-		var totalP = 0;
 		if(index!=="" && index != null){
 			list[parseInt(index)].checked = !list[parseInt(index)].checked ; 
 			var firstArr = list[parseInt(index)].value;
 			for(var j = 0,leng = firstArr.length;j<leng;j++){
 				var secondArr = firstArr[j].value;
-				var objData = {
-					category:list[parseInt(index)].value[parseInt(j)].category,
-					value:[]
-				};
 				if(list[parseInt(index)].checked && !list[parseInt(index)].value[parseInt(j)].checked){
 					list[parseInt(index)].value[parseInt(j)].checked = !list[parseInt(index)].value[parseInt(j)].checked;
 				}else if(!list[parseInt(index)].checked){
 					list[parseInt(index)].value[parseInt(j)].checked = !list[parseInt(index)].value[parseInt(j)].checked;
 				}
 				for(var k = 0,lengt = secondArr.length;k<lengt;k++){
-					var item = list[parseInt(index)].value[parseInt(j)].value[parseInt(k)];					
-					if(list[parseInt(index)].checked && !item.checked){
-						item.checked = !item.checked;						
-						objData.value.push(item);
+					var item = list[parseInt(index)].value[parseInt(j)].value[parseInt(k)];
+					if(list[parseInt(index)].checked){
+						item.checked = true;						
 					}else if(!list[parseInt(index)].checked){
-						item.checked = !item.checked;
-						that.removeVlue(objData.value,item.id);
+						item.checked = false;						
 					}
-					/*if(item.checked){
-						totalP = that.data.totalPrice*10000 + parseFloat(item.amount)*item.price*10000;
-					}else{
-						totalP = that.data.totalPrice*10000 - parseFloat(item.amount)*item.price*10000;						
-					}*/				
+								
 					that.setData({
 						cartInfo:{
 							list:list
 						}		
-						//totalPrice:(totalP/10000).toFixed(2)
 					});
 					that.getTotal();
-				}				
-				idArr.push(objData);
-				that.setData({
-					cartId:idArr
-				});
+				}
 			}
-			list.forEach(function(i,o){
+			list.forEach(function(i,o){ //判断是不是全选
 				if(i.checked){
 					marks++;					
 				}
@@ -231,47 +210,25 @@ Page({
 		var id = e.currentTarget.dataset.id;
 		var cateType = e.currentTarget.dataset.type;
 		var list = that.data.cartInfo.list;
-		var total = 0;
 		var times = 0;
 		var secondItemTimes = 0;
-		var idArr = that.data.cartId;
 		list.forEach(function(i,o){
 			i.value.forEach(function(j,m){
-				var objData = {
-					category:'',
-					value:[]
-				};
 				if(j.category == id){
 					j.checked = !j.checked;
-					objData.category = j.category;
 					j.value.forEach(function(k,n){
 						if(!k.checked){
 							k.checked = !k.checked;							
-							objData.value.push(k);
 						}else if(!j.checked){
 							k.checked = !k.checked;
-							that.removeVlue(idArr,j.category);
 						}						
-						/*if(j.checked){
-							total = that.data.totalPrice*10000 + parseFloat(k.amount)*k.price*10000;
-						}else{
-							total = that.data.totalPrice*10000 - parseFloat(k.amount)*k.price*10000;
-						}*/
-						console.log(list,'list');
 						that.setData({
 							cartInfo:{
 								list:list
 							}							
-							//totalPrice:parseFloat(total/10000).toFixed(2)
 						});
 					});
 					that.getTotal();
-					if(objData.value.length > 0){
-						idArr.push(objData);
-						that.setData({
-							cartId:idArr,
-						});
-					}
 				}
 					if(j.checked && cateType == i.p_category){
 						times++;
@@ -333,46 +290,18 @@ Page({
 						type = j.category;
 						category_id = k.product.category_id;
 						objData.category = j.category;
-						k.checked = !k.checked;
-						if(k.checked){	
-							objData.value.push(k);
-							if(detailArr.length > 0){								
-								detailArr.forEach(function(t,o){
-									if(t.category == type){
-										detailArr[o].value.push(k);																			
-									}else if(JSON.stringify(detailArr).indexOf(type) == -1){
-										detailArr.push(objData);										
-									}
-								})															
-							}else{
-								detailArr.push(objData);								
-							}						
-							//total = (that.data.totalPrice*10000 + parseFloat(k.amount)*k.price*10000)/10000
-						}else{					
-							detailArr.forEach(function(p,o){							
-								if(p.category == type && p.value.length > 1){
-									that.removeVlues(p.value,k.id);									
-								}
-								else{
-									that.removeVlue(detailArr,type);									
-								}
-							})
-							//total = (that.data.totalPrice*10000 - parseFloat(k.amount)*k.price*10000)/10000
-						}						
+						k.checked = !k.checked;				
 						that.setData({
 							cartInfo:{
 								list:list
 							},
-							cartId:detailArr
-							//totalPrice:total.toFixed(2)
 						});
 						that.getTotal();
 					}
 								
 					if(k.checked && category_id == k.product.category_id){
 						selectTimes++;
-					}					
-					console.log(selectTimes);					
+					}										
 					if(selectTimes == j.value.length && type == j.category){
 						j.checked = true;						
 						that.setData({
@@ -429,21 +358,8 @@ Page({
 	checkboxChangeAll: function(e){ //全选
 		var that = this;
 		var list = that.data.cartInfo.list;
-		var total = 0;
-		var idArr = [];	
 		that.data.allSelect = !that.data.allSelect;
-		if(that.data.allSelect){
-			list.forEach(function(i,o){
-				i.value.forEach(function(a,b){
-					idArr.push(a);
-				})
-			});
-		}else{
-			idArr = []
-		}
-		that.setData({
-			cartId:idArr
-		});
+
 		for(var i = 0,len = list.length;i < len;i++){
 			if((!list[i].checked && that.data.allSelect) || (list[i].checked && !that.data.allSelect)){
 				list[i].checked = !list[i].checked;
@@ -473,7 +389,7 @@ Page({
 		}
 		that.getTotal();
 	},
-	getTotal: function(){
+	getTotal: function(){ //获取总价格
 		var that = this;
 		var total = 0;
 		var list = that.data.cartInfo.list;
@@ -490,7 +406,7 @@ Page({
 			totalPrice:(total/10000).toFixed(2)
 		})
 	},
-	removeVlue: function(arr,val){
+	removeVlue: function(arr,val){ //删除小种类的数组
 		for(var i=0; i<arr.length; i++) {
 			if(arr[i].category == val) {
 			  arr.splice(i, 1);
@@ -498,7 +414,7 @@ Page({
 			}
 		}
 	},
-	removeVluep: function(arr,val){
+	removeVluep: function(arr,val){ //删除大种类的数组
 		for(var i=0; i<arr.length; i++) {
 			if(arr[i].p_category == val) {
 			  arr.splice(i, 1);
@@ -514,7 +430,7 @@ Page({
 			}
 		}
 	},
-	removeCart: function(arr,val){
+	removeCart: function(arr,val){ //删除购物车中具体的产品
 		for(var i=0; i<arr.length; i++) {
 			if(arr[i].product_id == val) {
 			  arr.splice(i, 1);
@@ -522,7 +438,7 @@ Page({
 			}
 		}
 	},
-	delItem: function(e){
+	delItem: function(e){ // 购物车删除操作
 		var that = this;
 		console.log(e.currentTarget.dataset);
 		var id = e.currentTarget.dataset.id;
@@ -590,10 +506,33 @@ Page({
 	},
     btnBuy: function(){ // 提交订单
 		var that = this;
-		if(that.data.cartId.length > 0){
+		var subArr = []; //提交的数组
+		var list = that.data.cartInfo.list;
+		list.forEach(function(i,o){
+			i.value.forEach(function(d,k){
+				var objData = {
+					category:'',
+					value:[]
+				};
+				if(d.checked){
+					subArr.push(d);
+				}else{
+					d.value.forEach(function(m,p){
+						if(m.checked){
+							objData.category = d.category;
+							objData.value.push(m);
+						} 
+					});
+					if(objData.value.length > 0){
+						subArr.push(objData);
+					}
+				}
+			});
+		});
+		if(subArr.length > 0){
 			wx.removeStorageSync('cartInfoSubmit');	
 			wx.removeStorageSync('submitOrder');
-			wx.setStorageSync('cartInfoSubmit',that.data.cartId);
+			wx.setStorageSync('cartInfoSubmit',subArr);
 			wx.navigateTo({
 			  url: '/pages/price/submitOrder'
 			})
@@ -722,10 +661,7 @@ Page({
 								m.value.forEach(function(j,k){
 									if(j.product_id == options.product_id){
 										j.amount = parseFloat(options.amount).toFixed(4);									
-									}
-									/*if(j.checked){																			
-										totalP += parseFloat(j.amount)*j.price*1000/1000;
-									}*/
+									}						
 								})
 							})
 						});
@@ -733,7 +669,6 @@ Page({
 							cartInfo:{
 								list:list
 							}
-							//totalPrice:totalP.toFixed(2)
 						});	
 						that.getTotal();
 					}
@@ -757,10 +692,7 @@ Page({
 								m.value.forEach(function(j,k){
 									if(j.product_id == options.product_id){
 										j.amount = parseFloat(options.amount).toFixed(4);								
-									}
-									//if(j.checked){
-									//	total += parseFloat(j.amount)*j.price*1000/1000;
-									//}
+									}					
 								})
 							})
 						});						
@@ -768,7 +700,6 @@ Page({
 							cartInfo:{
 								list:list
 							}
-							//totalPrice:total.toFixed(2)
 						});	
 						that.getTotal();
 					}

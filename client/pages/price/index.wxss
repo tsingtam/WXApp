@@ -4,7 +4,7 @@ page {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding-bottom: 120px;
+    padding-bottom: 140px;
 }
 .type-wrap{
 	font-size:34rpx;
@@ -18,13 +18,13 @@ page {
   margin-left:10px; 
 }
 .cartinfo-delete-wrap{
-  overflow: hidden;
+  /*overflow-x: hidden;*/
 }
 .list-info-item{
 	position: relative;
 	width:120%;
 	display:flex;
-	overflow: hidden;
+	/*overflow-x: hidden;*/
 	transition: 2s;
 	-webkit-transition: 2s;
 	transition-duration: 2s;
@@ -34,7 +34,7 @@ page {
 	background: #fff;
 }
 .type-li{
-	overflow:hidden;
+	/*overflow-x:hidden;*/
 }
 .delete-btn{
     width: 120rpx;
@@ -66,7 +66,7 @@ page {
 	position:relative;
 	width:655rpx;
 	display:flex;
-  margin:5px 10px;
+  margin:6px 10px;
   box-shadow:0px 1px 10px #ddd;
   background-color:#fff;
 }
@@ -157,6 +157,10 @@ page {
 .list-group{
 	padding-bottom:6rpx;
 	width:100%;
+	overflow:hidden;
+}
+.list-group:last-child{
+  margin-bottom: 90rpx;
 }
 .pageBottom{
 	height:90rpx;

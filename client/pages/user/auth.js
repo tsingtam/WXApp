@@ -47,14 +47,7 @@ Page({
 	},
 	getCode: function(e){
 		var that = this;
-		var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
-		if(!myreg.test(that.data.mobile)){
-			wx.showToast({
-				title: '手机号有误',
-				icon: 'none',
-				duration: 1500
-			})
-		}else if(that.data.mobile.length == 0){
+		if(that.data.mobile.length == 0){
 			wx.showToast({
 				title: '手机号不能为空',
 				icon: 'none',
@@ -67,24 +60,26 @@ Page({
 				duration: 1500
 			})
 		}else{
-			wx.request({
-				url: config.service.getVerfCodeUrl,
-				data: {
-					mobile:that.data.mobile
-				},
-				success: function(res) {	
-					console.log(res);
-					if(res.data.resultCode == 0){
-						that.getTimer();
-						that.setData({
-							disabled:true
-						})
+			if(!that.data.disabled){
+				wx.request({
+					url: config.service.getVerfCodeUrl,
+					data: {
+						mobile:that.data.mobile
+					},
+					success: function(res) {	
+						console.log(res);
+						if(res.data.resultCode == 0){
+							that.getTimer();
+							that.setData({
+								disabled:true
+							})
+						}
+					},
+					fail: function(res) {
+						console.log('失败', res)
 					}
-				},
-				fail: function(res) {
-					console.log('失败', res)
-				}
-			})
+				});
+			}
 		}
 	},
     formSubmit: function(e){

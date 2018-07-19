@@ -73,6 +73,7 @@
 }
 .list-item .contentR{
 	display:inline-block;
+  width: 460rpx;
 	text-align:left;
   padding: 15rpx;
   font-size:14px; 
