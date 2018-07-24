@@ -63,7 +63,7 @@ Page({
     },
 	onReachBottom: function(){
 		var that = this;
-		totalPage++;
+		/*totalPage++;
 		if(!that.data.isNoMore){
 			wx.request({
 				url: config.service.getCartInfoUrl,
@@ -88,7 +88,7 @@ Page({
 					console.log('失败', res)
 				}
 			});
-		}
+		}*/
 	},
 	toIndexPage: function(){
 		wx.switchTab({

@@ -4,7 +4,7 @@
 		<view class="status-item {{payOrders == 1 ? 'active' : ''}}" bindtap="wait_pay">待付款</view>
 		<view class="status-item {{sendOrders == 1 ? 'active' : ''}}" bindtap="wait_send">待发货</view>
 		<view class="status-item {{receiveOrders == 1 ? 'active' : ''}}" bindtap="wait_receive">待收货</view>
-		<view class="status-item {{invoiceOrders == 1 ? 'active' : ''}}" bindtap="wait_invoice">代开票</view>
+		<view class="status-item {{invoiceOrders == 1 ? 'active' : ''}}" bindtap="wait_invoice">待开票</view>
 	</view>
 	<view class="weui-loadmore weui-loadmore_line nullOrder" wx:if="{{order.orderList.length == 0 && allOrders == 1}}">
 		<view class="weui-loadmore__tips_in-line">暂无订单</view>

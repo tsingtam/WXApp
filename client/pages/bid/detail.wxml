@@ -72,6 +72,7 @@
 			<view class="model-item">
 				<view class="title">包装</view>
 				<text class="con {{pack == 1 ? 'active':''}}" bindtap="lableItemTap" data-name="25公斤装" data-index="1">25公斤装</text>
+				<text class="con {{pack == 4 ? 'active':''}}" bindtap="lableItemTap" data-name="40公斤装" data-index="4">40公斤装</text>
 				<text class="con {{pack == 2 ? 'active':''}}" bindtap="lableItemTap" data-name="50公斤装" data-index="2">50公斤装</text>
 				<text class="con {{pack == 3 ? 'active':''}}" bindtap="lableItemTap" data-name="1吨装" data-index="3">1吨装</text>
 			</view>

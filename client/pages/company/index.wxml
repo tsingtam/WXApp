@@ -15,7 +15,47 @@
                 <view class="weui-article__p">
                     地址：江苏省无锡市滨湖区太湖西大道2168号中锐佳诚国际大厦A座23层。
                 </view>
+                <view class="weui-article__p">付款说明：</view>
                 <view class="weui-article__p">
+                (氢氧化铝) 
+                </view>
+                <view class="weui-article__p">
+                请贵公司将货款（现金及电子银行承兑汇票）汇入如下账户：
+                </view>
+                <view class="weui-article__p">
+                户名：中铝新材料有限公司
+                </view>
+                <view class="weui-article__p">
+                账号：408410100100345852
+                </view>
+                <view class="weui-article__p">
+                开户银行：兴业银行无锡分行营业部
+                </view>
+                <view class="weui-article__p">
+                银行大额支付行号：309302098415
+                </view>
+                <view class="weui-article__p">
+                　
+                </view>
+                <view class="weui-article__p">
+                （高温氧化铝）
+                </view>
+                <view class="weui-article__p">
+                请贵公司将货款（现金及电子银行承兑汇票）汇入如下账户： 
+                </view>
+                <view class="weui-article__p">
+                户名：中铝新材料有限公司
+                </view>
+                <view class="weui-article__p">
+                账号：322000600018170142095
+                </view>
+                <view class="weui-article__p">
+                开户银行：交通银行无锡分行营业部
+                </view>
+                <view class="weui-article__p">
+                银行大额支付行号：301302009998
+                </view>
+                <view class="weui-article__p" hidden="true">
                     联系方式：<text bindtap="calling" data-phone="0510-82393780">0510-82393780</text>
                 </view>
             </view>

@@ -16,7 +16,7 @@
 				<text>管理</text>
 			</view>
 			<view class="topR" bindtap="goCompany">
-				<text class="companyName">中铝新材料有限公司</text>
+				<text class="companyName">中铝新材料有限公司 <text style="font-weight:normal;font-size:30rpx;">>></text></text>
 				<text class="small">主营特种氢氧化铝、特种氧化铝、沸石分子筛和催化剂载体等系列产品</text>
 			</view>
 			<navigator url="/pages/user/auth" hidden="{{true}}"><view class="floatR" style="margin:-60px 0 0 0;"><image class="icoImg" src="../../image/set.png" background-size="cover"></image>管理身份认证</view></navigator>
@@ -124,6 +124,7 @@
 			<view class="model-item">
 				<view class="title">包装</view>
 				<text class="con {{pack == 1 ? 'active':''}}" bindtap="lableItemTap" data-name="25公斤装" data-index="1">25公斤装</text>
+				<text class="con {{pack == 4 ? 'active':''}}" bindtap="lableItemTap" data-name="40公斤装" data-index="4">40公斤装</text>
 				<text class="con {{pack == 2 ? 'active':''}}" bindtap="lableItemTap" data-name="50公斤装" data-index="2">50公斤装</text>
 				<text class="con {{pack == 3 ? 'active':''}}" bindtap="lableItemTap" data-name="1吨装" data-index="3">1吨装</text>
 			</view>

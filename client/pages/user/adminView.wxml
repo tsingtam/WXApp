@@ -45,6 +45,10 @@
                 <view class="weui-form-preview__label">总金额</view>
                 <view class="weui-form-preview__value_in-hd">¥{{detail.totalPrice}}</view>
             </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">买家留言</view>
+                <view class="weui-form-preview__value">{{detail.order_memo||''}}</view>
+            </view>
         </view>
         <view class="weui-form-preview__bd" wx:for="{{detail.subOrders}}">
             <view class="weui-form-preview__item">

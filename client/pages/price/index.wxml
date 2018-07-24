@@ -45,7 +45,7 @@
 									<text class="info-item packs">包装规格：{{lastChild.packing}}</text>
 								</view>
 								<view class="numInfo">
-									<view class="priceL">单价：<text class="active">￥{{lastChild.price}}</text></view>
+									<view class="priceL">单价：<text class="active">￥{{lastChild.price || '0.00'}}</text></view>
 									<view class="numR">
 										<text class="btn minus {{lastChild.amount == 1 ? 'disabled':''}}" bindtap="minusTap" data-id="{{lastChild.product_id}}" data-item="{{lastChild}}">-</text>
 										<input class="buy-num" value="{{lastChild.amount}}" bindchange="getAmount" data-item="{{lastChild}}" />					
