@@ -61,20 +61,21 @@
 			</view>
 			<view class="model-item">
 				<view class="title">交货方式</view>
-				<text class="con active" bindtap="deliverItemTap" data-index="1" data-id="{{productDetail.id}}" data-name="自提">自提</text>
+				<block wx:for="{{price_list}}" >
+				<text class="con {{deliverType == item.delivery_method ?'active':''}}" bindtap="deliverItemTaps" data-index="{{item.delivery_method}}" data-id="{{productDetail.id}}" data-name="{{item.delivery_method}}">{{item.delivery_method}}</text>
+				</block>
 			</view>
 			<view class="model-item house">
 				<view class="title">提货地</view>
 				<block wx:for="{{warehouse}}" >
-				<text class="con ware {{company == item.w_id  ? 'active':''}}" bindtap="companyItemTap" data-index="{{item.w_id}}" data-name="{{item.warehouse.name}}">{{item.warehouse.name}}</text>
+				<text class="con ware {{company == item.id  ? 'active':''}}" bindtap="companyItemTap" data-index="{{item.id}}" data-name="{{item.name}}">{{item.name}}</text>
 				</block>
 			</view>
 			<view class="model-item">
 				<view class="title">包装</view>
-				<text class="con {{pack == 1 ? 'active':''}}" bindtap="lableItemTap" data-name="25公斤装" data-index="1">25公斤装</text>
-				<text class="con {{pack == 4 ? 'active':''}}" bindtap="lableItemTap" data-name="40公斤装" data-index="4">40公斤装</text>
-				<text class="con {{pack == 2 ? 'active':''}}" bindtap="lableItemTap" data-name="50公斤装" data-index="2">50公斤装</text>
-				<text class="con {{pack == 3 ? 'active':''}}" bindtap="lableItemTap" data-name="1吨装" data-index="3">1吨装</text>
+				<block wx:for="{{pack_size}}">
+					<text class="con {{pack == item ? 'active':''}}" bindtap="lableItemTap" data-name="{{item}}" data-index="{{item}}">{{item}}</text>
+				</block>
 			</view>
 			<view class="model-item buy-num-wrap">
 				<view class="title">购买数量</view>

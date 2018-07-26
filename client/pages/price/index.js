@@ -56,6 +56,7 @@ Page({
 				console.log('失败', res)
 			}
 		});
+		app.getCartNum(app.data.user.userKey);
 	},
 	onPullDownRefresh: function(){
         this.onShow();

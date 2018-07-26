@@ -1,1 +1,3 @@
 /**index.wxss**/
+.pic{text-align:center;margin:10px 0 0;}
+.pic image{width:80%;}

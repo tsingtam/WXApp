@@ -17,7 +17,9 @@ Page({
 		isShow:true,
 		deliver:1,
 		deliverType:'',
-		pack:0,
+		pack:'',
+		pack_size:[],
+		price_list:[],
 		packType:'',
 		warehouse:[],
 		companyName:'',
@@ -43,7 +45,9 @@ Page({
 	},
 	onShow: function(){
 		var that = this;
+		app.getCartNum(app.data.user.userKey);
 		that.setData({
+			cartNum:wx.getStorageSync('cartNum'),
 			isPicker: false
 		});
 		wx.request({
@@ -82,7 +86,6 @@ Page({
 		console.log(query, 'xxxxxxxxx');
 		var product_id = query.id;
 		that.setData({
-			cartNum:wx.getStorageSync('cartNum'),
 			userAuth:app.data.user && app.data.user.auth,
 			id: query.id
 		});
@@ -94,7 +97,9 @@ Page({
 			},
 			success: function(res) {
 				that.setData({
-					warehouse:res.data.data.warehouses
+					price_list:res.data.data.price_list,
+					pack_size:res.data.data.pack_size,
+					warehouse:res.data.data.price_list[0].warehouses
 				});
 				console.log(res.data.data,'warehouse');
 			},
@@ -170,29 +175,23 @@ Page({
 		var that = this;
 		var index = e.currentTarget.dataset.index;
 		var product_id = e.currentTarget.dataset.id;
-		if(index == 1 &&  that.data.deliver == 1){
-			wx.request({
-				url: config.service.getWareHouseUrl,
-				data: {
-					product_id:product_id,
-					userkey:app.data.user.userKey
-				},
-				success: function(res) {
+		if(that.data.deliver != index){
+			that.setData({
+				//isShow:true,
+				deliver:index,
+				deliverType:index
+			});
+			price_list.forEach(function(i,o){
+				if(that.data.deliverType == i.delivery_method){
 					that.setData({
-						isShow:false,
-						deliver:index,
-						warehouse:res.data.data.warehouses,
-						deliverType:e.currentTarget.dataset.name
+						warehouse:i.warehouses
 					});
-				},
-				fail: function(res) {
-					console.log('失败', res)
 				}
 			});
 		}else{
 			that.setData({
-				isShow:true,
-				deliver:0,
+				//isShow:true,
+				deliver:'',
 				deliverType:''
 			});
 		}
@@ -244,6 +243,7 @@ Page({
 				addCart:1,
 				productInfo:this.data.productDetail,
 				isDisplay:false,
+				deliverType:'自提',
 				buynumber:1
 			});
 		}else{
@@ -258,6 +258,7 @@ Page({
 				submitOrder:1,
 				productInfo:this.data.productDetail,
 				isDisplay:false,
+				deliverType:'自提',
 				buynumber:1
 			});
 		}else{
@@ -356,7 +357,7 @@ Page({
 									},
 									success: function(res) {				
 										if(res.data.resultCode == 0){
-											wx.setStorageSync('cartNum', res.data.data.count);
+											//wx.setStorageSync('cartNum', res.data.data.count);
 											if(res.data.data.count > 0){
 												wx.setTabBarBadge({
 													index: 1,
@@ -375,7 +376,7 @@ Page({
 									fail: function(res) {
 										console.log('失败', res)
 									}
-								});
+								});						
 							}else{
 								wx.showToast({
 								  title: res.data.msg || '系统繁忙，请稍后再试',

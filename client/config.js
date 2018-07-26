@@ -98,7 +98,10 @@ var config = {
         adminOrderReceiveUrl:`${host}/mng/receive`,
 		
 		// 管理-生成购销单
-		adminOrderCreateUrl:`${host}/mng/create`,
+		adminOrderCreateUrl:`${host}/mng/create-confirmation-letter`,
+		
+		// 管理-取消订单
+		adminOrderCancelUrl:`${host}/mng/cancel`,
 		
         // 测试的请求地址，用于测试会话
         requestUrl: `${host}/weapp/user`,

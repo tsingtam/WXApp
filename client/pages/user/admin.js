@@ -159,40 +159,60 @@ Page({
         var that = this,
             id = e.currentTarget.dataset.id;
 
-        wx.showToast({
-          title: '新功能即将开放，敬请期待！',
-          icon: 'none',
-          duration: 2000
-        });
-        return;
+        // wx.showToast({
+        //   title: '新功能即将开放，敬请期待！',
+        //   icon: 'none',
+        //   duration: 2000
+        // });
+        // return;
 
-        wx.request({
-            url: config.service.adminOrderCreateUrl,
-            data: {
-                order_id: id,
-                userkey: app.data.user && app.data.user.userKey
-            },
-            success: function(res) {
-                if (res.data.resultCode == 0 && res.data.data){
-                    wx.showToast({
-                      title: '生成购销单成功',
-                      icon: 'success',
-                      duration: 2000
+        wx.showModal({
+            title: '确认生成购销单？',
+            content: '',
+            confirmText: "确认",
+            confirmColor: "#366ec8",
+            cancelText: "取消",
+            success: function (res) {
+                if (res.confirm) {
+                    wx.request({
+                        url: config.service.adminOrderCreateUrl,
+                        data: {
+                            order_id: id,
+                            userkey: app.data.user && app.data.user.userKey
+                        },
+                        success: function(res) {
+                            if (res.data.resultCode == 0 && res.data.data){
+                                wx.showToast({
+                                  title: '生成购销单成功',
+                                  icon: 'success',
+                                  duration: 2000
+                                });
+                                var orderList = that.data.orderList;
+                                orderList.forEach(function(o, i){
+                                    if(o.order_id == id){
+                                        o.order_letter = true;
+                                    }
+                                });
+                                that.setData({
+                                    orderList: orderList
+                                });
+                                // setTimeout(function(){
+                                //     wx.navigateBack();
+                                // }, 2000);
+                            }
+                            else {
+                                wx.showToast({
+                                  title: res.data.msg || '系统繁忙，请稍后再试',
+                                  icon: 'none',
+                                  duration: 2000
+                                });
+                            }
+                        },
+                        fail: function(res) {
+                            console.log('失败', res)
+                        }
                     });
-                    // setTimeout(function(){
-                    //     wx.navigateBack();
-                    // }, 2000);
                 }
-                else {
-                    wx.showToast({
-                      title: res.data.msg || '系统繁忙，请稍后再试',
-                      icon: 'none',
-                      duration: 2000
-                    });
-                }
-            },
-            fail: function(res) {
-                console.log('失败', res)
             }
         });
     },

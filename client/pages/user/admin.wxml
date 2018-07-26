@@ -22,6 +22,7 @@
 				    	<view class="floatR c_pass" wx:if="{{item.order_status==0}}">待接单</view>
 				    	<view class="floatR c_pass" wx:if="{{item.order_status==1}}">待录入ERP</view>
 				    	<view class="floatR c_warning" wx:if="{{item.order_status==2}}">已录入ERP</view>
+				    	<view class="floatR c_disabled" wx:if="{{item.order_status==3}}">已取消</view>
 				    </view>
 				    <view class="weui-panel__bd">
 				        <view class="weui-media-box weui-media-box_text">
@@ -37,7 +38,7 @@
 							        <picker bindchange="bindPickerChange" data-id="{{item.order_id}}" value="{{index}}" range="{{sales}}" wx:if="{{item.order_status==1&&activeIndex==0}}">
 							        	<button class="weui-btn mini-btn" type="default" size="mini">转单</button>
 							        </picker>
-									<button class="weui-btn mini-btn" form-type="submit" type="primary" size="mini" bindtap="create" data-id="{{item.order_id}}" wx:if="{{item.order_status==1||item.order_status==2}}">生成购销单</button>
+									<button class="weui-btn mini-btn" form-type="submit" type="primary" size="mini" bindtap="create" data-id="{{item.order_id}}" wx:if="{{(item.order_status==1||item.order_status==2)&&!item.order_letter}}">生成购销单</button>
 							        <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="deal" data-id="{{item.order_id}}" wx:if="{{item.order_status==1&&activeIndex==0}}">完成ERP录入</button>
 							        <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="receive" data-id="{{item.order_id}}" wx:if="{{item.order_status==0&&activeIndex==0}}">接单</button>
 							    </view>

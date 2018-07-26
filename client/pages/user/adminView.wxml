@@ -40,6 +40,7 @@
                 <view class="weui-form-preview__value c_pass" wx:if="{{detail.order_status==0}}">待接单</view>
                 <view class="weui-form-preview__value c_pass" wx:if="{{detail.order_status==1}}">待录入ERP</view>
                 <view class="weui-form-preview__value c_warning" wx:if="{{detail.order_status==2}}">已录入ERP</view>
+                <view class="weui-form-preview__value c_disabled" wx:if="{{detail.order_status==3}}">已取消</view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">总金额</view>
@@ -73,13 +74,14 @@
             </view>
         </view>
     </view>
+    <view class="pic" wx:if="{{detail.order_letter}}"><view>购销单</view><image src="{{detail.order_letter}}"></image></view>
     <view class="weui-btn-area" wx:if="{{userType!=2}}">
         <button class="weui-btn" type="primary" bindtap="receive" wx:if="{{detail.order_status==0&&activeIndex==0}}">接单</button>
         <button class="weui-btn" type="primary" bindtap="deal" wx:if="{{detail.order_status==1&&activeIndex==0}}">完成ERP录入</button>
-		<button form-type="submit" type="primary" bindtap="create" wx:if="{{detail.order_status==1||detail.order_status==2}}">生成购销单</button>
+		<button form-type="submit" type="primary" bindtap="create" wx:if="{{(detail.order_status==1||detail.order_status==2)&&!detail.order_letter}}">生成购销单</button>
         <picker bindchange="bindPickerChange" value="{{index}}" range="{{sales}}" wx:if="{{detail.order_status==1&&activeIndex==0}}">
             <button class="weui-btn" type="primary">转单</button>
         </picker>
-        <button class="weui-btn" type="default" bindtap="create" wx:if="{{activeIndex==0}}">取消订单</button>
+        <button class="weui-btn" type="default" bindtap="cancel" wx:if="{{detail.order_status!=3}}">取消订单</button>
     </view>
 </view>

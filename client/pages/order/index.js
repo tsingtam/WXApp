@@ -23,16 +23,7 @@ Page({
 	},
 	onShow: function(){
 		this.getOrderList();
-		if(wx.getStorageSync('cartNum') == '0'){
-			wx.removeTabBarBadge({
-				index: 1
-			});
-		}else{
-			wx.setTabBarBadge({
-				index:1,
-				text:wx.getStorageSync('cartNum')
-			});
-		}
+		app.getCartNum(app.data.user.userKey);
 	},
 	getOrderList: function(){
 		var that = this;		
@@ -64,7 +55,7 @@ Page({
 	onReachBottom: function(){
 		var that = this;
 		totalPage++;
-		if(!that.data.isNoMore){
+		if(!that.data.isNoMore && that.data.order.orderList.length > 0){
 			wx.request({
 				url: config.service.orderListUrl,
 				data: {

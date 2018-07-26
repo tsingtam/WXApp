@@ -26,7 +26,8 @@
 			<view class='name-status-wrap'>
         <text class='proName'>{{item.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</text>
         <text class="c_pass floatR title" wx:if="{{item.status == '0'}}">待处理</text>
-			  <text class="c_disabled floatR title" wx:else>已处理</text>
+        <text class="c_disabled floatR title" wx:elif="{{item.status == '3'}}">已取消</text>
+			  <text class="c_warning floatR title" wx:else>已处理</text>
       </view>
       <view class='time'>
       <image src='../../image/clock.png' background-size="cover" class='clock'></image>

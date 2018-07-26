@@ -45,7 +45,9 @@ Page({
 		isNoMore:false, //没有更多显示
 		deliver:1, //发货方式（自提）
 		deliverType:'',
-		pack:0, //包装方式
+		pack:'', //包装方式
+		pack_size:[],
+		price_list:[],
 		packType:'',
 		warehouse:[], //发货地
 		companyName:'',
@@ -175,6 +177,10 @@ Page({
 	onLoad: function(query){		
 		var that = this;
 
+		// wx.navigateTo({
+		// 	url:'/pages/user/auth'
+		// });
+
 		// 详情分享，根据id跳转
 		if (query.id){
 			setTimeout(function(){
@@ -246,11 +252,8 @@ Page({
 			cateChildName:wx.getStorageSync('selectCateName'),
 			useChildName:wx.getStorageSync('selectUseName')
 		});
-		if(wx.getStorageSync('cartNum') > 0){
-			wx.setTabBarBadge({
-				index: 1,
-				text: wx.getStorageSync('cartNum')
-			});
+		if(app.data.user){
+			app.getCartNum(that.data.user.userKey);
 		}
 	},
 	click_nav_zh: function(){ //综合筛选
@@ -620,30 +623,23 @@ Page({
 		var that = this;
 		var index = e.currentTarget.dataset.index;
 		var product_id = e.currentTarget.dataset.id;
-		if(index == 1 &&  that.data.deliver == 0){
-			wx.request({
-				url: config.service.getWareHouseUrl,
-				data: {
-					product_id:product_id,
-					userkey:app.data.user.userKey
-				},
-				success: function(res) {
+		if(that.data.deliver != index){
+			that.setData({
+				//isShow:true,
+				deliver:index,
+				deliverType:index
+			});
+			price_list.forEach(function(i,o){
+				if(that.data.deliverType == i.delivery_method){
 					that.setData({
-						isShow:false,
-						deliver:index,
-						warehouse:res.data.data.warehouses,
-						deliverType:e.currentTarget.dataset.name
+						warehouse:i.warehouses
 					});
-					console.log(res.data.data,'warehouse');
-				},
-				fail: function(res) {
-					console.log('失败', res)
 				}
 			});
 		}else{
 			that.setData({
-				isShow:true,
-				deliver:0,
+				//isShow:true,
+				deliver:'',
 				deliverType:''
 			});
 		}
@@ -710,7 +706,9 @@ Page({
 						that.setData({
 							isShow:false,
 							deliver:1,
-							warehouse:res.data.data.warehouses,
+							pack_size:res.data.data.pack_size,
+							price_list:res.data.data.price_list,
+							warehouse:res.data.data.price_list[0].warehouses,
 							deliverType:'自提'
 						});
 					}else{

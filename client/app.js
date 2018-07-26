@@ -117,8 +117,8 @@ App({
 									if(res.data.data.count > 0){
 										//that.setData({
 										that.data.cartNum = parseInt(res.data.data.count);
-										//});
-										wx.setStorageSync('cartNum', res.data.data.count);
+										//});						
+										//wx.setStorageSync('cartNum', res.data.data.count);
 										wx.setTabBarBadge({
 											index: 1,
 											text: res.data.data.count
@@ -190,6 +190,7 @@ App({
 	    });
 	},
 	getCartNum: function(userKey){//获取购物车数量
+		var that = this;
 		wx.request({ 
 			url: config.service.getCartNumUrl,
 			data: {
@@ -197,6 +198,7 @@ App({
 			},
 			success: function(res) {				
 				if(res.data.resultCode == 0){
+					wx.removeStorageSync('cartNum');
 					wx.setStorageSync('cartNum', res.data.data.count);
 					if(res.data.data.count > 0){
 						wx.setTabBarBadge({

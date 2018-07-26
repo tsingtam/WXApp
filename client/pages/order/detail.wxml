@@ -17,8 +17,9 @@
 			<view class="order-wrap-item">
 				<view class="marks"></view>
 				<view class="proname">{{orderDetail.subOrders[0].product.lCategory.lCategoryParentInfo.name}}</view>
-				<view class="status c_pass" wx:if="{{orderDetail.status==0}}">待处理</view>
-				<view class="status c_disabled" wx:else>已处理</view>
+                <view class="status c_pass" wx:if="{{orderDetail.status==0}}">待处理</view>
+				<view class="status c_disabled" wx:elif="{{orderDetail.status==3}}">已取消</view>
+				<view class="status c_warning" wx:else>已处理</view>
 			</view>
 			<view class="order-wrap-item">
 				<view class="preview__label">产品系列</view>
